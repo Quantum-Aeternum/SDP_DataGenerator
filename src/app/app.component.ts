@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { DataGeneratorSettings } from './models/data-generator-settings.model';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +7,4 @@ import { DataGeneratorSettings } from './models/data-generator-settings.model';
 })
 export class AppComponent {
   title = 'sdp-gen';
-  dataGenSettings: DataGeneratorSettings = new DataGeneratorSettings();
 }

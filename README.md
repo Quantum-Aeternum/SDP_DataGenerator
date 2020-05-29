@@ -4,7 +4,11 @@ Application for generating SDP data sets - Part of Research Project - BScHons Co
 
 ## Supply Demand Problem (SDP) Template
 
-![](template.png)
+![](readme-data/template.png)
+
+## Model (UML Class Diagram)
+
+![](readme-data/class-diagram.png)
 
 ## Angular Stuff
 
