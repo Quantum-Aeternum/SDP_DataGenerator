@@ -15,7 +15,7 @@ export class Random {
   public evaluate(): number {
     let upper = this.max / this.step;
     let lower = this.min / this.step;
-    let random = (Math.random() * (upper - lower)) + lower;
+    let random = Math.floor((Math.random() * (upper - lower)) + lower);
     let value = random * this.step;
     return value;
   }
