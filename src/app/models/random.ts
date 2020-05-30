@@ -9,15 +9,27 @@ export class Random {
     protected max: number,
     protected step: number
   ) {
-
+    if (step == 0) step = 1;
   }
 
   public evaluate(): number {
     let upper = this.max / this.step;
     let lower = this.min / this.step;
-    let random = Math.floor((Math.random() * (upper - lower)) + lower);
+    let random = Math.round((Math.random() * (upper - lower)) + lower);
     let value = random * this.step;
-    return value;
+
+    // Compensate for rounding and step issues
+    if (value > this.max) {
+      if (this.max % this.step == 0) {
+        return this.max;
+      }
+      else {
+        return value - this.step;
+      }
+    }
+    else {
+      return value;
+    }
   }
 
   public settings(): Array<Parameter> {

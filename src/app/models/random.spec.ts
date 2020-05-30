@@ -24,6 +24,12 @@ describe('Random', () => {
       let rnd: Random = new Random('Random', 'Random number', 0, 100, step );
       for (let index = 0; index < 100; index++) {
         let val = rnd.evaluate();
+        if (val > 100)
+        {
+          expect(val).toBeFalsy();
+          expect(step).toBeFalsy();
+          expect(100 / step).toBeFalsy();
+        }
         if (val < 0 || val > 100 || val % step != 0) {
           success = false;
           break;
