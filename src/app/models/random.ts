@@ -3,7 +3,7 @@ import { Parameter, DataType } from '../interfaces/parameter';
 export abstract class Random {
 
   protected evaluated: boolean = false;
-  protected value: Object = 0;
+  protected value: Object = 'none';
 
   constructor(
     protected name: string,
@@ -13,7 +13,7 @@ export abstract class Random {
 
   public reset(): void {
     this.evaluated = false;
-    this.value = 0;
+    this.value = 'none';
   }
 
   protected setValue(value: Object): Object {

@@ -5,11 +5,16 @@ export abstract class Format extends Random{
 
   constructor(
     protected format: string,
-    protected value: Random
+    protected obj: Random
   ) {
-    super('Format','Formats a random value')
+    super('Format','Formats a random value');
   }
 
   public abstract evaluate(): Object;
   public abstract settings(): Array<Parameter>;
+
+  public reset(): void {
+    super.reset();
+    this.obj.reset();
+  }
 }

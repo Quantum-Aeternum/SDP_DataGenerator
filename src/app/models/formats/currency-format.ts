@@ -6,15 +6,15 @@ export class CurrencyFormat extends Format{
 
   constructor(
     protected symbol: string,
-    protected value: RandomNumber
+    protected obj: RandomNumber
   ){
-    super(symbol, value);
+    super(symbol, obj);
     this.name = 'CurrencyFormat';
     this.description = 'Adds a symbol to the front of a number and rounds to the closest two decimals';
   }
 
   public evaluate(): Object {
-    let roundedVal:number = Math.floor(Number(this.value.evaluate()) * 100) / 100;
+    let roundedVal:number = Math.floor(Number(this.obj.evaluate()) * 100) / 100;
     let amount = this.symbol + roundedVal;
     return this.setValue(amount);
   }
@@ -24,10 +24,5 @@ export class CurrencyFormat extends Format{
       { name: 'symbol', type: DataType.string, list: false, description: 'Currency symbol', default: 'R'},
       { name: 'value', type: DataType.RandomNumber, list: false, description: 'Numerical amount', default: new RandomNumber(0,100,0.05)}
     ];
-  }
-
-  public reset(): void {
-    super.reset();
-    this.value.reset();
   }
 }
