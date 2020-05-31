@@ -11,6 +11,7 @@ describe('RandomNumber', () => {
     let success = true;
     let rnd: Random = new RandomNumber(0, 100, 1 );
     for (let index = 0; index < 100; index++) {
+      rnd.reset();
       let val = rnd.evaluate();
       if (val < 0 || val > 100) {
         success = false;
@@ -25,6 +26,7 @@ describe('RandomNumber', () => {
     for (let step = 2; step <= 10; step++) {
       let rnd: Random = new RandomNumber(0, 100, step);
       for (let index = 0; index < 100; index++) {
+        rnd.reset();
         let val: number = Number(rnd.evaluate());
         if (val > 100)
         {
@@ -47,6 +49,7 @@ describe('RandomNumber', () => {
     for (let step = 2.5; step <= 7.5; step += 2.5) {
       let rnd: Random = new RandomNumber(0, 100, step);
       for (let index = 0; index < 100; index++) {
+        rnd.reset();
         let val: number = Number(rnd.evaluate());
         if (val < 0 || val > 100 || val % step != 0) {
           success = false;

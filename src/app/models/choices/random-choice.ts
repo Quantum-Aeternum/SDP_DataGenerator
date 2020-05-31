@@ -10,6 +10,9 @@ export class RandomChoice extends Random{
   }
 
   public evaluate(): Object {
+    // Check if the object has already been set
+    if (this.evaluated == true) return this.value;
+
     let index: number = Math.round(Math.random() * this.options.length - 1);
     if (index > this.options.length - 1) {
       return this.setValue(this.options[this.options.length - 1]);

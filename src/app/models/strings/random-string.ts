@@ -9,18 +9,22 @@ export class RandomString extends Random{
     protected length: RandomNumber,
     protected separator: string
   ) {
-    super('RandomString', 'Creates a random string based on its alphabet')
+    super('RandomString', 'Creates a random string based on its alphabet');
   }
 
   public evaluate(): Object {
+    // Check if the object has already been set
+    if (this.evaluated == true) return this.value;
+
     let length: number = Number(this.length.evaluate());
     let generated: string = '';
     let index: number = 0;
     for (let i = 0; i < length; i++) {
-      index = Math.round(Math.random() * this.alphabet.length - 1);
-      if (index > this.alphabet.length - 1) {
+      index = Math.round(Math.random() * this.alphabet.length);
+      if (index >= this.alphabet.length) {
         index = this.alphabet.length - 1
       }
+      if (i > 0) generated += this.separator;
       generated += this.alphabet[index];
     }
     return this.setValue(generated);

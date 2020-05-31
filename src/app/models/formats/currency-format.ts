@@ -14,8 +14,24 @@ export class CurrencyFormat extends Format{
   }
 
   public evaluate(): Object {
-    let roundedVal:number = Math.floor(Number(this.obj.evaluate()) * 100) / 100;
+    // Check if the object has already been set
+    if (this.evaluated == true) return this.value;
+
+    let roundedVal:number = Math.round(Number(this.obj.evaluate()) * 100) / 100;
     let amount = this.symbol + roundedVal;
+
+    // Add leading zeros if needed
+    let dotIndex = amount.indexOf('.');
+    if (dotIndex < 0) {
+      amount += '.00';
+    }
+    else {
+      let missing = 2 - (amount.length - dotIndex - 1);
+      for (let i = 0; i < missing; i++) {
+        amount += '0';
+      }
+    }
+
     return this.setValue(amount);
   }
 
