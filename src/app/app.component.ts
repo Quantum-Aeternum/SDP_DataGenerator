@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Table } from './models/table';
 import { Random } from './models/random';
+import { RandomNumber } from './models/numbers/random-number';
 
 @Component({
   selector: 'app-root',
@@ -13,11 +14,11 @@ export class AppComponent {
   constructor() {
     let group: Table = new Table('Group', 5, 10);
     let demand: Table = new Table('Demand', 2, 5);
-    demand.addColumn('val', new Random('', '', 0, 100, 1));
+    demand.addColumn('val', new RandomNumber(0, 100, 1));
     group.addChild(demand);
-    group.addColumn('first', new Random('', '', 10, 50, 5));
-    group.addColumn('second', new Random('', '', 2, 4, 2));
-    demand.addColumn('const', new Random('', '', 8, 8, 1));
+    group.addColumn('first', new RandomNumber(10, 50, 5));
+    group.addColumn('second', new RandomNumber(2, 4, 2));
+    demand.addColumn('const', new RandomNumber(8, 8, 1));
     console.log(group.generateData());
     group.removeChild(demand);
     console.log(group.generateData());

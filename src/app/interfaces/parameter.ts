@@ -1,4 +1,4 @@
-export enum DataType {number}
+export enum DataType {number, Random}
 
 export interface Parameter {
   name: string,
