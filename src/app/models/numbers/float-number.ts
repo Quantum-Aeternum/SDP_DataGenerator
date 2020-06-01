@@ -9,8 +9,14 @@ export class FloatNumber extends RandomNumber{
     protected accuracy: number
   ) {
     super(min, max, step);
-    this.name = 'FloatNumber';
-    this.description = 'Random float number in range';
+  }
+
+  public static getName(): string {
+    return 'FloatNumber'
+  }
+
+  public static getDescription(): string {
+    return 'Random float number in range'
   }
 
   public evaluate(): Object {
@@ -37,7 +43,7 @@ export class FloatNumber extends RandomNumber{
     }
   }
 
-  public settings(): Array<Parameter> {
+  public static settings(): Array<Parameter> {
     let params: Array<Parameter> = super.settings();
     params.push({ name: 'accuracy', type: DataType.number, list: false, description: 'Decimal places in the number', default: 2});
     return params;

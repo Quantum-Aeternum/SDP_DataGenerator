@@ -7,15 +7,21 @@ export class FixedNumber extends RandomNumber{
   ) {
     super(value, value, 1);
     this.value = value;
-    this.name = 'FixedNumber';
-    this.description = 'Any given number';
+  }
+
+  public static getName(): string {
+    return 'FixedNumber'
+  }
+
+  public static getDescription(): string {
+    return 'Any given number'
   }
 
   public evaluate(): Object {
     return this.value;
   }
 
-  public settings(): Array<Parameter> {
+  public static settings(): Array<Parameter> {
     return [
       { name: 'value', type: DataType.number, list: false, description: 'Any number', default: 1}
     ];

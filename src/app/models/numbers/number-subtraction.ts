@@ -7,8 +7,14 @@ export class NumberSubtraction extends NumberManipulator{
     protected right: RandomNumber
   ){
     super(left, right);
-    this.name = 'NumberSubtraction';
-    this.description = 'Represents a number by subtracting one number (right) from another (left)';
+  }
+
+  public static getName(): string {
+    return 'NumberSubtraction'
+  }
+
+  public static getDescription(): string {
+    return 'Represents a number by subtracting one number (right) from another (left)'
   }
 
   public evaluate(): Object {

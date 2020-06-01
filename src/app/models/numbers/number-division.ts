@@ -7,8 +7,14 @@ export class NumberDivision extends NumberManipulator{
     protected right: RandomNumber
   ){
     super(left, right);
-    this.name = 'NumberDivision';
-    this.description = 'Represents a number given by dividing a number (left) by another number (right)';
+  }
+
+  public static getName(): string {
+    return 'NumberDivision'
+  }
+
+  public static getDescription(): string {
+    return 'Represents a number given by dividing a number (left) by another number (right)'
   }
 
   public evaluate(): Object {

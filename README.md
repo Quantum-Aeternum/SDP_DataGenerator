@@ -6,11 +6,15 @@ Application for generating SDP data sets - Part of Research Project - BScHons Co
 
 ![](readme-data/template.png)
 
-## Model (UML Class Diagram)
+## Models (UML Class Diagram)
 
-![](readme-data/class-diagram.png)
+![](readme-data/models.png)
 
-## Angular Stuff
+## Components (UML Class Diagram)
+
+![](readme-data/components.png)
+
+## Angular Commands
 
 ### Development server
 

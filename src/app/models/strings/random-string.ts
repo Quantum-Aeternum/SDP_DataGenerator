@@ -9,7 +9,15 @@ export class RandomString extends Random{
     protected length: RandomNumber,
     protected separator: string
   ) {
-    super('RandomString', 'Creates a random string based on its alphabet');
+    super();
+  }
+
+  public static getName(): string {
+    return 'RandomString'
+  }
+
+  public static getDescription(): string {
+    return 'Creates a random string based on its alphabet'
   }
 
   public evaluate(): Object {
@@ -30,7 +38,7 @@ export class RandomString extends Random{
     return this.setValue(generated);
   }
 
-  public settings(): Array<Parameter> {
+  public static settings(): Array<Parameter> {
     return [
       { name: 'alphabet', type: DataType.string, list: true, description: 'Symbols (characters or strings) to use when creating the string', default: ['a','b','c']},
       { name: 'length', type: DataType.RandomNumber, list: false, description: 'Number of symbols to concatenate', default: new RandomNumber(4,6,1)},

@@ -9,8 +9,14 @@ export class CurrencyFormat extends Format{
     protected obj: RandomNumber
   ){
     super(symbol, obj);
-    this.name = 'CurrencyFormat';
-    this.description = 'Adds a symbol to the front of a number and rounds to the closest two decimals';
+  }
+
+  public static getName(): string {
+    return 'CurrencyFormat'
+  }
+
+  public static getDescription(): string {
+    return 'Adds a symbol to the front of a number and rounds to the closest two decimals'
   }
 
   public evaluate(): Object {
@@ -35,7 +41,7 @@ export class CurrencyFormat extends Format{
     return this.setValue(amount);
   }
 
-  public settings(): Array<Parameter> {
+  public static settings(): Array<Parameter> {
     return [
       { name: 'symbol', type: DataType.string, list: false, description: 'Currency symbol', default: 'R'},
       { name: 'value', type: DataType.RandomNumber, list: false, description: 'Numerical amount', default: new RandomNumber(0,100,0.05)}

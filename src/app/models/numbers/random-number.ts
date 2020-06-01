@@ -8,7 +8,7 @@ export class RandomNumber extends Random{
     protected max: number,
     protected step: number
   ) {
-    super('RandomNumber', 'Creates a random value within a set range');
+    super();
     if (step == 0) step = 1;
     else if (step < 0) step = -step;
     if (min > max) {
@@ -16,6 +16,14 @@ export class RandomNumber extends Random{
       max = min;
       min = tmp;
     }
+  }
+
+  public static getName(): string {
+    return 'RandomNumber'
+  }
+
+  public static getDescription(): string {
+    return 'Creates a random value within a set range'
   }
 
   public evaluate(): Object {
@@ -41,7 +49,7 @@ export class RandomNumber extends Random{
     }
   }
 
-  public settings(): Array<Parameter> {
+  public static settings(): Array<Parameter> {
     return [
       { name: 'min', type: DataType.number, list: false, description: 'Minimum value', default: 0},
       { name: 'max', type: DataType.number, list: false, description: 'Maximum value', default: 100},

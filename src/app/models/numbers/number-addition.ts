@@ -7,8 +7,14 @@ export class NumberAddition extends NumberManipulator{
     protected right: RandomNumber
   ){
     super(left, right);
-    this.name = 'NumberAddition';
-    this.description = 'Represents a number by adding two numbers (left and right)';
+  }
+
+  public static getName(): string {
+    return 'NumberAddition'
+  }
+
+  public static getDescription(): string {
+    return 'Represents a number by adding two numbers (left and right)'
   }
 
   public evaluate(): Object {

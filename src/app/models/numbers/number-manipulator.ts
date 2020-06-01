@@ -7,8 +7,14 @@ export class NumberManipulator extends RandomNumber{
     protected right: RandomNumber
   ){
     super(1, 1, 1);
-    this.name = 'NumberManipulator';
-    this.description = 'Allow RandomNumbers to be manipulated'
+  }
+
+  public static getName(): string {
+    return 'NumberManipulator'
+  }
+
+  public static getDescription(): string {
+    return 'Allow RandomNumbers to be manipulated'
   }
 
   public evaluate(): Object {
@@ -17,7 +23,7 @@ export class NumberManipulator extends RandomNumber{
     return this.setValue(this.left.evaluate());
   }
 
-  public settings(): Array<Parameter> {
+  public static settings(): Array<Parameter> {
     return [
       { name: 'left', type: DataType.RandomNumber, list: false, description: 'Left side of the operator', default: new RandomNumber(1,1,1)},
       { name: 'right', type: DataType.RandomNumber, list: false, description: 'Right side of the operator', default: new RandomNumber(1,1,1)}

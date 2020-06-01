@@ -6,7 +6,15 @@ export class RandomChoice extends Random{
   constructor(
     private options: Array<Random>
   ) {
-    super('RandomChoice', 'Randomly chooses out of a list of options')
+    super();
+  }
+
+  public static getName(): string {
+    return 'RandomChoice'
+  }
+
+  public static getDescription(): string {
+    return 'Randomly chooses out of a list of options'
   }
 
   public evaluate(): Object {
@@ -22,7 +30,7 @@ export class RandomChoice extends Random{
     }
   }
 
-  public settings(): Array<Parameter> {
+  public static settings(): Array<Parameter> {
     return [
       { name: 'options', type: DataType.Random, list: true, description: 'List of options to choose from', default: 0}
     ];

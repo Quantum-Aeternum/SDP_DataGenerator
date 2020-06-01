@@ -17,8 +17,14 @@ export class IntegerNumber extends RandomNumber{
     this.step = Math.round(step);
     this.min = Math.round(min);
     this.max = Math.round(max);
-    this.name = 'IntegerNumber';
-    this.description = 'Random integer number in range';
+  }
+
+  public static getName(): string {
+    return 'IntegerNumber'
+  }
+
+  public static getDescription(): string {
+    return 'Random integer number in range'
   }
 
   public evaluate(): Object {

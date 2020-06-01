@@ -1,4 +1,4 @@
-export enum DataType {number, string, Random, RandomNumber, RandomString, RandomChoice, Format}
+export enum DataType {number, string, Random, RandomNumber, NumberManipulator, RandomString, RandomChoice, Format}
 
 export interface Parameter {
   name: string,

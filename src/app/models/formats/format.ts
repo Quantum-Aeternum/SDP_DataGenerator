@@ -7,11 +7,18 @@ export abstract class Format extends Random{
     protected format: string,
     protected obj: Random
   ) {
-    super('Format','Formats a random value');
+    super();
+  }
+
+  public static getName(): string {
+    return 'Format'
+  }
+
+  public static getDescription(): string {
+    return 'Formats a random value'
   }
 
   public abstract evaluate(): Object;
-  public abstract settings(): Array<Parameter>;
 
   public reset(): void {
     super.reset();

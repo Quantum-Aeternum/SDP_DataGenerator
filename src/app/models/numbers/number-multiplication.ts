@@ -7,8 +7,14 @@ export class NumberMultiplication extends NumberManipulator{
     protected right: RandomNumber
   ){
     super(left, right);
-    this.name = 'NumberMultiplication';
-    this.description = 'Represents a number by multiplying two numbers (left and right)';
+  }
+
+  public static getName(): string {
+    return 'NumberMultiplication'
+  }
+
+  public static getDescription(): string {
+    return 'Represents a number by multiplying two numbers (left and right)'
   }
 
   public evaluate(): Object {
