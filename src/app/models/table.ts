@@ -17,6 +17,10 @@ export class Table {
 
   }
 
+  public getName(): string {
+    return this.name;
+  }
+
   public addColumn(name: string, value: Random, required: boolean = false): ReturnState {
     if (name.trim() == '') return {success: false, message: 'Column name may not be empty'};
     if (this.columns.findIndex(col => col.name == name) >= 0) return {success: false, message: 'Column with same name already exists'};

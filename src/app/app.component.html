@@ -1,0 +1,4 @@
+<button mat-raised-button (click)="generate()">Generate</button><button mat-raised-button (click)="toggleView()">Toggle View</button>
+<mat-card *ngIf="!prettyView">{{textData}}</mat-card>
+<mat-card *ngIf="prettyView"><ngx-json-viewer [json]="jsonData" [expanded]="false"></ngx-json-viewer></mat-card>
+

@@ -3,8 +3,10 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSelectModule, MatIconModule } from '@angular/material'
+import { MatSelectModule, MatIconModule, MatButtonModule, MatCardModule } from '@angular/material'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { NgxJsonViewerModule } from 'ngx-json-viewer';
 
 @NgModule({
   declarations: [
@@ -15,8 +17,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxJsonViewerModule,
     MatIconModule,
-    MatSelectModule
+    MatSelectModule,
+    MatButtonModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
