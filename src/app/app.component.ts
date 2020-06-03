@@ -5,6 +5,7 @@ import { CurrencyFormat } from './models/formats/currency-format';
 import { Random } from './models/random';
 import { FixedNumber } from './models/numbers/fixed-number';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { NotificationsService } from './services/notifications.service';
 
 @Component({
   selector: 'app-root',
@@ -22,12 +23,13 @@ export class AppComponent {
   protected prettyView: boolean = true;
 
   constructor(
-    protected sanitizer: DomSanitizer
+    protected sanitizer: DomSanitizer,
+    protected notifications: NotificationsService
   ) {
 
     this.generateDownloadURL();
 
-    let group: Table = new Table('Group', 250, 1000);
+    let group: Table = new Table('Group', 10, 20);
     let demand: Table = new Table('Demand', 10, 20);
     demand.addColumn('val', new RandomNumber(0, 100, 1));
     group.addChild(demand);
@@ -46,6 +48,7 @@ export class AppComponent {
     this.jsonData = JSON.parse(this.textData);
     this.generateDownloadURL();
     this.busy = false;
+    this.notifications.showMessage({success: true, message: `Data has been generated`});
   }
 
   protected generateDownloadURL() {

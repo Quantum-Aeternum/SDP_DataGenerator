@@ -8,18 +8,17 @@
   </mat-accordion>
 </mat-card>
 
-<button mat-raised-button (click)="generate()" [disabled]="busy">Generate</button>
-<button mat-raised-button (click)="toggleView()" [disabled]="busy">Toggle View</button>
-<a mat-raised-button [href]="downloadUri" download="dataset.json" [disabled]="busy">Download</a>
-<button mat-raised-button (click)="clear()" [disabled]="busy">Clear Data</button>
+<mat-card>
+  <mat-card-title>
+    Output:
+    <button mat-raised-button (click)="generate()" [disabled]="busy">Generate</button>
+    <button mat-raised-button (click)="toggleView()" [disabled]="busy">Toggle View</button>
+    <a mat-raised-button [href]="downloadUri" download="dataset.json" [disabled]="busy">Download</a>
+    <button mat-raised-button (click)="clear()" [disabled]="busy">Clear Data</button>
+  </mat-card-title>
 
-<mat-card *ngIf="!prettyView">
-  <!--<mat-spinner *ngIf="busy" diameter="20"></mat-spinner>-->
-  {{textData}}
-</mat-card>
-
-<mat-card *ngIf="prettyView">
-  <!--<mat-spinner *ngIf="busy" diameter="20"></mat-spinner>--><p>
-  <ngx-json-viewer [json]="jsonData" [expanded]="false"></ngx-json-viewer>
+  <mat-spinner *ngIf="busy" diameter="20"></mat-spinner>
+  <p *ngIf="!prettyView">{{textData}}</p>
+  <ngx-json-viewer *ngIf="prettyView" [json]="jsonData" [expanded]="false"></ngx-json-viewer>
 </mat-card>
 

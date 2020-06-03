@@ -21,6 +21,14 @@ export class Table {
     return this.name;
   }
 
+  public getMinRows(): number {
+    return this.minRows;
+  }
+
+  public getMaxRows(): number {
+    return this.maxRows;
+  }
+
   public hasParent(): boolean {
     if (this.parent) return true;
     else return false;
@@ -35,7 +43,7 @@ export class Table {
   }
 
   public addColumn(name: string, value: Random, required: boolean = false): ReturnState {
-    if (name.trim() == '') return {success: false, message: `Column name may not be empty`};
+    if (name == undefined || name.trim() == '') return {success: false, message: `Column name may not be empty`};
     if (this.columns.findIndex(col => col.name == name) >= 0) return {success: false, message: `Column ${name} already exists on table ${this.name}`};
     this.columns.push({name, value, required});
     return {success: true, message: `Added column: ${name}`};
@@ -49,7 +57,7 @@ export class Table {
   }
 
   public addChild(child: Table): ReturnState {
-    if (child.name.trim() == '') return {success: false, message: `Cannot add a table with a blank name`};
+    if (name == undefined || child.name.trim() == '') return {success: false, message: `Cannot add a table with a blank name`};
     if (child.name == this.name) return {success: false, message: `Cannot add a table to itself`};
     if (this.children.findIndex(table => table.name == child.name) >= 0) return {success: false, message: `${this.name} already contains ${child.name}`};
     this.children.push(child);
@@ -69,7 +77,7 @@ export class Table {
     this.children.forEach(child => {
       child.logicallyDelete()
     });
-    if (this.parent === undefined) return {success: false, message: `Removed table: ${this.name}`};
+    if (this.parent === undefined) return {success: true, message: `Removed table: ${this.name}`};
     return this.parent.removeChild(this);
   }
 

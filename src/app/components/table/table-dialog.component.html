@@ -1,0 +1,19 @@
+<h1 mat-dialog-title *ngIf='data.new' >Create Table:</h1>
+<h1 mat-dialog-title *ngIf='!data.new' >Edit Table:</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Child table name</mat-label>
+    <input matInput placeholder="Ex. Test Table" [(ngModel)]='data.name'>
+  </mat-form-field><mat-form-field>
+    <mat-label>Min Rows</mat-label>
+    <input matInput type='number' min='1' [(ngModel)]='data.min'>
+  </mat-form-field><mat-form-field>
+    <mat-label>Max Rows</mat-label>
+    <input matInput type='number' min='1' [(ngModel)]='data.max'>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button *ngIf='data.new' mat-button [mat-dialog-close]="data" cdkFocusInitial>Create</button>
+  <button *ngIf='!data.new' mat-button [mat-dialog-close]="data" cdkFocusInitial>Update</button>
+</div>
