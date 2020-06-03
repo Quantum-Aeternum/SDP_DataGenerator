@@ -1,0 +1,26 @@
+<mat-expansion-panel *ngIf='table'>
+
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <mat-card-title>{{table.getName()}}</mat-card-title>
+    </mat-panel-title>
+    <mat-panel-description>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <button mat-button (click)="removeTable()" color="primary">Delete {{table.getName()}}</button>
+
+  <br>
+
+  <mat-accordion>
+    <app-table *ngFor='let child of table.children' [table]='child'></app-table>
+  </mat-accordion>
+  <br>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Child table name</mat-label>
+    <input matInput placeholder="Ex. Test Table" [(ngModel)]='newChildTableName'>
+  </mat-form-field>
+
+  <button mat-button (click)="addNestedTable()" color="primary">Add Child Table</button>
+
+</mat-expansion-panel>

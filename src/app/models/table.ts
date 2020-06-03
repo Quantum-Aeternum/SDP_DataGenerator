@@ -6,7 +6,7 @@ import { Row } from '../interfaces/row';
 export class Table {
 
   private columns: Array<Column> = [];
-  private parents: Array<Table> = [];
+  private parent: Table | undefined = undefined;
   private children: Array<Table> = [];
 
   constructor(
@@ -21,18 +21,9 @@ export class Table {
     return this.name;
   }
 
-  public addColumn(name: string, value: Random, required: boolean = false): ReturnState {
-    if (name.trim() == '') return {success: false, message: 'Column name may not be empty'};
-    if (this.columns.findIndex(col => col.name == name) >= 0) return {success: false, message: 'Column with same name already exists'};
-    this.columns.push({name, value, required});
-    return {success: true, message: 'Added column'};
-  }
-
-  public removeColumn(name: string): ReturnState {
-    let index = this.columns.findIndex(col => col.name == name);
-    if (index < 0) return {success: false, message: 'Column with that name does not exist in this table'};
-    this.columns.splice(index, 1);
-    return {success: true, message: 'Removed column'};
+  public hasParent(): boolean {
+    if (this.parent) return true;
+    else return false;
   }
 
   public getColumnNames(): Array<string> {
@@ -43,20 +34,43 @@ export class Table {
     return names;
   }
 
+  public addColumn(name: string, value: Random, required: boolean = false): ReturnState {
+    if (name.trim() == '') return {success: false, message: `Column name may not be empty`};
+    if (this.columns.findIndex(col => col.name == name) >= 0) return {success: false, message: `Column ${name} already exists on table ${this.name}`};
+    this.columns.push({name, value, required});
+    return {success: true, message: `Added column: ${name}`};
+  }
+
+  public removeColumn(name: string): ReturnState {
+    let index = this.columns.findIndex(col => col.name == name);
+    if (index < 0) return {success: false, message: `Column ${name} does not exist in the ${this.name} table`};
+    this.columns.splice(index, 1);
+    return {success: true, message: `Removed column ${name}`};
+  }
+
   public addChild(child: Table): ReturnState {
-    if (this.children.findIndex(table => table.name == child.name) >= 0) return {success: false, message: 'Cannot add a table to itself'};
+    if (child.name.trim() == '') return {success: false, message: `Cannot add a table with a blank name`};
+    if (child.name == this.name) return {success: false, message: `Cannot add a table to itself`};
+    if (this.children.findIndex(table => table.name == child.name) >= 0) return {success: false, message: `${this.name} already contains ${child.name}`};
     this.children.push(child);
-    child.parents.push(this);
-    return {success: true, message: 'Added child table'};
+    child.parent = this;
+    return {success: true, message: `Added ${child.name} to ${this.name}`};
   }
 
   public removeChild(child: Table): ReturnState {
     let childIndex = this.children.findIndex(table => table.name == child.name);
-    let parentIndex = child.parents.findIndex(table => table.name == this.name);
-    if (childIndex < 0 || parentIndex < 0) return {success: false, message: 'Table is not a child of the parent table'};
+    if (childIndex < 0 || this.children[childIndex].parent != this) return {success: false, message: `Table ${child.name} is not a child of the ${this.name} table`};
     this.children.splice(childIndex, 1);
-    child.parents.splice(parentIndex, 1);
-    return {success: true, message: 'Removed child table'};
+    child.parent = undefined;
+    return {success: true, message: `Removed child table: ${child.name}`};
+  }
+
+  public logicallyDelete(): ReturnState {
+    this.children.forEach(child => {
+      child.logicallyDelete()
+    });
+    if (this.parent === undefined) return {success: false, message: `Removed table: ${this.name}`};
+    return this.parent.removeChild(this);
   }
 
   public generateData(): Array<Object> {
