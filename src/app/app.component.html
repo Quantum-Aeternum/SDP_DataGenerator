@@ -11,10 +11,10 @@
 <mat-card>
   <mat-card-title>
     Output:
-    <button mat-raised-button (click)="generate()" [disabled]="busy">Generate</button>
-    <button mat-raised-button (click)="toggleView()" [disabled]="busy">Toggle View</button>
-    <a mat-raised-button [href]="downloadUri" download="dataset.json" [disabled]="busy">Download</a>
-    <button mat-raised-button (click)="clear()" [disabled]="busy">Clear Data</button>
+    <button mat-button (click)="generate()" [disabled]="busy" color="primary">Generate</button>
+    <button mat-button (click)="toggleView()" [disabled]="busy" color="primary">Toggle View</button>
+    <a mat-button [href]="downloadUri" download="dataset.json" [disabled]="busy" color="primary">Download</a>
+    <button mat-button (click)="clear()" [disabled]="busy" color="primary">Clear Data</button>
   </mat-card-title>
 
   <mat-spinner *ngIf="busy" diameter="20"></mat-spinner>

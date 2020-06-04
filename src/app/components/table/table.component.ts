@@ -5,6 +5,7 @@ import { NotificationsService, YesNo } from 'src/app/services/notifications.serv
 import { TableDialogComponent } from './table-dialog.component';
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
+import { ContainerService } from 'src/app/services/container.service';
 
 export interface TableData {
   new: boolean;
@@ -23,7 +24,8 @@ export class TableComponent implements OnInit {
   @Input() table: Table | undefined;
 
   constructor(
-    protected notifications: NotificationsService,
+    public notifications: NotificationsService,
+    public container: ContainerService,
     public dialog: MatDialog
   ) { }
 
@@ -47,9 +49,16 @@ export class TableComponent implements OnInit {
   protected editTableData(): void {
     if (this.table) {
       this.openTableDialog({new: false, name: this.table.getName(), min: this.table.getMinRows(), max: this.table.getMaxRows()}).subscribe((tableData: TableData) => {
-        if (this.table && tableData)
-        {
-
+        if (this.table && tableData) {
+          let returnState: ReturnState = {success: true, message: `Updated table ${tableData.name}`};
+          if (this.table.getName() != tableData.name) {
+            returnState = this.table.setName(tableData.name);
+          }
+          if (returnState.success === true) {
+            this.table.setMaxRows(tableData.max);
+            this.table.setMinRows(tableData.min);
+          }
+          this.notifications.showMessage(returnState);
         }
       });
     }
@@ -58,10 +67,14 @@ export class TableComponent implements OnInit {
   protected addNestedTable(): void {
     if (this.table) {
       this.openTableDialog({new: true, name: '', min: 1, max: 1}).subscribe((tableData: TableData) => {
-        if (this.table && tableData)
-        {
-          let returnState: ReturnState = this.table.addChild(new Table(tableData.name, tableData.min, tableData.max));
-          this.notifications.showMessage(returnState);
+        if (this.table && tableData) {
+          if (this.container.isTableNameAvailable(tableData.name)) {
+            let returnState: ReturnState = this.table.addChild(new Table(tableData.name, tableData.min, tableData.max, this.container));
+            this.notifications.showMessage(returnState);
+          }
+          else {
+            this.notifications.showMessage({success: false, message: `Table name already used: ${tableData.name}`});
+          }
         }
       });
     }

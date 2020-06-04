@@ -6,6 +6,7 @@ import { Random } from './models/random';
 import { FixedNumber } from './models/numbers/fixed-number';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { NotificationsService } from './services/notifications.service';
+import { ContainerService } from './services/container.service';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,7 @@ export class AppComponent {
 
   protected busy: boolean = false;
 
-  protected table: Table = new Table('Temp', 1, 1);
+  protected table: Table | undefined;
   protected jsonData: JSON = JSON.parse('[]');
   protected downloadUri: SafeUrl = '';
   protected textData: string = '[]';
@@ -24,13 +25,14 @@ export class AppComponent {
 
   constructor(
     protected sanitizer: DomSanitizer,
-    protected notifications: NotificationsService
+    public notifications: NotificationsService,
+    public container: ContainerService
   ) {
 
     this.generateDownloadURL();
 
-    let group: Table = new Table('Group', 10, 20);
-    let demand: Table = new Table('Demand', 10, 20);
+    let group: Table = new Table('Group', 10, 20, container);
+    let demand: Table = new Table('Demand', 10, 20, container);
     demand.addColumn('val', new RandomNumber(0, 100, 1));
     group.addChild(demand);
     group.addColumn('first', new CurrencyFormat('R', new RandomNumber(10, 50, 5)));
@@ -43,12 +45,14 @@ export class AppComponent {
   protected generate(): void {
     this.busy = true;
     let tableData: {[key: string]: Object} = {};
-    tableData[this.table.getName()] = this.table.generateData();
-    this.textData = JSON.stringify(tableData);
-    this.jsonData = JSON.parse(this.textData);
-    this.generateDownloadURL();
+    if (this.table) {
+      tableData[this.table.getName()] = this.table.generateData();
+      this.textData = JSON.stringify(tableData);
+      this.jsonData = JSON.parse(this.textData);
+      this.generateDownloadURL();
+      this.notifications.showMessage({success: true, message: `Data has been generated`});
+    }
     this.busy = false;
-    this.notifications.showMessage({success: true, message: `Data has been generated`});
   }
 
   protected generateDownloadURL() {

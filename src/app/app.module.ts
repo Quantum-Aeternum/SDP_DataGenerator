@@ -12,6 +12,7 @@ import { ColumnComponent } from './components/column/column.component';
 import { NotificationsService, ConfirmDialog } from './services/notifications.service';
 import { TableDialogComponent } from './components/table/table-dialog.component';
 import { TableDialogModule } from './components/table/table-dialog.module';
+import { ContainerService } from './services/container.service';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { TableDialogModule } from './components/table/table-dialog.module';
     ConfirmDialog
   ],
   providers: [
-    NotificationsService
+    NotificationsService,
+    ContainerService
   ],
   bootstrap: [AppComponent]
 })

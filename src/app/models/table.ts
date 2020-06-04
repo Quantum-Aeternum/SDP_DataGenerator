@@ -2,6 +2,7 @@ import { Random } from './random';
 import { Column } from '../interfaces/column';
 import { ReturnState } from '../interfaces/return-state';
 import { Row } from '../interfaces/row';
+import { ContainerService } from '../services/container.service';
 
 export class Table {
 
@@ -12,9 +13,15 @@ export class Table {
   constructor(
     private name: string,
     private minRows: number,
-    private maxRows: number
+    private maxRows: number,
+    private container: ContainerService
   ) {
-
+    container.registerTableName(name);
+    if (minRows > maxRows) {
+      let tmp: number = minRows;
+      minRows = maxRows;
+      maxRows = tmp;
+    }
   }
 
   public getName(): string {
@@ -27,6 +34,30 @@ export class Table {
 
   public getMaxRows(): number {
     return this.maxRows;
+  }
+
+  public setName(newName: string): ReturnState {
+    let response: ReturnState = this.container.updateTableName(this.name, newName);
+    if (response.success === true) this.name = newName;
+    return response;
+  }
+
+  public setMinRows(min: number): void {
+    this.minRows = min;
+    if (this.minRows > this.maxRows) {
+      let tmp: number = this.minRows;
+      this.minRows = this.maxRows;
+      this.maxRows = tmp;
+    }
+  }
+
+  public setMaxRows(max: number): void {
+    this.maxRows = max;
+    if (this.minRows > this.maxRows) {
+      let tmp: number = this.minRows;
+      this.minRows = this.maxRows;
+      this.maxRows = tmp;
+    }
   }
 
   public hasParent(): boolean {
