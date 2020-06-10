@@ -2,17 +2,22 @@
 
   <mat-expansion-panel-header>
     <mat-panel-title>
-      {{table.getName()}} [min:{{table.getMinRows()}}, max: {{table.getMaxRows()}}]
+      <mat-card-title>
+      {{table.name}} [min:{{table.minRows}}, max: {{table.maxRows}}]
+      </mat-card-title>
     </mat-panel-title>
     <mat-panel-description>
     </mat-panel-description>
   </mat-expansion-panel-header>
 
-  <button mat-button (click)="editTableData()" color="primary">Edit {{table.getName()}}</button>
-  <button mat-button (click)="removeTable()" color="primary">Delete {{table.getName()}}</button>
-  <button mat-button (click)="addNestedTable()" color="primary">Add Child Table</button>
+  <app-toggle-controls [buttons]='buttons' (clicked)='buttonClicked($event)'></app-toggle-controls>
 
-  <br><br>
+  <mat-list>
+    <mat-list-item> <b>{{table.name}} Columns</b> </mat-list-item>
+    <mat-divider [inset]="true"></mat-divider>
+    <app-column *ngFor='let column of table.columns' [column]='column'></app-column>
+  </mat-list>
+  <br>
 
   <mat-accordion>
     <app-table *ngFor='let child of table.children' [table]='child'></app-table>

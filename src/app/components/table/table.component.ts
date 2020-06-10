@@ -22,6 +22,7 @@ export interface TableData {
 export class TableComponent implements OnInit {
 
   @Input() table: Table | undefined;
+  protected buttons: Array<string> = ["Edit Table", "Delete Table", "Add Column", "Add Nested Table"];
 
   constructor(
     public notifications: NotificationsService,
@@ -30,6 +31,22 @@ export class TableComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+  }
+
+  protected buttonClicked(id: number): void {
+    switch (id) {
+      case 0:
+        this.editTableData();
+        break;
+      case 1:
+        this.removeTable();
+        break;
+      case 2:
+        break;
+      case 3:
+        this.addNestedTable();
+        break;
+    }
   }
 
   protected removeTable(): void {
@@ -50,7 +67,7 @@ export class TableComponent implements OnInit {
     if (this.table) {
       this.openTableDialog({new: false, name: this.table.getName(), min: this.table.getMinRows(), max: this.table.getMaxRows()}).subscribe((tableData: TableData) => {
         if (this.table && tableData) {
-          let returnState: ReturnState = {success: true, message: `Updated table ${tableData.name}`};
+          let returnState: ReturnState = {success: true, message: `Updated table: ${tableData.name}`};
           if (this.table.getName() != tableData.name) {
             returnState = this.table.setName(tableData.name);
           }

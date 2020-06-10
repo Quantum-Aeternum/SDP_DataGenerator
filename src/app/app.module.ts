@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSelectModule, MatIconModule, MatButtonModule, MatCardModule, MatExpansionModule, MatProgressSpinnerModule, MatToolbarModule, MatBadgeModule, MatSnackBarModule, MatTableModule, MatInputModule, MatDialogModule } from '@angular/material'
+import { MatSelectModule, MatIconModule, MatButtonModule, MatCardModule, MatExpansionModule, MatProgressSpinnerModule, MatToolbarModule, MatBadgeModule, MatSnackBarModule, MatTableModule, MatInputModule, MatDialogModule, MatListModule } from '@angular/material'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NgxJsonViewerModule } from 'ngx-json-viewer';
@@ -13,13 +13,15 @@ import { NotificationsService, ConfirmDialog } from './services/notifications.se
 import { TableDialogComponent } from './components/table/table-dialog.component';
 import { TableDialogModule } from './components/table/table-dialog.module';
 import { ContainerService } from './services/container.service';
+import { ToggleControlsComponent } from './components/toggle-controls/toggle-controls.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TableComponent,
     ColumnComponent,
-    ConfirmDialog
+    ConfirmDialog,
+    ToggleControlsComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +41,8 @@ import { ContainerService } from './services/container.service';
     MatSnackBarModule,
     MatTableModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    MatListModule
   ],
   entryComponents: [
     TableDialogComponent,

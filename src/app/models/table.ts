@@ -43,7 +43,7 @@ export class Table {
   }
 
   public setMinRows(min: number): void {
-    this.minRows = min;
+    this.minRows = Math.round(min);
     if (this.minRows > this.maxRows) {
       let tmp: number = this.minRows;
       this.minRows = this.maxRows;
@@ -52,7 +52,7 @@ export class Table {
   }
 
   public setMaxRows(max: number): void {
-    this.maxRows = max;
+    this.maxRows = Math.round(max);
     if (this.minRows > this.maxRows) {
       let tmp: number = this.minRows;
       this.minRows = this.maxRows;
@@ -65,26 +65,32 @@ export class Table {
     else return false;
   }
 
-  public getColumnNames(): Array<string> {
-    let names: Array<string> = [];
-    this.columns.forEach(col => {
-      names.push(col.name)
-    });
-    return names;
-  }
-
   public addColumn(name: string, value: Random, required: boolean = false): ReturnState {
     if (name == undefined || name.trim() == '') return {success: false, message: `Column name may not be empty`};
     if (this.columns.findIndex(col => col.name == name) >= 0) return {success: false, message: `Column ${name} already exists on table ${this.name}`};
-    this.columns.push({name, value, required});
-    return {success: true, message: `Added column: ${name}`};
+    let newCol: Column = {table: this.name, name: name, value: value, references: 0};
+    let response = this.container.registerColumn(newCol);
+    if (response.success) {
+      this.columns.push(newCol);
+      return {success: true, message: `Added column: ${name}`};
+    }
+    else {
+      return response;
+    }
   }
 
   public removeColumn(name: string): ReturnState {
     let index = this.columns.findIndex(col => col.name == name);
     if (index < 0) return {success: false, message: `Column ${name} does not exist in the ${this.name} table`};
-    this.columns.splice(index, 1);
-    return {success: true, message: `Removed column ${name}`};
+    if (this.columns[index].references > 0) return {success: false, message: `Cannot remove ${name} because it still has references`};
+    let response = this.container.deregisterColumn(this.columns[index]);
+    if (response.success == true) {
+      this.columns.splice(index, 1);
+      return {success: true, message: `Removed column ${name}`};
+    }
+    else {
+      return response;
+    }
   }
 
   public addChild(child: Table): ReturnState {
@@ -96,18 +102,40 @@ export class Table {
     return {success: true, message: `Added ${child.name} to ${this.name}`};
   }
 
-  public removeChild(child: Table): ReturnState {
+  protected removeChild(child: Table): ReturnState {
     let childIndex = this.children.findIndex(table => table.name == child.name);
     if (childIndex < 0 || this.children[childIndex].parent != this) return {success: false, message: `Table ${child.name} is not a child of the ${this.name} table`};
-    this.children.splice(childIndex, 1);
-    child.parent = undefined;
-    return {success: true, message: `Removed child table: ${child.name}`};
+    let response = this.container.deregisterTableName(child.name);
+    if (response.success == true) {
+      this.children.splice(childIndex, 1);
+      child.parent = undefined;
+      return {success: true, message: `Removed child table: ${child.name}`};
+    }
+    else {
+      return response;
+    }
   }
 
   public logicallyDelete(): ReturnState {
+
+    // Recursively delete all children
     this.children.forEach(child => {
       child.logicallyDelete()
     });
+
+    // Attempt to remove all columns
+    for (let index = 0; index < this.columns.length; index++) {
+      let col: Column = this.columns[index];
+      if (col.references > 0) {
+        return {success: false, message: `${col.table}.${col.name} still has references`}
+      }
+    }
+    while (this.columns.length > 0) {
+      let response = this.removeColumn(this.columns[0].name);
+      if (response.success == false) return response;
+    }
+
+    // Finally remove this table from its parent
     if (this.parent === undefined) return {success: true, message: `Removed table: ${this.name}`};
     return this.parent.removeChild(this);
   }

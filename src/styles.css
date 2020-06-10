@@ -5,3 +5,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 mat-card {
   margin: 4px;
 }
+
+mat-card-title {
+  color: dimgray;
+}
+
+.button-row button{
+  margin-left: 5px;
+}

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ApplicationRef } from '@angular/core';
 import { Table } from './models/table';
 import { RandomNumber } from './models/numbers/random-number';
 import { CurrencyFormat } from './models/formats/currency-format';
@@ -21,7 +21,9 @@ export class AppComponent {
   protected jsonData: JSON = JSON.parse('[]');
   protected downloadUri: SafeUrl = '';
   protected textData: string = '[]';
-  protected prettyView: boolean = true;
+
+  protected prettyView: boolean = false;
+  protected toggleViewName: "Pretty View" | "Basic View" = "Pretty View";
 
   constructor(
     protected sanitizer: DomSanitizer,
@@ -31,7 +33,7 @@ export class AppComponent {
 
     this.generateDownloadURL();
 
-    let group: Table = new Table('Group', 10, 20, container);
+    let group: Table = new Table('Group', 100, 200, container);
     let demand: Table = new Table('Demand', 10, 20, container);
     demand.addColumn('val', new RandomNumber(0, 100, 1));
     group.addChild(demand);
@@ -43,16 +45,16 @@ export class AppComponent {
   }
 
   protected generate(): void {
-    this.busy = true;
     let tableData: {[key: string]: Object} = {};
     if (this.table) {
+      this.busy = true;
       tableData[this.table.getName()] = this.table.generateData();
       this.textData = JSON.stringify(tableData);
       this.jsonData = JSON.parse(this.textData);
       this.generateDownloadURL();
       this.notifications.showMessage({success: true, message: `Data has been generated`});
+      this.busy = false;
     }
-    this.busy = false;
   }
 
   protected generateDownloadURL() {
@@ -71,7 +73,11 @@ export class AppComponent {
   }
 
   protected toggleView(): void {
+    this.busy = true;
     this.prettyView = !this.prettyView;
+    if (this.prettyView) this.toggleViewName = "Basic View";
+    else this.toggleViewName = "Pretty View";
+    this.busy = false;
   }
 
 }
