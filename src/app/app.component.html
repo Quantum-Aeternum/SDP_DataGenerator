@@ -18,8 +18,11 @@
   </mat-card-title>
 
   <mat-spinner *ngIf="busy" diameter="20"></mat-spinner>
+  <p>
+    "Clear Data" to remove the generated data set if the app is slow; or switch to "Basic View". <br>
+    "Pretty View" is not recommended for large data sets.
+  </p>
   <p *ngIf="!prettyView">{{textData}}</p>
-  <p *ngIf="prettyView"> "Pretty View" is not recommended for large data sets.</p>
   <ngx-json-viewer *ngIf="prettyView" [json]="jsonData" [expanded]="false"></ngx-json-viewer>
 </mat-card>
 

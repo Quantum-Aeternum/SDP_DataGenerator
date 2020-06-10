@@ -42,16 +42,8 @@ export class Table {
     return response;
   }
 
-  public setMinRows(min: number): void {
+  public setMinMax(min: number, max: number): void {
     this.minRows = Math.round(min);
-    if (this.minRows > this.maxRows) {
-      let tmp: number = this.minRows;
-      this.minRows = this.maxRows;
-      this.maxRows = tmp;
-    }
-  }
-
-  public setMaxRows(max: number): void {
     this.maxRows = Math.round(max);
     if (this.minRows > this.maxRows) {
       let tmp: number = this.minRows;

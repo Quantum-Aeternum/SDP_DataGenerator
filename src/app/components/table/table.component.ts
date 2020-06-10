@@ -72,8 +72,7 @@ export class TableComponent implements OnInit {
             returnState = this.table.setName(tableData.name);
           }
           if (returnState.success === true) {
-            this.table.setMaxRows(tableData.max);
-            this.table.setMinRows(tableData.min);
+            this.table.setMinMax(tableData.min, tableData.max);
           }
           this.notifications.showMessage(returnState);
         }
