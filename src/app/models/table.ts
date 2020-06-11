@@ -141,7 +141,9 @@ export class Table {
 
     // Reset the columns after creating the row (and its children)
     this.columns.forEach(col => {
-      col.value.reset();
+      if (col.value.owner != undefined && col.value.owner.readonly != undefined && col.value.owner.readonly == false) {
+        col.value.reset();
+      }
     });
 
     return row;

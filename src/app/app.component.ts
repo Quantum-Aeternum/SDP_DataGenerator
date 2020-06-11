@@ -8,6 +8,7 @@ import { NotificationsService } from './services/notifications.service';
 import { ContainerService } from './services/container.service';
 import { Column } from './interfaces/column';
 import { NumberMultiplication } from './models/numbers/number-multiplication';
+import { NumberSubtraction } from './models/numbers/number-subtraction';
 
 @Component({
   selector: 'app-root',
@@ -49,6 +50,7 @@ export class AppComponent {
     demand.addColumn('const', constVal);
     demand.addColumn('const_ref', constVal);
     demand.addColumn('val', new NumberMultiplication(constVal, new RandomNumber(0, 100, 1)));
+    demand.addColumn('const-1', new NumberSubtraction(constVal, new FixedNumber(1)));
 
     group.addChild(demand);
 
