@@ -3,31 +3,31 @@ import { Parameter, DataType } from 'src/app/interfaces/parameter';
 
 export class NumberManipulator extends RandomNumber{
   constructor(
-    protected left: RandomNumber,
-    protected right: RandomNumber
+    protected left: RandomNumber = new RandomNumber(),
+    protected right: RandomNumber = new RandomNumber()
   ){
     super(1, 1, 1);
   }
 
-  public static getName(): string {
+  public getName(): string {
     return 'NumberManipulator'
   }
 
-  public static getDescription(): string {
+  public getDescription(): string {
     return 'Allow RandomNumbers to be manipulated'
+  }
+
+  public settings(): Array<Parameter> {
+    return [
+      { name: 'left', type: DataType.RandomNumber, list: false, description: 'Left side of the operator', default: this.right},
+      { name: 'right', type: DataType.RandomNumber, list: false, description: 'Right side of the operator', default: this.left}
+    ];
   }
 
   public evaluate(): Object {
     // Check if the object has already been set
     if (this.evaluated == true) return this.value;
     return this.setValue(this.left.evaluate());
-  }
-
-  public static settings(): Array<Parameter> {
-    return [
-      { name: 'left', type: DataType.RandomNumber, list: false, description: 'Left side of the operator', default: new RandomNumber(1,1,1)},
-      { name: 'right', type: DataType.RandomNumber, list: false, description: 'Right side of the operator', default: new RandomNumber(1,1,1)}
-    ];
   }
 
   public reset(): void {

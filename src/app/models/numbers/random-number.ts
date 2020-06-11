@@ -4,9 +4,9 @@ import { Parameter, DataType } from 'src/app/interfaces/parameter';
 export class RandomNumber extends Random{
 
   constructor(
-    protected min: number,
-    protected max: number,
-    protected step: number
+    protected min: number = 0,
+    protected max: number = 100,
+    protected step: number = 1
   ) {
     super();
     if (step == 0) step = 1;
@@ -18,12 +18,20 @@ export class RandomNumber extends Random{
     }
   }
 
-  public static getName(): string {
+  public getName(): string {
     return 'RandomNumber'
   }
 
-  public static getDescription(): string {
+  public getDescription(): string {
     return 'Creates a random value within a set range'
+  }
+
+  public settings(): Array<Parameter> {
+    return [
+      { name: 'min', type: DataType.number, list: false, description: 'Minimum value', default: this.min},
+      { name: 'max', type: DataType.number, list: false, description: 'Maximum value', default: this.max},
+      { name: 'step', type: DataType.number, list: false, description: 'Distance between values', default: this.step}
+    ];
   }
 
   public evaluate(): Object {
@@ -47,13 +55,5 @@ export class RandomNumber extends Random{
     else {
       return this.setValue(value);
     }
-  }
-
-  public static settings(): Array<Parameter> {
-    return [
-      { name: 'min', type: DataType.number, list: false, description: 'Minimum value', default: 0},
-      { name: 'max', type: DataType.number, list: false, description: 'Maximum value', default: 100},
-      { name: 'step', type: DataType.number, list: false, description: 'Distance between values', default: 1}
-    ];
   }
 }

@@ -1,22 +1,30 @@
 import { Format } from './format';
 import { RandomNumber } from '../numbers/random-number';
 import { Parameter, DataType } from 'src/app/interfaces/parameter';
+import { Random } from '../random';
 
 export class CurrencyFormat extends Format{
 
   constructor(
-    protected symbol: string,
-    protected obj: RandomNumber
+    protected symbol: string = 'R',
+    protected obj: RandomNumber = new RandomNumber()
   ){
     super(symbol, obj);
   }
 
-  public static getName(): string {
+  public getName(): string {
     return 'CurrencyFormat'
   }
 
-  public static getDescription(): string {
+  public getDescription(): string {
     return 'Adds a symbol to the front of a number and rounds to the closest two decimals'
+  }
+
+  public settings(): Array<Parameter> {
+    return [
+      { name: 'symbol', type: DataType.string, list: false, description: 'Currency symbol', default: this.symbol},
+      { name: 'obj', type: DataType.RandomNumber, list: false, description: 'Numerical amount', default: new RandomNumber()}
+    ];
   }
 
   public evaluate(): Object {
@@ -39,12 +47,5 @@ export class CurrencyFormat extends Format{
     }
 
     return this.setValue(amount);
-  }
-
-  public static settings(): Array<Parameter> {
-    return [
-      { name: 'symbol', type: DataType.string, list: false, description: 'Currency symbol', default: 'R'},
-      { name: 'value', type: DataType.RandomNumber, list: false, description: 'Numerical amount', default: new RandomNumber(0,100,0.05)}
-    ];
   }
 }

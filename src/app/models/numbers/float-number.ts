@@ -3,20 +3,26 @@ import { Parameter, DataType } from 'src/app/interfaces/parameter';
 
 export class FloatNumber extends RandomNumber{
   constructor(
-    protected min: number,
-    protected max: number,
-    protected step: number,
-    protected accuracy: number
+    protected min: number = 0,
+    protected max: number = 100,
+    protected step: number = 1,
+    protected accuracy: number = 2
   ) {
     super(min, max, step);
   }
 
-  public static getName(): string {
+  public getName(): string {
     return 'FloatNumber'
   }
 
-  public static getDescription(): string {
+  public getDescription(): string {
     return 'Random float number in range'
+  }
+
+  public settings(): Array<Parameter> {
+    let params: Array<Parameter> = super.settings();
+    params.push({ name: 'accuracy', type: DataType.number, list: false, description: 'Decimal places in the number', default: this.accuracy});
+    return params;
   }
 
   public evaluate(): Object {
@@ -41,11 +47,5 @@ export class FloatNumber extends RandomNumber{
     else {
       return this.setValue(value);
     }
-  }
-
-  public static settings(): Array<Parameter> {
-    let params: Array<Parameter> = super.settings();
-    params.push({ name: 'accuracy', type: DataType.number, list: false, description: 'Decimal places in the number', default: 2});
-    return params;
   }
 }

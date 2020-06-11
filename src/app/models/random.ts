@@ -21,15 +21,15 @@ export abstract class Random {
 
   public abstract evaluate(): Object;
 
-  public static settings(): Array<Parameter> {
+  public settings(): Array<Parameter> {
     return [];
   }
 
-  public static getName(): string {
+  public getName(): string {
     return 'Random'
   }
 
-  public static getDescription(): string {
+  public getDescription(): string {
     return 'Base class of all Randoms'
   }
 

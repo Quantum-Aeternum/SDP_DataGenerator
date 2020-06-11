@@ -1,4 +1,4 @@
-<mat-list-item>
-  {{column.name}}
+<mat-list-item *ngIf='column'>
+  {{column.name}}: {{column.value.getName()}}
 </mat-list-item>
 <mat-divider [inset]="true"></mat-divider>

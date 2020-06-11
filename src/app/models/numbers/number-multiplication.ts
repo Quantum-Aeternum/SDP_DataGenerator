@@ -3,17 +3,17 @@ import { RandomNumber } from './random-number';
 
 export class NumberMultiplication extends NumberManipulator{
   constructor(
-    protected left: RandomNumber,
-    protected right: RandomNumber
+    protected left: RandomNumber = new RandomNumber(),
+    protected right: RandomNumber = new RandomNumber()
   ){
     super(left, right);
   }
 
-  public static getName(): string {
+  public getName(): string {
     return 'NumberMultiplication'
   }
 
-  public static getDescription(): string {
+  public getDescription(): string {
     return 'Represents a number by multiplying two numbers (left and right)'
   }
 

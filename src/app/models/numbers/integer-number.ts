@@ -2,9 +2,9 @@ import { RandomNumber } from './random-number';
 
 export class IntegerNumber extends RandomNumber{
   constructor(
-    protected min: number,
-    protected max: number,
-    protected step: number
+    protected min: number = 0,
+    protected max: number = 100,
+    protected step: number = 1
   ) {
     super(min, max, step);
     if (Math.round(step) == 0) step = 1;
@@ -19,11 +19,11 @@ export class IntegerNumber extends RandomNumber{
     this.max = Math.round(max);
   }
 
-  public static getName(): string {
+  public getName(): string {
     return 'IntegerNumber'
   }
 
-  public static getDescription(): string {
+  public getDescription(): string {
     return 'Random integer number in range'
   }
 

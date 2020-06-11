@@ -1,25 +1,25 @@
 import { RandomString } from './random-string';
-import { RandomNumber } from '../numbers/random-number';
 import { Parameter, DataType } from 'src/app/interfaces/parameter';
+import { FixedNumber } from '../numbers/fixed-number';
 
 export class FixedString extends RandomString{
   constructor(
-    private fixedString: string
+    protected fixedString: string = 'text'
   ){
-    super([fixedString], new RandomNumber(1,1,1), '');
+    super([fixedString], new FixedNumber(1), '');
   }
 
-  public static getName(): string {
+  public getName(): string {
     return 'FixedString'
   }
 
-  public static getDescription(): string {
+  public getDescription(): string {
     return 'Any fixed string literal'
   }
 
-  public static settings(): Array<Parameter> {
+  public settings(): Array<Parameter> {
     return [
-      { name: 'string', type: DataType.string, list: false, description: 'Any fixed piece of text', default: 'text'}
+      { name: 'string', type: DataType.string, list: false, description: 'Any fixed piece of text', default: this.fixedString }
     ];
   }
 }

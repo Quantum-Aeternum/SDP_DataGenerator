@@ -5,19 +5,27 @@ import { RandomNumber } from '../numbers/random-number';
 export class RandomString extends Random{
 
   constructor(
-    protected alphabet: Array<string>,
-    protected length: RandomNumber,
-    protected separator: string
+    protected alphabet: Array<string> = ['a','b','c'],
+    protected length: RandomNumber = new RandomNumber(),
+    protected separator: string = ''
   ) {
     super();
   }
 
-  public static getName(): string {
+  public getName(): string {
     return 'RandomString'
   }
 
-  public static getDescription(): string {
+  public getDescription(): string {
     return 'Creates a random string based on its alphabet'
+  }
+
+  public settings(): Array<Parameter> {
+    return [
+      { name: 'alphabet', type: DataType.string, list: true, description: 'Symbols (characters or strings) to use when creating the string', default: this.alphabet},
+      { name: 'length', type: DataType.RandomNumber, list: false, description: 'Number of symbols to concatenate', default: this.length},
+      { name: 'separator', type: DataType.string, list: false, description: 'Character or string to put between the concatenated symbols', default: this.separator}
+    ];
   }
 
   public evaluate(): Object {
@@ -36,14 +44,6 @@ export class RandomString extends Random{
       generated += this.alphabet[index];
     }
     return this.setValue(generated);
-  }
-
-  public static settings(): Array<Parameter> {
-    return [
-      { name: 'alphabet', type: DataType.string, list: true, description: 'Symbols (characters or strings) to use when creating the string', default: ['a','b','c']},
-      { name: 'length', type: DataType.RandomNumber, list: false, description: 'Number of symbols to concatenate', default: new RandomNumber(4,6,1)},
-      { name: 'separator', type: DataType.string, list: false, description: 'Character or string to put between the concatenated symbols', default: ''}
-    ];
   }
 
   public reset(): void {

@@ -1,21 +1,29 @@
 import { Random } from '../random';
-import { Parameter } from 'src/app/interfaces/parameter';
+import { Parameter, DataType } from 'src/app/interfaces/parameter';
+import { RandomNumber } from '../numbers/random-number';
 
 export abstract class Format extends Random{
 
   constructor(
-    protected format: string,
-    protected obj: Random
+    protected format: string = '',
+    protected obj: Random = new RandomNumber()
   ) {
     super();
   }
 
-  public static getName(): string {
+  public getName(): string {
     return 'Format'
   }
 
-  public static getDescription(): string {
+  public getDescription(): string {
     return 'Formats a random value'
+  }
+
+  public settings(): Array<Parameter> {
+    return [
+      { name: 'format', type: DataType.string, list: false, description: 'Format', default: this.format},
+      { name: 'obj', type: DataType.Random, list: false, description: 'Any random value', default: new RandomNumber()}
+    ];
   }
 
   public abstract evaluate(): Object;

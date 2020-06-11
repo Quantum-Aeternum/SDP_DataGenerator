@@ -3,17 +3,17 @@ import { RandomNumber } from './random-number';
 
 export class NumberAddition extends NumberManipulator{
   constructor(
-    protected left: RandomNumber,
-    protected right: RandomNumber
+    protected left: RandomNumber = new RandomNumber(),
+    protected right: RandomNumber = new RandomNumber()
   ){
     super(left, right);
   }
 
-  public static getName(): string {
+  public getName(): string {
     return 'NumberAddition'
   }
 
-  public static getDescription(): string {
+  public getDescription(): string {
     return 'Represents a number by adding two numbers (left and right)'
   }
 

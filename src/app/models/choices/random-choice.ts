@@ -1,20 +1,27 @@
 import { Random } from '../random';
 import { Parameter, DataType } from 'src/app/interfaces/parameter';
+import { RandomNumber } from '../numbers/random-number';
 
 export class RandomChoice extends Random{
 
   constructor(
-    private options: Array<Random>
+    private options: Array<Random> = [new RandomNumber()]
   ) {
     super();
   }
 
-  public static getName(): string {
+  public getName(): string {
     return 'RandomChoice'
   }
 
-  public static getDescription(): string {
+  public getDescription(): string {
     return 'Randomly chooses out of a list of options'
+  }
+
+  public settings(): Array<Parameter> {
+    return [
+      { name: 'options', type: DataType.Random, list: true, description: 'List of options to choose from', default: this.options}
+    ];
   }
 
   public evaluate(): Object {
@@ -28,12 +35,6 @@ export class RandomChoice extends Random{
     else {
       return this.setValue(this.options[index]);
     }
-  }
-
-  public static settings(): Array<Parameter> {
-    return [
-      { name: 'options', type: DataType.Random, list: true, description: 'List of options to choose from', default: 0}
-    ];
   }
 
   public reset(): void {
