@@ -9,8 +9,13 @@ export class NumberManipulator extends RandomNumber{
     super(1, 1, 1);
   }
 
-  public getName(): string {
-    return 'NumberManipulator'
+  public getName(includeAll: boolean = false): string {
+    if (includeAll) {
+      return `NumberManipulator[${this.left.getName(includeAll)}, ${this.right.getName(includeAll)}]`
+    }
+    else {
+      return 'NumberManipulator'
+    }
   }
 
   public getDescription(): string {

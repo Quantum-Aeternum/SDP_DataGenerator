@@ -18,8 +18,13 @@ export class RandomNumber extends Random{
     }
   }
 
-  public getName(): string {
-    return 'RandomNumber'
+  public getName(includeAll: boolean = false): string {
+    if (includeAll) {
+      return `RandomNumber[${this.min}, ${this.max}, ${this.step}]`
+    }
+    else {
+      return 'RandomNumber'
+    }
   }
 
   public getDescription(): string {

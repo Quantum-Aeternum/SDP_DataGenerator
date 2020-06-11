@@ -19,8 +19,13 @@ export class IntegerNumber extends RandomNumber{
     this.max = Math.round(max);
   }
 
-  public getName(): string {
-    return 'IntegerNumber'
+  public getName(includeAll: boolean = false): string {
+    if (includeAll) {
+      return `IntegerNumber[${this.min}, ${this.max}, ${this.step}]`
+    }
+    else {
+      return 'IntegerNumber'
+    }
   }
 
   public getDescription(): string {

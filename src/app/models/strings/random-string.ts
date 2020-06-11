@@ -12,8 +12,13 @@ export class RandomString extends Random{
     super();
   }
 
-  public getName(): string {
-    return 'RandomString'
+  public getName(includeAll: boolean = false): string {
+    if (includeAll) {
+      return `RandomString[${this.alphabet.toString()}, ${this.length.getName(includeAll)}, ${this.separator}]`
+    }
+    else {
+      return 'RandomString'
+    }
   }
 
   public getDescription(): string {

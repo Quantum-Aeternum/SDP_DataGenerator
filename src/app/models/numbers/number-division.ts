@@ -9,8 +9,13 @@ export class NumberDivision extends NumberManipulator{
     super(left, right);
   }
 
-  public getName(): string {
-    return 'NumberDivision'
+  public getName(includeAll: boolean = false): string {
+    if (includeAll) {
+      return `NumberDivision[${this.left.getName(includeAll)}, ${this.right.getName(includeAll)}]`
+    }
+    else {
+      return 'NumberDivision'
+    }
   }
 
   public getDescription(): string {

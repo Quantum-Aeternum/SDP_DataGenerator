@@ -11,8 +11,13 @@ export class FloatNumber extends RandomNumber{
     super(min, max, step);
   }
 
-  public getName(): string {
-    return 'FloatNumber'
+  public getName(includeAll: boolean = false): string {
+    if (includeAll) {
+      return `FloatNumber[${this.min}, ${this.max}, ${this.step}, ${this.accuracy}]`
+    }
+    else {
+      return 'FloatNumber'
+    }
   }
 
   public getDescription(): string {

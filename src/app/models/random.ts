@@ -25,7 +25,7 @@ export abstract class Random {
     return [];
   }
 
-  public getName(): string {
+  public getName(includeAll: boolean = false): string {
     return 'Random'
   }
 

@@ -9,8 +9,13 @@ export class NumberAddition extends NumberManipulator{
     super(left, right);
   }
 
-  public getName(): string {
-    return 'NumberAddition'
+  public getName(includeAll: boolean = false): string {
+    if (includeAll) {
+      return `NumberAddition[${this.left.getName(includeAll)}, ${this.right.getName(includeAll)}]`
+    }
+    else {
+      return 'NumberAddition'
+    }
   }
 
   public getDescription(): string {

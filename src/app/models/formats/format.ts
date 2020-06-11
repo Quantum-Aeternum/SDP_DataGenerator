@@ -11,8 +11,13 @@ export abstract class Format extends Random{
     super();
   }
 
-  public getName(): string {
-    return 'Format'
+  public getName(includeAll: boolean = false): string {
+    if (includeAll) {
+      return `Format[${this.format}, ${this.obj.getName(includeAll)}]`
+    }
+    else {
+      return 'Format'
+    }
   }
 
   public getDescription(): string {

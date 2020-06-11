@@ -12,8 +12,13 @@ export class CurrencyFormat extends Format{
     super(symbol, obj);
   }
 
-  public getName(): string {
-    return 'CurrencyFormat'
+  public getName(includeAll: boolean = false): string {
+    if (includeAll) {
+      return `CurrencyFormat[${this.symbol}, ${this.obj.getName(includeAll)}]`
+    }
+    else {
+      return 'CurrencyFormat'
+    }
   }
 
   public getDescription(): string {

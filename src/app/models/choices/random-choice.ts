@@ -10,8 +10,14 @@ export class RandomChoice extends Random{
     super();
   }
 
-  public getName(): string {
-    return 'RandomChoice'
+  public getName(includeAll: boolean = false): string {
+    if (includeAll) {
+      let optionsString = this.options.map(o => o.getName()).join(', ');
+      return `RandomChoice[${optionsString}]`;
+    }
+    else {
+      return 'RandomChoice'
+    }
   }
 
   public getDescription(): string {

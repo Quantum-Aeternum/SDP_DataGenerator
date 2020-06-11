@@ -9,8 +9,13 @@ export class FixedNumber extends RandomNumber{
     this.value = value;
   }
 
-  public getName(): string {
-    return 'FixedNumber'
+  public getName(includeAll: boolean = false): string {
+    if (includeAll) {
+      return `FixedNumber[${this.value}]`
+    }
+    else {
+      return 'FixedNumber'
+    }
   }
 
   public getDescription(): string {

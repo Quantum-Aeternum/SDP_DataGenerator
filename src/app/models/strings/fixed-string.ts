@@ -9,8 +9,13 @@ export class FixedString extends RandomString{
     super([fixedString], new FixedNumber(1), '');
   }
 
-  public getName(): string {
-    return 'FixedString'
+  public getName(includeAll: boolean = false): string {
+    if (includeAll) {
+      return `FixedString[${this.fixedString}]`
+    }
+    else {
+      return 'FixedString'
+    }
   }
 
   public getDescription(): string {
