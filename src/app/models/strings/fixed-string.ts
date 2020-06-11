@@ -9,8 +9,8 @@ export class FixedString extends RandomString{
     super([fixedString], new FixedNumber(1), '');
   }
 
-  public getName(includeAll: boolean = false): string {
-    if (includeAll) {
+  public getName(tableName?: string, colName?: string): string {
+    if (tableName != undefined && colName != undefined) {
       return `FixedString[${this.fixedString}]`
     }
     else {

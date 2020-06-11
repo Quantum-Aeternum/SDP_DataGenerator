@@ -28,7 +28,7 @@ export abstract class Random {
     return [];
   }
 
-  public getName(includeAll: boolean = false): string {
+  public getName(tableName?: string, colName?: string): string {
     return 'Random'
   }
 
@@ -45,7 +45,7 @@ export abstract class Random {
       return `${this.owner.table}.${this.owner.name}`;
     }
     else {
-      return this.getName(true);
+      return this.getName(tableName, colName);
     }
   }
 

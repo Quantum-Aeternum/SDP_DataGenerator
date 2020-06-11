@@ -9,9 +9,9 @@ export class NumberManipulator extends RandomNumber{
     super(1, 1, 1);
   }
 
-  public getName(includeAll: boolean = false): string {
-    if (includeAll) {
-      return `NumberManipulator[${this.left.getName(includeAll)}, ${this.right.getName(includeAll)}]`
+  public getName(tableName?: string, colName?: string): string {
+    if (tableName != undefined && colName != undefined) {
+      return `NumberManipulator[${this.left.getDisplayName(tableName, colName)}, ${this.right.getDisplayName(tableName, colName)}]`
     }
     else {
       return 'NumberManipulator'

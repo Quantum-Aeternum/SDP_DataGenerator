@@ -12,9 +12,9 @@ export class CurrencyFormat extends Format{
     super(symbol, obj);
   }
 
-  public getName(includeAll: boolean = false): string {
-    if (includeAll) {
-      return `CurrencyFormat[${this.symbol}, ${this.obj.getName(includeAll)}]`
+  public getName(tableName?: string, colName?: string): string {
+    if (tableName != undefined && colName != undefined) {
+      return `CurrencyFormat[${this.symbol}, ${this.obj.getDisplayName(tableName, colName)}]`
     }
     else {
       return 'CurrencyFormat'

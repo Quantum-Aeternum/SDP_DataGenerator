@@ -18,8 +18,8 @@ export class RandomNumber extends Random{
     }
   }
 
-  public getName(includeAll: boolean = false): string {
-    if (includeAll) {
+  public getName(tableName?: string, colName?: string): string {
+    if (tableName != undefined && colName != undefined) {
       return `RandomNumber[${this.min}, ${this.max}, ${this.step}]`
     }
     else {

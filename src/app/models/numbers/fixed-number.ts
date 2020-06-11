@@ -9,8 +9,8 @@ export class FixedNumber extends RandomNumber{
     this.value = value;
   }
 
-  public getName(includeAll: boolean = false): string {
-    if (includeAll) {
+  public getName(tableName?: string, colName?: string): string {
+    if (tableName != undefined && colName != undefined) {
       return `FixedNumber[${this.value}]`
     }
     else {

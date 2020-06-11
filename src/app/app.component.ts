@@ -2,12 +2,12 @@ import { Component, ApplicationRef } from '@angular/core';
 import { Table } from './models/table';
 import { RandomNumber } from './models/numbers/random-number';
 import { CurrencyFormat } from './models/formats/currency-format';
-import { Random } from './models/random';
 import { FixedNumber } from './models/numbers/fixed-number';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { NotificationsService } from './services/notifications.service';
 import { ContainerService } from './services/container.service';
 import { Column } from './interfaces/column';
+import { NumberMultiplication } from './models/numbers/number-multiplication';
 
 @Component({
   selector: 'app-root',
@@ -40,17 +40,17 @@ export class AppComponent {
 
     let group: Table = new Table('Group', second, container);
     let demand: Table = new Table('Demand', new RandomNumber(25,50), container);
-    demand.addColumn('val', new RandomNumber(0, 100, 1));
-    group.addChild(demand);
     group.addColumn('first', new CurrencyFormat('R', new RandomNumber(10, 50, 5)));
     group.addColumn('second', second);
 
     let constVal: RandomNumber = new FixedNumber(8);
     let col: Column = {name: 'const', table: 'Demand', references: 0, value: constVal};
     constVal.owner = col;
-
     demand.addColumn('const', constVal);
     demand.addColumn('const_ref', constVal);
+    demand.addColumn('val', new NumberMultiplication(constVal, new RandomNumber(0, 100, 1)));
+
+    group.addChild(demand);
 
     this.table = group;
   }

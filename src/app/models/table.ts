@@ -49,6 +49,7 @@ export class Table {
     let response = this.container.registerColumn(newCol);
     if (response.success) {
       this.columns.push(newCol);
+      if (newCol.value.owner == undefined) newCol.value.owner = newCol;
       return {success: true, message: `Added column: ${name}`};
     }
     else {

@@ -9,9 +9,9 @@ export class NumberMultiplication extends NumberManipulator{
     super(left, right);
   }
 
-  public getName(includeAll: boolean = false): string {
-    if (includeAll) {
-      return `NumberMultiplication[${this.left.getName(includeAll)}, ${this.right.getName(includeAll)}]`
+  public getName(tableName?: string, colName?: string): string {
+    if (tableName != undefined && colName != undefined) {
+      return `NumberMultiplication[${this.left.getDisplayName(tableName, colName)}, ${this.right.getDisplayName(tableName, colName)}]`
     }
     else {
       return 'NumberMultiplication'

@@ -11,9 +11,9 @@ export abstract class Format extends Random{
     super();
   }
 
-  public getName(includeAll: boolean = false): string {
-    if (includeAll) {
-      return `Format[${this.format}, ${this.obj.getName(includeAll)}]`
+  public getName(tableName?: string, colName?: string): string {
+    if (tableName != undefined && colName != undefined) {
+      return `Format[${this.format}, ${this.obj.getDisplayName(tableName, colName)}]`
     }
     else {
       return 'Format'

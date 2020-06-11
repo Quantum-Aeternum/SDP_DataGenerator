@@ -12,9 +12,9 @@ export class RandomString extends Random{
     super();
   }
 
-  public getName(includeAll: boolean = false): string {
-    if (includeAll) {
-      return `RandomString[${this.alphabet.toString()}, ${this.length.getName(includeAll)}, ${this.separator}]`
+  public getName(tableName?: string, colName?: string): string {
+    if (tableName != undefined && colName != undefined) {
+      return `RandomString[${this.alphabet.toString()}, ${this.length.getDisplayName(tableName, colName)}, ${this.separator}]`
     }
     else {
       return 'RandomString'

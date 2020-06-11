@@ -19,8 +19,8 @@ export class IntegerNumber extends RandomNumber{
     this.max = Math.round(max);
   }
 
-  public getName(includeAll: boolean = false): string {
-    if (includeAll) {
+  public getName(tableName?: string, colName?: string): string {
+    if (tableName != undefined && colName != undefined) {
       return `IntegerNumber[${this.min}, ${this.max}, ${this.step}]`
     }
     else {

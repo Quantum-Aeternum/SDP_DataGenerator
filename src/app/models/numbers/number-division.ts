@@ -9,9 +9,9 @@ export class NumberDivision extends NumberManipulator{
     super(left, right);
   }
 
-  public getName(includeAll: boolean = false): string {
-    if (includeAll) {
-      return `NumberDivision[${this.left.getName(includeAll)}, ${this.right.getName(includeAll)}]`
+  public getName(tableName?: string, colName?: string): string {
+    if (tableName != undefined && colName != undefined) {
+      return `NumberDivision[${this.left.getDisplayName(tableName, colName)}, ${this.right.getDisplayName(tableName, colName)}]`
     }
     else {
       return 'NumberDivision'

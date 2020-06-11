@@ -11,8 +11,8 @@ export class FloatNumber extends RandomNumber{
     super(min, max, step);
   }
 
-  public getName(includeAll: boolean = false): string {
-    if (includeAll) {
+  public getName(tableName?: string, colName?: string): string {
+    if (tableName != undefined && colName != undefined) {
       return `FloatNumber[${this.min}, ${this.max}, ${this.step}, ${this.accuracy}]`
     }
     else {
