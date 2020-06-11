@@ -6,12 +6,12 @@ import { TableDialogComponent } from './table-dialog.component';
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
 import { ContainerService } from 'src/app/services/container.service';
+import { RandomNumber } from 'src/app/models/numbers/random-number';
 
 export interface TableData {
   new: boolean;
   name: string;
-  min: number;
-  max: number;
+  numRows: RandomNumber;
 }
 
 @Component({
@@ -65,14 +65,14 @@ export class TableComponent implements OnInit {
 
   protected editTableData(): void {
     if (this.table) {
-      this.openTableDialog({new: false, name: this.table.getName(), min: this.table.getMinRows(), max: this.table.getMaxRows()}).subscribe((tableData: TableData) => {
+      this.openTableDialog({new: false, name: this.table.getName(), numRows: this.table.getNumRows()}).subscribe((tableData: TableData) => {
         if (this.table && tableData) {
           let returnState: ReturnState = {success: true, message: `Updated table: ${tableData.name}`};
           if (this.table.getName() != tableData.name) {
             returnState = this.table.setName(tableData.name);
           }
           if (returnState.success === true) {
-            this.table.setMinMax(tableData.min, tableData.max);
+            this.table.setNumRows(tableData.numRows);
           }
           this.notifications.showMessage(returnState);
         }
@@ -82,10 +82,10 @@ export class TableComponent implements OnInit {
 
   protected addNestedTable(): void {
     if (this.table) {
-      this.openTableDialog({new: true, name: '', min: 1, max: 1}).subscribe((tableData: TableData) => {
+      this.openTableDialog({new: true, name: '', numRows: new RandomNumber()}).subscribe((tableData: TableData) => {
         if (this.table && tableData) {
           if (this.container.isTableNameAvailable(tableData.name)) {
-            let returnState: ReturnState = this.table.addChild(new Table(tableData.name, tableData.min, tableData.max, this.container));
+            let returnState: ReturnState = this.table.addChild(new Table(tableData.name, tableData.numRows, this.container));
             this.notifications.showMessage(returnState);
           }
           else {

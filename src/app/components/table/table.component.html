@@ -3,7 +3,7 @@
   <mat-expansion-panel-header>
     <mat-panel-title>
       <mat-card-title>
-      {{table.name}} [min:{{table.minRows}}, max: {{table.maxRows}}]
+      {{table.name}} (Rows: {{table.numRows.getDisplayName(table.name, '')}})
       </mat-card-title>
     </mat-panel-title>
     <mat-panel-description>

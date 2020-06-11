@@ -1,4 +1,5 @@
 <mat-list-item *ngIf='column'>
-  {{column.name}}: {{column.value.getName(true)}}
+  <button mat-button color="primary">{{column.name}}</button>
+  {{column.value.getDisplayName(column.table, column.name)}}
 </mat-list-item>
 <mat-divider [inset]="true"></mat-divider>

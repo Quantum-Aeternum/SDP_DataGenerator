@@ -3,6 +3,7 @@ import { Column } from '../interfaces/column';
 import { ReturnState } from '../interfaces/return-state';
 import { Row } from '../interfaces/row';
 import { ContainerService } from '../services/container.service';
+import { RandomNumber } from './numbers/random-number';
 
 export class Table {
 
@@ -12,28 +13,18 @@ export class Table {
 
   constructor(
     private name: string,
-    private minRows: number,
-    private maxRows: number,
+    private numRows: RandomNumber = new RandomNumber(),
     private container: ContainerService
   ) {
     container.registerTableName(name);
-    if (minRows > maxRows) {
-      let tmp: number = minRows;
-      minRows = maxRows;
-      maxRows = tmp;
-    }
   }
 
   public getName(): string {
     return this.name;
   }
 
-  public getMinRows(): number {
-    return this.minRows;
-  }
-
-  public getMaxRows(): number {
-    return this.maxRows;
+  public getNumRows(): RandomNumber {
+    return this.numRows;
   }
 
   public setName(newName: string): ReturnState {
@@ -42,14 +33,8 @@ export class Table {
     return response;
   }
 
-  public setMinMax(min: number, max: number): void {
-    this.minRows = Math.round(min);
-    this.maxRows = Math.round(max);
-    if (this.minRows > this.maxRows) {
-      let tmp: number = this.minRows;
-      this.minRows = this.maxRows;
-      this.maxRows = tmp;
-    }
+  public setNumRows(numRows: RandomNumber): void {
+    this.numRows = numRows;
   }
 
   public hasParent(): boolean {
@@ -134,10 +119,11 @@ export class Table {
 
   public generateData(): Array<Object> {
     let data: Array<Object> = [];
-    let numRows = Math.floor((Math.random() * (this.maxRows - this.minRows)) + this.minRows);
+    let numRows = this.numRows.evaluate();
     for (let index = 0; index < numRows; index++) {
       data.push(this.generateRow(index));
     }
+    this.numRows.reset();
     return data;
   }
 
