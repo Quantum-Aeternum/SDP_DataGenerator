@@ -5,6 +5,7 @@
     <mat-label>Column name</mat-label>
     <input matInput placeholder="Ex. Test Column" [(ngModel)]='data.name'>
   </mat-form-field>
+  <app-input [(value)]='data.value'></app-input>
 </div>
 <div mat-dialog-actions>
   <button *ngIf='data.new' mat-button [mat-dialog-close]="data" color="primary">Create</button>

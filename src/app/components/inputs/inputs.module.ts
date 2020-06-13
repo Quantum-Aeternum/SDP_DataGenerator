@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { ColumnDialogComponent } from './column-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule, MatInputModule, MatCardModule, MatButtonModule } from '@angular/material';
 import { CommonModule } from '@angular/common';
-import { InputsModule } from '../components/inputs/inputs.module';
+import { InputComponent } from './input/input.component';
+import { RandomInputComponent } from './random-input/random-input.component';
 
 @NgModule({
   imports: [
@@ -13,11 +13,15 @@ import { InputsModule } from '../components/inputs/inputs.module';
     MatButtonModule,
     MatCardModule,
     MatInputModule,
-    MatDialogModule,
-    InputsModule
+    MatDialogModule
   ],
   declarations: [
-    ColumnDialogComponent
+    InputComponent,
+    RandomInputComponent
+  ],
+  exports: [
+    InputComponent,
+    RandomInputComponent
   ]
 })
-export class ColumnDialogModule { }
+export class InputsModule { }

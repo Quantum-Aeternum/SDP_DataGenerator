@@ -1,0 +1,14 @@
+<!-- Input for number -->
+<mat-form-field *ngIf="settings && settings.type == dataTypes.number">
+  <mat-label>{{settings.name}}</mat-label>
+  <input matInput [(ngModel)]='value'>
+</mat-form-field>
+
+<!-- Input for string -->
+<mat-form-field *ngIf="settings && settings.type == dataTypes.string">
+  <mat-label>{{settings.name}}</mat-label>
+  <input matInput [(ngModel)]='value'>
+</mat-form-field>
+
+<!-- Input for Random -->
+<app-random-input *ngIf="!settings || (settings.type != dataTypes.number && settings.type != dataTypes.string)" [random]='value'></app-random-input>

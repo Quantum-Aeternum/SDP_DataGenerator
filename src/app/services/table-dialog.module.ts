@@ -3,6 +3,7 @@ import { TableDialogComponent } from './table-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule, MatInputModule, MatCardModule, MatButtonModule } from '@angular/material';
 import { CommonModule } from '@angular/common';
+import { InputsModule } from '../components/inputs/inputs.module';
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import { CommonModule } from '@angular/common';
     MatButtonModule,
     MatCardModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    InputsModule
   ],
   declarations: [
     TableDialogComponent

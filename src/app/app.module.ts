@@ -17,6 +17,7 @@ import { ToggleControlsComponent } from './components/toggle-controls/toggle-con
 import { ColumnDialogModule } from './services/column-dialog.module';
 import { ColumnDialogComponent } from './services/column-dialog.component';
 import { GeneratorComponent } from './components/generator/generator.component';
+import { InputsModule } from './components/inputs/inputs.module';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { GeneratorComponent } from './components/generator/generator.component';
     MatTableModule,
     MatInputModule,
     MatDialogModule,
-    MatListModule
+    MatListModule,
+    InputsModule
   ],
   entryComponents: [
     TableDialogComponent,

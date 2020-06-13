@@ -10,7 +10,8 @@ export class ColumnDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<ColumnDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ColumnData) {}
+    @Inject(MAT_DIALOG_DATA) public data: ColumnData) {
+    }
 
   protected cancel(): void {
     this.dialogRef.close();
