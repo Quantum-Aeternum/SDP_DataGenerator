@@ -1,5 +1,6 @@
 import { NumberManipulator } from './number-manipulator';
 import { RandomNumber } from './random-number';
+import { Column } from '../column';
 
 export class NumberSubtraction extends NumberManipulator{
   constructor(
@@ -9,9 +10,9 @@ export class NumberSubtraction extends NumberManipulator{
     super(left, right);
   }
 
-  public getName(tableName?: string, colName?: string): string {
-    if (tableName != undefined && colName != undefined) {
-      return `NumberSubtraction[${this.left.getDisplayName(tableName, colName)}, ${this.right.getDisplayName(tableName, colName)}]`
+  public getName(column?: Column): string {
+    if (column != undefined) {
+      return `NumberSubtraction[${this.left.getDisplayName(column)}, ${this.right.getDisplayName(column)}]`
     }
     else {
       return 'NumberSubtraction'

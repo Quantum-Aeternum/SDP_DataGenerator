@@ -1,6 +1,7 @@
 import { Random } from '../random';
 import { Parameter, DataType } from 'src/app/interfaces/parameter';
 import { RandomNumber } from '../numbers/random-number';
+import { Column } from '../column';
 
 export class RandomChoice extends Random{
 
@@ -13,8 +14,8 @@ export class RandomChoice extends Random{
     });
   }
 
-  public getName(tableName?: string, colName?: string): string {
-    if (tableName != undefined && colName != undefined) {
+  public getName(column?: Column): string {
+    if (column != undefined) {
       let optionsString = this.options.map(o => o.getName()).join(', ');
       return `RandomChoice[${optionsString}]`;
     }

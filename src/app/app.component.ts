@@ -6,7 +6,7 @@ import { FixedNumber } from './models/numbers/fixed-number';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { NotificationsService } from './services/notifications.service';
 import { ContainerService } from './services/container.service';
-import { Column } from './interfaces/column';
+import { Column } from './models/column';
 import { NumberMultiplication } from './models/numbers/number-multiplication';
 import { NumberSubtraction } from './models/numbers/number-subtraction';
 
@@ -35,18 +35,17 @@ export class AppComponent {
 
     this.generateDownloadURL();
 
+    let READONLY: Table = new Table('READONLY', new FixedNumber(1), container);
     let second: RandomNumber = new RandomNumber(100, 200, 2);
-    let constCol: Column = {name: 'Val', table: 'READONLY', references: 0, value: second, readonly: true};
-    second.owner = constCol;
+    READONLY.addColumn('Val', second, true);
 
     let group: Table = new Table('Group', second, container);
     let demand: Table = new Table('Demand', new RandomNumber(25,50), container);
+
     group.addColumn('first', new CurrencyFormat('R', new RandomNumber(10, 50, 5)));
     group.addColumn('second', second);
 
     let constVal: RandomNumber = new FixedNumber(8);
-    let col: Column = {name: 'const', table: 'Demand', references: 0, value: constVal};
-    constVal.owner = col;
     demand.addColumn('const', constVal);
     demand.addColumn('const_ref', constVal);
     demand.addColumn('val', new NumberMultiplication(constVal, new RandomNumber(0, 100, 1)));

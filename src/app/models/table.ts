@@ -1,9 +1,9 @@
 import { Random } from './random';
-import { Column } from '../interfaces/column';
 import { ReturnState } from '../interfaces/return-state';
 import { Row } from '../interfaces/row';
 import { ContainerService } from '../services/container.service';
 import { RandomNumber } from './numbers/random-number';
+import { Column } from './column';
 
 export class Table {
 
@@ -16,7 +16,7 @@ export class Table {
     private numRows: RandomNumber = new RandomNumber(),
     private container: ContainerService
   ) {
-    container.registerTableName(name);
+    container.registerTable(this);
   }
 
   public getName(): string {
@@ -28,7 +28,7 @@ export class Table {
   }
 
   public setName(newName: string): ReturnState {
-    let response: ReturnState = this.container.updateTableName(this.name, newName);
+    let response: ReturnState = this.container.updateTableName(this, newName);
     if (response.success === true) this.name = newName;
     return response;
   }
@@ -42,28 +42,24 @@ export class Table {
     else return false;
   }
 
-  public setColumnName(oldName: string, newName: string): ReturnState {
-    let index = this.columns.findIndex(col => col.name == oldName);
-    if (index < 0) return {success: false, message: `Column ${oldName} does not exist in the ${this.name} table`};
-    let response: ReturnState = this.container.updateColumnName(this.name, oldName, newName);
-    if (response.success === true) this.columns[index].name = newName;
-    return response;
+  public setColumnName(column: Column, newName: string): ReturnState {
+    let index = this.columns.indexOf(column);
+    if (index < 0) return {success: false, message: `Column ${column.getName()} does not exist in the ${this.name} table`};
+    return this.container.updateColumnName(column, newName);;
   }
 
-  public addColumn(name: string, value: Random, required: boolean = false): ReturnState {
+  public addColumn(name: string, value: Random, readonly: boolean = false): ReturnState {
     if (name == undefined || name.trim() == '') return {success: false, message: `Column name may not be empty`};
-    if (this.columns.findIndex(col => col.name == name) >= 0) return {success: false, message: `Column ${name} already exists on table ${this.name}`};
-    let newCol: Column = {table: this.name, name: name, value: value, references: 0};
+    if (this.columns.findIndex(col => col.getName() == name) >= 0) return {success: false, message: `Column ${name} already exists on table ${this.name}`};
+    let newCol: Column = new Column(this, name, value, readonly);
     let response = this.container.registerColumn(newCol);
     if (response.success) {
-      newCol.value.owners().forEach(owner => {
-        if (owner.name != newCol.name || owner.table != newCol.table) {
-          console.log(`${this.name}.${newCol.name} now references ${this.name}.${owner.name}`);
-          this.container.addColumnReference(this.name, owner.name);
+      newCol.getValue().owners().forEach(owner => {
+        if (owner != newCol) {
+          this.container.addColumnReference(owner);
         }
       });
       this.columns.push(newCol);
-      if (newCol.value.owner == undefined) newCol.value.owner = newCol;
       return {success: true, message: `Added column: ${name}`};
     }
     else {
@@ -72,14 +68,13 @@ export class Table {
   }
 
   public removeColumn(name: string, ignoreReferences: boolean = false): ReturnState {
-    let index = this.columns.findIndex(col => col.name == name);
+    let index = this.columns.findIndex(col => col.getName() == name);
     if (index < 0) return {success: false, message: `Column ${name} does not exist in the ${this.name} table`};
     let response = this.container.deregisterColumn(this.columns[index], ignoreReferences);
     if (response.success == true) {
-      this.columns[index].value.owners().forEach(owner => {
+      this.columns[index].getValue().owners().forEach(owner => {
         if (owner != this.columns[index]) {
-          console.log(`${this.name}.${this.columns[index].name} dereferenced ${this.name}.${owner.name}`);
-          this.container.removeColumnReference(this.name, owner.name);
+          this.container.removeColumnReference(owner);
         }
       });
       this.columns.splice(index, 1);
@@ -102,7 +97,7 @@ export class Table {
   protected removeChild(child: Table): ReturnState {
     let childIndex = this.children.findIndex(table => table.name == child.name);
     if (childIndex < 0 || this.children[childIndex].parent != this) return {success: false, message: `Table ${child.name} is not a child of the ${this.name} table`};
-    let response = this.container.deregisterTableName(child.name);
+    let response = this.container.deregisterTable(child);
     if (response.success == true) {
       this.children.splice(childIndex, 1);
       child.parent = undefined;
@@ -122,7 +117,7 @@ export class Table {
 
     // Attempt to remove all columns
     while (this.columns.length > 0) {
-      let response = this.removeColumn(this.columns[0].name, true);
+      let response = this.removeColumn(this.columns[0].getName(), true);
       if (response.success == false) return response;
     }
 
@@ -146,7 +141,7 @@ export class Table {
     // Create the row
     let row: Row = {id: id};
     this.columns.forEach(col => {
-      row[col.name] = col.value.evaluate();
+      row[col.getName()] = col.getValue().evaluate();
     });
     this.children.forEach(child => {
       row[child.name] = child.generateData();
@@ -154,8 +149,9 @@ export class Table {
 
     // Reset the columns after creating the row (and its children)
     this.columns.forEach(col => {
-      if (col.value.owner != undefined && col.value.owner.readonly != undefined && col.value.owner.readonly == false) {
-        col.value.reset();
+      let val: Random = col.getValue();
+      if (val.owner != undefined && val.owner.isReadonly() == false) {
+        val.reset();
       }
     });
 

@@ -2,6 +2,7 @@ import { Format } from './format';
 import { RandomNumber } from '../numbers/random-number';
 import { Parameter, DataType } from 'src/app/interfaces/parameter';
 import { Random } from '../random';
+import { Column } from '../column';
 
 export class CurrencyFormat extends Format{
 
@@ -12,9 +13,9 @@ export class CurrencyFormat extends Format{
     super(symbol, obj);
   }
 
-  public getName(tableName?: string, colName?: string): string {
-    if (tableName != undefined && colName != undefined) {
-      return `CurrencyFormat[${this.symbol}, ${this.obj.getDisplayName(tableName, colName)}]`
+  public getName(column?: Column): string {
+    if (column != undefined) {
+      return `CurrencyFormat[${this.symbol}, ${this.obj.getDisplayName(column)}]`
     }
     else {
       return 'CurrencyFormat'

@@ -1,4 +1,5 @@
 import { RandomNumber } from './random-number';
+import { Column } from '../column';
 
 export class IntegerNumber extends RandomNumber{
   constructor(
@@ -19,8 +20,8 @@ export class IntegerNumber extends RandomNumber{
     this.max = Math.round(max);
   }
 
-  public getName(tableName?: string, colName?: string): string {
-    if (tableName != undefined && colName != undefined) {
+  public getName(column?: Column): string {
+    if (column != undefined) {
       return `IntegerNumber[${this.min}, ${this.max}, ${this.step}]`
     }
     else {

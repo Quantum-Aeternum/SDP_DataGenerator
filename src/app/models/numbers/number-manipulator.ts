@@ -1,5 +1,6 @@
 import { RandomNumber } from './random-number';
 import { Parameter, DataType } from 'src/app/interfaces/parameter';
+import { Column } from '../column';
 
 export class NumberManipulator extends RandomNumber{
   constructor(
@@ -11,9 +12,9 @@ export class NumberManipulator extends RandomNumber{
     this.registerChildRandom(right);
   }
 
-  public getName(tableName?: string, colName?: string): string {
-    if (tableName != undefined && colName != undefined) {
-      return `NumberManipulator[${this.left.getDisplayName(tableName, colName)}, ${this.right.getDisplayName(tableName, colName)}]`
+  public getName(column?: Column): string {
+    if (column != undefined) {
+      return `NumberManipulator[${this.left.getDisplayName(column)}, ${this.right.getDisplayName(column)}]`
     }
     else {
       return 'NumberManipulator'

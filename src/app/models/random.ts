@@ -1,5 +1,5 @@
 import { Parameter, DataType } from '../interfaces/parameter';
-import { Column } from '../interfaces/column';
+import { Column } from '../models/column';
 
 export abstract class Random {
 
@@ -31,7 +31,7 @@ export abstract class Random {
     return [];
   }
 
-  public getName(tableName?: string, colName?: string): string {
+  public getName(column?: Column): string {
     return 'Random'
   }
 
@@ -39,16 +39,16 @@ export abstract class Random {
     return 'Base class of all Randoms'
   }
 
-  public getDisplayName(tableName: string, colName: string): string {
-    if (this.owner != undefined && this.owner.readonly != undefined && this.owner.readonly == true){
-      return `${this.owner.name}`;
+  public getDisplayName(column: Column): string {
+    if (this.owner != undefined && this.owner.isReadonly() == true){
+      return `${this.owner.getName()}`;
     }
-    else if (this.owner != undefined && (this.owner.table != tableName || this.owner.name != colName))
+    else if (this.owner != undefined && this.owner != column)
     {
-      return `${this.owner.table}.${this.owner.name}`;
+      return `${this.owner.getFullname()}`;
     }
     else {
-      return this.getName(tableName, colName);
+      return this.getName(column);
     }
   }
 

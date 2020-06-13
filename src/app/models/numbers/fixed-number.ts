@@ -1,5 +1,6 @@
 import { RandomNumber } from './random-number';
 import { Parameter, DataType } from 'src/app/interfaces/parameter';
+import { Column } from '../column';
 
 export class FixedNumber extends RandomNumber{
   constructor(
@@ -9,8 +10,8 @@ export class FixedNumber extends RandomNumber{
     this.value = value;
   }
 
-  public getName(tableName?: string, colName?: string): string {
-    if (tableName != undefined && colName != undefined) {
+  public getName(column?: Column): string {
+    if (column != undefined) {
       return `FixedNumber[${this.value}]`
     }
     else {

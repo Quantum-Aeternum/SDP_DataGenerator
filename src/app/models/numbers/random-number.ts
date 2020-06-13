@@ -1,5 +1,6 @@
 import { Random } from '../random';
 import { Parameter, DataType } from 'src/app/interfaces/parameter';
+import { Column } from '../column';
 
 export class RandomNumber extends Random{
 
@@ -18,8 +19,8 @@ export class RandomNumber extends Random{
     }
   }
 
-  public getName(tableName?: string, colName?: string): string {
-    if (tableName != undefined && colName != undefined) {
+  public getName(column?: Column): string {
+    if (column != undefined) {
       return `RandomNumber[${this.min}, ${this.max}, ${this.step}]`
     }
     else {

@@ -1,6 +1,7 @@
 import { Random } from '../random';
 import { Parameter, DataType } from 'src/app/interfaces/parameter';
 import { RandomNumber } from '../numbers/random-number';
+import { Column } from '../column';
 
 export abstract class Format extends Random{
 
@@ -12,9 +13,9 @@ export abstract class Format extends Random{
     this.registerChildRandom(obj);
   }
 
-  public getName(tableName?: string, colName?: string): string {
-    if (tableName != undefined && colName != undefined) {
-      return `Format[${this.format}, ${this.obj.getDisplayName(tableName, colName)}]`
+  public getName(column?: Column): string {
+    if (column != undefined) {
+      return `Format[${this.format}, ${this.obj.getDisplayName(column)}]`
     }
     else {
       return 'Format'

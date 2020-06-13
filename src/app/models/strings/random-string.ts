@@ -1,7 +1,7 @@
 import { Random } from '../random';
 import { Parameter, DataType } from 'src/app/interfaces/parameter';
 import { RandomNumber } from '../numbers/random-number';
-import { Column } from 'src/app/interfaces/column';
+import { Column } from '../column';
 
 export class RandomString extends Random{
 
@@ -14,9 +14,9 @@ export class RandomString extends Random{
     this.registerChildRandom(length);
   }
 
-  public getName(tableName?: string, colName?: string): string {
-    if (tableName != undefined && colName != undefined) {
-      return `RandomString[${this.alphabet.toString()}, ${this.length.getDisplayName(tableName, colName)}, ${this.separator}]`
+  public getName(column?: Column): string {
+    if (column != undefined) {
+      return `RandomString[${this.alphabet.toString()}, ${this.length.getDisplayName(column)}, ${this.separator}]`
     }
     else {
       return 'RandomString'

@@ -1,120 +1,120 @@
 import { Injectable } from '@angular/core';
 import { ReturnState } from '../interfaces/return-state';
-import { Column } from '../interfaces/column';
-import { reference } from '@angular/core/src/render3';
+import { Column } from '../models/column';
+import { Table } from '../models/table';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContainerService {
 
-  private tableNames: Array<string> = [];
+  private allTables: Array<Table> = [];
   private allColumns: Array<Column> = [];
 
   constructor() { }
 
   public isTableNameAvailable(nameToCheck: string): boolean {
-    return !this.tableNames.includes(nameToCheck);
+    return (this.allTables.findIndex(table => table.getName() == nameToCheck) < 0)
   }
 
-  public registerTableName(tableName: string): ReturnState {
-    if (this.isTableNameAvailable(tableName)) {
-      this.tableNames.push(tableName);
-      return {success: true, message: `Table ${tableName} has been registered`}
+  public isColumnNameAvailable(table: Table, colNameToCheck: string): boolean {
+    return (this.allColumns.findIndex(col => col.getTable() == table && col.getName() == colNameToCheck) < 0)
+  }
+
+  public registerTable(table: Table): ReturnState {
+    if (this.isTableNameAvailable(table.getName())) {
+      this.allTables.push(table);
+      return {success: true, message: `Table ${table.getName()} has been registered`}
     }
     else {
-      return {success: false, message: `Table name already used: ${tableName}`}
+      return {success: false, message: `Table name already used: ${table.getName()}`}
     }
   }
 
-  public deregisterTableName(tableName: string): ReturnState {
-    let index: number = this.tableNames.indexOf(tableName);
+  public deregisterTable(table: Table): ReturnState {
+    let index: number = this.allTables.indexOf(table);
     if (index < 0) {
-      return {success: false, message: `Table ${tableName} could not be found`}
+      return {success: false, message: `Table ${table.getName()} could not be found`}
     }
     else {
-      this.tableNames.splice(index, 1);
-      return {success: true, message: `Deregistered table ${tableName}`};
+      this.allTables.splice(index, 1);
+      return {success: true, message: `Deregistered table ${table.getName()}`};
     }
   }
 
-  public updateTableName(oldName: string, newName: string): ReturnState {
-    if (!this.isTableNameAvailable(newName)) return {success: false, message: `Table name already used: ${newName}`}
-    let index: number = this.tableNames.indexOf(oldName);
+  public updateTableName(table: Table, newName: string): ReturnState {
+    if (!this.isTableNameAvailable(newName)) return {success: false, message: `Table name already used: ${newName}`};
+    let index: number = this.allTables.indexOf(table);
     if (index < 0) {
-      return {success: false, message: `Table ${oldName} could not be found`}
+      return {success: false, message: `Table ${table.getName()} could not be found`}
     }
     else {
-      this.tableNames[index] = newName;
+      let oldName = table.getName();
       return {success: true, message: `Changed table name from ${oldName} to ${newName}`};
     }
   }
 
-  public isColumnNameAvailable(tableName: string, colNameToCheck: string): boolean {
-    return (this.allColumns.findIndex(col => col.table == tableName && col.name == colNameToCheck) < 0)
-  }
-
   public registerColumn(column: Column): ReturnState {
-    if (!this.tableNames.includes(column.table)) return {success: false, message: `Table not found: ${column.table}`};
-    if (this.isColumnNameAvailable(column.table, column.name)) {
-      column.references = 0;
+    if (!this.allTables.includes(column.getTable())) return {success: false, message: `Table not found: ${column.getTable().getName()}`};
+    if (this.isColumnNameAvailable(column.getTable(), column.getName())) {
       this.allColumns.push(column);
-      return {success: true, message: `Column ${column.name} has been registered`}
+      return {success: true, message: `Column ${column.getName()} has been registered`}
     }
     else {
-      return {success: false, message: `Column name already used for table: ${column.table}.${column.name}`}
+      return {success: false, message: `Column name already used for table: ${column.getTable().getName()}.${column.getName()}`}
     }
   }
 
   public deregisterColumn(column: Column, ingoreReferences: boolean = false): ReturnState {
     let index: number = this.allColumns.indexOf(column);
     if (index < 0) {
-      return {success: false, message: `${column.table}.${column.name} could not be found`}
+      return {success: false, message: `${column.getTable().getName()}.${column.getName()} could not be found`}
     }
-    else if (!ingoreReferences && column.references > 0) {
-      if (column.references == 1) return {success: false, message: `Cannot deregister ${column.name} because it still has 1 reference`};
-      else return {success: false, message: `Cannot deregister ${column.name} because it still has ${column.references} references`};
+    else if (!ingoreReferences && column.getReferenceCount() > 0) {
+      if (column.getReferenceCount() == 1) return {success: false, message: `Cannot deregister ${column.getName()} because it still has 1 reference`};
+      else return {success: false, message: `Cannot deregister ${column.getName()} because it still has ${column.getReferenceCount()} references`};
     }
     else {
       this.allColumns.splice(index, 1);
-      return {success: true, message: `Deregistered column ${column.name}`};
+      return {success: true, message: `Deregistered column ${column.getName()}`};
     }
   }
 
-  public updateColumnName(tableName: string, oldColName: string, newColName: string): ReturnState {
-    if (!this.isColumnNameAvailable(tableName, newColName)) return {success: false, message: `Column name already used for table: ${tableName}.${newColName}`}
-    let index: number = this.allColumns.findIndex(col => col.table == tableName && col.name == oldColName);
+  public updateColumnName(column: Column, newColName: string): ReturnState {
+    if (!this.isColumnNameAvailable(column.getTable(), newColName)) return {success: false, message: `Column name already used for table: ${column.getTable().getName()}.${newColName}`}
+    let index: number = this.allColumns.indexOf(column);
     if (index < 0) {
-      return {success: false, message: `Column ${oldColName} could not be found`}
+      return {success: false, message: `Column ${column.getName()} could not be found`}
     }
     else {
-      this.allColumns[index].name = newColName;
-      return {success: true, message: `Changed column name from ${oldColName} to ${newColName}`};
+      let oldName: string = column.getName();
+      this.allColumns[index].setName(newColName);
+      return {success: true, message: `Changed column name from ${oldName} to ${newColName}`};
     }
   }
 
-  public addColumnReference(tableName: string, colName: string): ReturnState {
-    let index: number = this.allColumns.findIndex(col => col.table == tableName && col.name == colName);
+  public addColumnReference(column: Column): ReturnState {
+    let index: number = this.allColumns.indexOf(column);
     if (index < 0) {
-      return {success: false, message: `${tableName}.${colName} could not be found`}
+      return {success: false, message: `${column.getFullname()} could not be found`}
     }
     else {
-      this.allColumns[index].references += 1;
-      return {success: true, message: `Added reference to column ${tableName}.${colName}`};
+      this.allColumns[index].addReference();
+      return {success: true, message: `Added reference to column ${column.getFullname()}`};
     }
   }
 
-  public removeColumnReference(tableName: string, colName: string): ReturnState {
-    let index: number = this.allColumns.findIndex(col => col.table == tableName && col.name == colName);
+  public removeColumnReference(column: Column): ReturnState {
+    let index: number = this.allColumns.indexOf(column);
     if (index < 0) {
-      return {success: false, message: `${tableName}.${colName} could not be found`}
+      return {success: false, message: `${column.getFullname()} could not be found`}
     }
-    else if (this.allColumns[index].references > 0) {
-      this.allColumns[index].references -= 1;
-      return {success: true, message: `Removed reference from column ${tableName}.${colName}`};
+    else if (this.allColumns[index].getReferenceCount() > 0) {
+      this.allColumns[index].removeReference()
+      return {success: true, message: `Removed reference from column ${column.getFullname()}`};
     }
     else {
-      return {success: false, message: `${tableName}.${colName} already had 0 references`}
+      return {success: false, message: `${column.getFullname()} already had 0 references`}
     }
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Column } from 'src/app/interfaces/column';
+import { Column } from 'src/app/models/column';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { ContainerService } from 'src/app/services/container.service';
 import { MatDialog } from '@angular/material';
@@ -39,20 +39,20 @@ export class ColumnComponent implements OnInit {
 
   protected editColumnData(): void {
     if (this.column) {
-      this.openColumnDialog({new: false, name: this.column.name, value: this.column.value}).subscribe((columnData: ColumnData) => {
+      this.openColumnDialog({new: false, name: this.column.getName(), value: this.column.getValue()}).subscribe((columnData: ColumnData) => {
         if (this.column && this.table && columnData) {
           let returnState: ReturnState = {success: true, message: `Updated column: ${columnData.name}`};
           if (columnData.delete === true)
           {
-            returnState = this.table.removeColumn(this.column.name);
+            returnState = this.table.removeColumn(this.column.getName());
           }
           else
           {
-            if (this.column.name != columnData.name) {
-              returnState = this.table.setColumnName(this.column.name, columnData.name);
+            if (this.column.getName() != columnData.name) {
+              returnState = this.table.setColumnName(this.column, columnData.name);
             }
             if (returnState.success === true) {
-              this.column.value = columnData.value;
+              this.column.changeValue(columnData.value);
             }
           }
           this.notifications.showMessage(returnState);

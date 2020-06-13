@@ -1,5 +1,6 @@
 import { RandomNumber } from './random-number';
 import { Parameter, DataType } from 'src/app/interfaces/parameter';
+import { Column } from '../column';
 
 export class FloatNumber extends RandomNumber{
   constructor(
@@ -11,8 +12,8 @@ export class FloatNumber extends RandomNumber{
     super(min, max, step);
   }
 
-  public getName(tableName?: string, colName?: string): string {
-    if (tableName != undefined && colName != undefined) {
+  public getName(column?: Column): string {
+    if (column != undefined) {
       return `FloatNumber[${this.min}, ${this.max}, ${this.step}, ${this.accuracy}]`
     }
     else {
