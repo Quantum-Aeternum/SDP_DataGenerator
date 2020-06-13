@@ -1,0 +1,48 @@
+<mat-card>
+  <mat-card-title>
+    Readonly Values:
+    <button mat-button color="primary">Add Readonly Value</button>
+  </mat-card-title>
+  <p>
+    "Readonly Values" can be used in any table. Its value is constant after the first evaluation.
+  </p>
+  <mat-expansion-panel *ngIf='readonlyTable'>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <b>{{readonlyTable.name}}</b>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-list>
+      <app-column *ngFor='let column of readonlyTable.columns' [column]='column' [table]='readonlyTable'></app-column>
+    </mat-list>
+    <br>
+  </mat-expansion-panel>
+</mat-card>
+
+<mat-card>
+  <mat-card-title>
+    Tables:
+    <button mat-button color="primary">Add Table</button>
+  </mat-card-title>
+  <mat-accordion>
+    <app-table [table]='table'></app-table>
+  </mat-accordion>
+</mat-card>
+
+<mat-card>
+  <mat-card-title>
+    Output:
+    <button mat-button (click)="generate()" [disabled]="busy" color="primary">Generate</button>
+    <button mat-button (click)="toggleView()" [disabled]="busy" color="primary">{{toggleViewName}}</button>
+    <a mat-button [href]="downloadUri" download="dataset.json" [disabled]="busy" color="primary">Download</a>
+    <button mat-button (click)="clear()" [disabled]="busy" color="primary">Clear Data</button>
+  </mat-card-title>
+
+  <mat-spinner *ngIf="busy" diameter="20"></mat-spinner>
+  <p>
+    "Clear Data" to remove the generated data set if the app is slow; or switch to "Basic View". <br>
+    "Pretty View" is not recommended for large data sets.
+  </p>
+  <p *ngIf="!prettyView">{{textData}}</p>
+  <ngx-json-viewer *ngIf="prettyView" [json]="jsonData" [expanded]="false"></ngx-json-viewer>
+</mat-card>

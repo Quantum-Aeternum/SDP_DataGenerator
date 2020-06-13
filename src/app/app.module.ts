@@ -16,6 +16,7 @@ import { ContainerService } from './services/container.service';
 import { ToggleControlsComponent } from './components/toggle-controls/toggle-controls.component';
 import { ColumnDialogModule } from './components/column/column-dialog.module';
 import { ColumnDialogComponent } from './components/column/column-dialog.component';
+import { GeneratorComponent } from './components/generator/generator.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ColumnDialogComponent } from './components/column/column-dialog.compone
     TableComponent,
     ColumnComponent,
     ConfirmDialog,
-    ToggleControlsComponent
+    ToggleControlsComponent,
+    GeneratorComponent
   ],
   imports: [
     BrowserModule,

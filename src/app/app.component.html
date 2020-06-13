@@ -7,27 +7,4 @@
   </mat-toolbar-row>
 </mat-toolbar>
 
-<mat-card>
-  <mat-accordion>
-    <app-table [table]='table'></app-table>
-  </mat-accordion>
-</mat-card>
-
-<mat-card>
-  <mat-card-title>
-    Output:
-    <button mat-button (click)="generate()" [disabled]="busy" color="primary">Generate</button>
-    <button mat-button (click)="toggleView()" [disabled]="busy" color="primary">{{toggleViewName}}</button>
-    <a mat-button [href]="downloadUri" download="dataset.json" [disabled]="busy" color="primary">Download</a>
-    <button mat-button (click)="clear()" [disabled]="busy" color="primary">Clear Data</button>
-  </mat-card-title>
-
-  <mat-spinner *ngIf="busy" diameter="20"></mat-spinner>
-  <p>
-    "Clear Data" to remove the generated data set if the app is slow; or switch to "Basic View". <br>
-    "Pretty View" is not recommended for large data sets.
-  </p>
-  <p *ngIf="!prettyView">{{textData}}</p>
-  <ngx-json-viewer *ngIf="prettyView" [json]="jsonData" [expanded]="false"></ngx-json-viewer>
-</mat-card>
-
+<app-generator></app-generator>

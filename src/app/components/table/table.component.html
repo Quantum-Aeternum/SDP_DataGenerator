@@ -2,9 +2,7 @@
 
   <mat-expansion-panel-header>
     <mat-panel-title>
-      <mat-card-title>
-      {{table.name}} (Rows: {{table.numRows.getDisplayName()}})
-      </mat-card-title>
+      <b>{{table.name}} (Rows: {{table.numRows.getDisplayName()}})</b>
     </mat-panel-title>
     <mat-panel-description>
     </mat-panel-description>
@@ -13,8 +11,6 @@
   <app-toggle-controls [buttons]='buttons' (clicked)='buttonClicked($event)'></app-toggle-controls>
 
   <mat-list>
-    <mat-list-item> <b>{{table.name}} Columns</b> </mat-list-item>
-    <mat-divider [inset]="true"></mat-divider>
     <app-column *ngFor='let column of table.columns' [column]='column' [table]='table'></app-column>
   </mat-list>
   <br>

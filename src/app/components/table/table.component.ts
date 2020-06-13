@@ -89,7 +89,7 @@ export class TableComponent implements OnInit {
             this.notifications.showMessage(returnState);
           }
           else {
-            this.notifications.showMessage({success: false, message: `Table name already used: ${tableData.name}`});
+            this.notifications.showMessage({success: false, message: `Table name already used or invalid: ${tableData.name}`});
           }
         }
       });

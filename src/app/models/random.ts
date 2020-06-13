@@ -40,15 +40,15 @@ export abstract class Random {
   }
 
   public getDisplayName(column?: Column): string {
-    if (this.owner != undefined && this.owner.isReadonly() == true){
-      return `${this.owner.getName()}`;
-    }
-    else if (this.owner != undefined && this.owner != column)
+
+    if (this.owner == undefined || this.owner == column)
     {
-      return `${this.owner.getFullname()}`;
-    }
-    else {
       return this.getName(column);
+    }
+    else
+    {
+      if (this.owner.isReadonly()) return this.owner.getName();
+      else return this.owner.getFullname();
     }
   }
 

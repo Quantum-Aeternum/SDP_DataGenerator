@@ -14,10 +14,12 @@ export class ContainerService {
   constructor() { }
 
   public isTableNameAvailable(nameToCheck: string): boolean {
+    if (nameToCheck.trim() == '') return false;
     return (this.allTables.findIndex(table => table.getName() == nameToCheck) < 0)
   }
 
   public isColumnNameAvailable(table: Table, colNameToCheck: string): boolean {
+    if (colNameToCheck.trim() == '') return false;
     return (this.allColumns.findIndex(col => col.getTable() == table && col.getName() == colNameToCheck) < 0)
   }
 
@@ -27,7 +29,7 @@ export class ContainerService {
       return {success: true, message: `Table ${table.getName()} has been registered`}
     }
     else {
-      return {success: false, message: `Table name already used: ${table.getName()}`}
+      return {success: false, message: `Table name already used or invalid: ${table.getName()}`}
     }
   }
 
@@ -43,7 +45,7 @@ export class ContainerService {
   }
 
   public updateTableName(table: Table, newName: string): ReturnState {
-    if (!this.isTableNameAvailable(newName)) return {success: false, message: `Table name already used: ${newName}`};
+    if (!this.isTableNameAvailable(newName)) return {success: false, message: `Table name already used or invalid: ${newName}`};
     let index: number = this.allTables.indexOf(table);
     if (index < 0) {
       return {success: false, message: `Table ${table.getName()} could not be found`}
@@ -61,7 +63,7 @@ export class ContainerService {
       return {success: true, message: `Column ${column.getName()} has been registered`}
     }
     else {
-      return {success: false, message: `Column name already used for table: ${column.getTable().getName()}.${column.getName()}`}
+      return {success: false, message: `Column name already used for table or invalid: ${column.getFullname()}`}
     }
   }
 
@@ -81,7 +83,7 @@ export class ContainerService {
   }
 
   public updateColumnName(column: Column, newColName: string): ReturnState {
-    if (!this.isColumnNameAvailable(column.getTable(), newColName)) return {success: false, message: `Column name already used for table: ${column.getTable().getName()}.${newColName}`}
+    if (!this.isColumnNameAvailable(column.getTable(), newColName)) return {success: false, message: `Column name already used for table or invalid: ${column.getTable().getName()}.${newColName}`}
     let index: number = this.allColumns.indexOf(column);
     if (index < 0) {
       return {success: false, message: `Column ${column.getName()} could not be found`}

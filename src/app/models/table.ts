@@ -27,6 +27,10 @@ export class Table {
     return this.numRows;
   }
 
+  public getColumnNames(): Array<string> {
+    return this.columns.map(c => c.getName());
+  }
+
   public setName(newName: string): ReturnState {
     let response: ReturnState = this.container.updateTableName(this, newName);
     if (response.success === true) this.name = newName;
