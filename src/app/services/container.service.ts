@@ -148,7 +148,6 @@ export class ContainerService {
   public openTableDialog(data: TableData): Observable<TableData> {
 
     const dialogRef = this.dialog.open(TableDialogComponent, {
-      width: '250px',
       data: data
     });
 
@@ -158,7 +157,6 @@ export class ContainerService {
   public openColumnDialog(data: ColumnData): Observable<ColumnData> {
 
     const dialogRef = this.dialog.open(ColumnDialogComponent, {
-      width: `${window.innerWidth}px`,
       data: data
     });
 

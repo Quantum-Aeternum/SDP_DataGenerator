@@ -24,7 +24,7 @@ export abstract class Format extends Random{
   public settings(): Array<Parameter> {
     return [
       { name: 'format', type: DataType.string, list: false, description: 'Format', value: this.format},
-      { name: 'obj', type: DataType.Random, list: false, description: 'Any random value', value: new RandomNumber()}
+      { name: 'obj', type: DataType.Random, list: false, description: 'Any random value', value: this.obj}
     ];
   }
 

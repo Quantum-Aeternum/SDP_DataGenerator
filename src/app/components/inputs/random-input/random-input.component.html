@@ -8,13 +8,11 @@
     </mat-panel-description>
   </mat-expansion-panel-header>
 
-  <mat-list>
-  </mat-list>
-  <br>
-
-  <mat-accordion *ngIf="nestedInputs">
-    <app-input *ngFor="let parameter of nestedInputs" [(settings)]='parameter' [(value)]='parameter.value'></app-input>
-  </mat-accordion>
+  <ng-template matExpansionPanelContent>
+    <mat-accordion *ngIf="nestedInputs">
+      <app-input *ngFor="let parameter of nestedInputs" [(settings)]='parameter' [(value)]='parameter.value'></app-input>
+    </mat-accordion>
+  </ng-template>
   <br>
 
 </mat-expansion-panel>

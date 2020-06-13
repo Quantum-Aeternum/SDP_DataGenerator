@@ -31,7 +31,6 @@ export class NotificationsService {
   public confirm(message: string): Observable<YesNo> {
 
     const dialogRef = this.dialog.open(ConfirmDialog, {
-      width: '250px',
       data: {confirmed: false, message: message}
     });
 

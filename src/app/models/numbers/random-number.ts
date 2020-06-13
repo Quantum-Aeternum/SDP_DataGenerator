@@ -29,9 +29,12 @@ export class RandomNumber extends Random{
 
   public settings(): Array<Parameter> {
     return [
-      { name: 'min', type: DataType.number, list: false, description: 'Minimum value', value: this.min},
-      { name: 'max', type: DataType.number, list: false, description: 'Maximum value', value: this.max},
-      { name: 'step', type: DataType.number, list: false, description: 'Distance between values', value: this.step}
+      new Parameter('min', DataType.number, false, '', this.min),
+      new Parameter('max', DataType.number, false, '', this.max),
+      new Parameter('step', DataType.number, false, '', this.step),
+      // { name: 'min', type: DataType.number, list: false, description: 'Minimum value', value: this.min},
+      // { name: 'max', type: DataType.number, list: false, description: 'Maximum value', value: this.max},
+      // { name: 'step', type: DataType.number, list: false, description: 'Distance between values', value: this.step}
     ];
   }
 
