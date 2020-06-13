@@ -15,12 +15,7 @@ export class RandomString extends Random{
   }
 
   public getName(column?: Column): string {
-    if (column != undefined) {
-      return `RandomString[${this.alphabet.toString()}, ${this.length.getDisplayName(column)}, ${this.separator}]`
-    }
-    else {
-      return 'RandomString'
-    }
+    return `RandomString[${this.alphabet.toString()}, ${this.length.getDisplayName(column)}, ${this.separator}]`;
   }
 
   public getDescription(): string {

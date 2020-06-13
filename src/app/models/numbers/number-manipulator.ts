@@ -13,12 +13,7 @@ export class NumberManipulator extends RandomNumber{
   }
 
   public getName(column?: Column): string {
-    if (column != undefined) {
-      return `NumberManipulator[${this.left.getDisplayName(column)}, ${this.right.getDisplayName(column)}]`
-    }
-    else {
-      return 'NumberManipulator'
-    }
+    return `NumberManipulator[${this.left.getDisplayName(column)}, ${this.right.getDisplayName(column)}]`
   }
 
   public getDescription(): string {

@@ -20,12 +20,7 @@ export class RandomNumber extends Random{
   }
 
   public getName(column?: Column): string {
-    if (column != undefined) {
-      return `RandomNumber[${this.min}, ${this.max}, ${this.step}]`
-    }
-    else {
-      return 'RandomNumber'
-    }
+    return `RandomNumber[${this.min}, ${this.max}, ${this.step}]`
   }
 
   public getDescription(): string {

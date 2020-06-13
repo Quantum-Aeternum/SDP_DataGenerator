@@ -11,12 +11,7 @@ export class NumberDivision extends NumberManipulator{
   }
 
   public getName(column?: Column): string {
-    if (column != undefined) {
-      return `NumberDivision[${this.left.getDisplayName(column)}, ${this.right.getDisplayName(column)}]`
-    }
-    else {
-      return 'NumberDivision'
-    }
+    return `NumberDivision[${this.left.getDisplayName(column)}, ${this.right.getDisplayName(column)}]`
   }
 
   public getDescription(): string {

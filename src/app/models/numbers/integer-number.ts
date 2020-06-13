@@ -21,12 +21,7 @@ export class IntegerNumber extends RandomNumber{
   }
 
   public getName(column?: Column): string {
-    if (column != undefined) {
-      return `IntegerNumber[${this.min}, ${this.max}, ${this.step}]`
-    }
-    else {
-      return 'IntegerNumber'
-    }
+    return `IntegerNumber[${this.min}, ${this.max}, ${this.step}]`
   }
 
   public getDescription(): string {

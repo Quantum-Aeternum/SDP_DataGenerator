@@ -11,12 +11,7 @@ export class FixedString extends RandomString{
   }
 
   public getName(column?: Column): string {
-    if (column != undefined) {
-      return `FixedString[${this.fixedString}]`
-    }
-    else {
-      return 'FixedString'
-    }
+    return `FixedString[${this.fixedString}]`
   }
 
   public getDescription(): string {

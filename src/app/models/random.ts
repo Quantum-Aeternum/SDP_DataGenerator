@@ -39,7 +39,7 @@ export abstract class Random {
     return 'Base class of all Randoms'
   }
 
-  public getDisplayName(column: Column): string {
+  public getDisplayName(column?: Column): string {
     if (this.owner != undefined && this.owner.isReadonly() == true){
       return `${this.owner.getName()}`;
     }

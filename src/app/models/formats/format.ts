@@ -14,12 +14,7 @@ export abstract class Format extends Random{
   }
 
   public getName(column?: Column): string {
-    if (column != undefined) {
-      return `Format[${this.format}, ${this.obj.getDisplayName(column)}]`
-    }
-    else {
-      return 'Format'
-    }
+    return `Format[${this.format}, ${this.obj.getDisplayName(column)}]`
   }
 
   public getDescription(): string {

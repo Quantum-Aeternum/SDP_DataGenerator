@@ -15,13 +15,8 @@ export class RandomChoice extends Random{
   }
 
   public getName(column?: Column): string {
-    if (column != undefined) {
-      let optionsString = this.options.map(o => o.getName()).join(', ');
-      return `RandomChoice[${optionsString}]`;
-    }
-    else {
-      return 'RandomChoice'
-    }
+    let optionsString = this.options.map(o => o.getName()).join(', ');
+    return `RandomChoice[${optionsString}]`;
   }
 
   public getDescription(): string {

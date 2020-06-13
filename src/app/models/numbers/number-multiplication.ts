@@ -11,12 +11,7 @@ export class NumberMultiplication extends NumberManipulator{
   }
 
   public getName(column?: Column): string {
-    if (column != undefined) {
-      return `NumberMultiplication[${this.left.getDisplayName(column)}, ${this.right.getDisplayName(column)}]`
-    }
-    else {
-      return 'NumberMultiplication'
-    }
+    return `NumberMultiplication[${this.left.getDisplayName(column)}, ${this.right.getDisplayName(column)}]`
   }
 
   public getDescription(): string {

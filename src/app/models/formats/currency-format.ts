@@ -14,12 +14,7 @@ export class CurrencyFormat extends Format{
   }
 
   public getName(column?: Column): string {
-    if (column != undefined) {
-      return `CurrencyFormat[${this.symbol}, ${this.obj.getDisplayName(column)}]`
-    }
-    else {
-      return 'CurrencyFormat'
-    }
+    return `CurrencyFormat[${this.symbol}, ${this.obj.getDisplayName(column)}]`
   }
 
   public getDescription(): string {

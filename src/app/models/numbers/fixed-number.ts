@@ -11,12 +11,7 @@ export class FixedNumber extends RandomNumber{
   }
 
   public getName(column?: Column): string {
-    if (column != undefined) {
-      return `FixedNumber[${this.value}]`
-    }
-    else {
-      return 'FixedNumber'
-    }
+    return `FixedNumber[${this.value}]`
   }
 
   public getDescription(): string {

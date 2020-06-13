@@ -13,12 +13,7 @@ export class FloatNumber extends RandomNumber{
   }
 
   public getName(column?: Column): string {
-    if (column != undefined) {
-      return `FloatNumber[${this.min}, ${this.max}, ${this.step}, ${this.accuracy}]`
-    }
-    else {
-      return 'FloatNumber'
-    }
+    return `FloatNumber[${this.min}, ${this.max}, ${this.step}, ${this.accuracy}]`
   }
 
   public getDescription(): string {
