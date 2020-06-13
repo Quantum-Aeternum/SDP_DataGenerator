@@ -43,8 +43,8 @@ export class NotificationsService {
   selector: 'table-dialog',
   template: `<h1 mat-dialog-title>{{data.message}}</h1>
   <div mat-dialog-actions>
-    <button mat-button (click)="no()">No</button>
-    <button mat-button (click)="yes()" cdkFocusInitial>Yes</button>
+    <button mat-button (click)="yes()" color="primary">Yes</button>
+    <button mat-button (click)="no()" color="primary">No</button>
   </div>`,
 })
 export class ConfirmDialog {

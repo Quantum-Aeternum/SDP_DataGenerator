@@ -15,7 +15,7 @@
   <mat-list>
     <mat-list-item> <b>{{table.name}} Columns</b> </mat-list-item>
     <mat-divider [inset]="true"></mat-divider>
-    <app-column *ngFor='let column of table.columns' [column]='column'></app-column>
+    <app-column *ngFor='let column of table.columns' [column]='column' [table]='table'></app-column>
   </mat-list>
   <br>
 

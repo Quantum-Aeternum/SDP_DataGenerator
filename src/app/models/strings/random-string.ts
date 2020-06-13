@@ -1,6 +1,7 @@
 import { Random } from '../random';
 import { Parameter, DataType } from 'src/app/interfaces/parameter';
 import { RandomNumber } from '../numbers/random-number';
+import { Column } from 'src/app/interfaces/column';
 
 export class RandomString extends Random{
 
@@ -10,6 +11,7 @@ export class RandomString extends Random{
     protected separator: string = ''
   ) {
     super();
+    this.registerChildRandom(length);
   }
 
   public getName(tableName?: string, colName?: string): string {

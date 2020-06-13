@@ -9,6 +9,7 @@ export abstract class Format extends Random{
     protected obj: Random = new RandomNumber()
   ) {
     super();
+    this.registerChildRandom(obj);
   }
 
   public getName(tableName?: string, colName?: string): string {

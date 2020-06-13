@@ -14,6 +14,8 @@ import { TableDialogComponent } from './components/table/table-dialog.component'
 import { TableDialogModule } from './components/table/table-dialog.module';
 import { ContainerService } from './services/container.service';
 import { ToggleControlsComponent } from './components/toggle-controls/toggle-controls.component';
+import { ColumnDialogModule } from './components/column/column-dialog.module';
+import { ColumnDialogComponent } from './components/column/column-dialog.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { ToggleControlsComponent } from './components/toggle-controls/toggle-con
     BrowserModule,
     BrowserAnimationsModule,
     TableDialogModule,
+    ColumnDialogModule,
     FormsModule,
     ReactiveFormsModule,
     NgxJsonViewerModule,
@@ -46,6 +49,7 @@ import { ToggleControlsComponent } from './components/toggle-controls/toggle-con
   ],
   entryComponents: [
     TableDialogComponent,
+    ColumnDialogComponent,
     ConfirmDialog
   ],
   providers: [

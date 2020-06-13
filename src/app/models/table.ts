@@ -42,12 +42,26 @@ export class Table {
     else return false;
   }
 
+  public setColumnName(oldName: string, newName: string): ReturnState {
+    let index = this.columns.findIndex(col => col.name == oldName);
+    if (index < 0) return {success: false, message: `Column ${oldName} does not exist in the ${this.name} table`};
+    let response: ReturnState = this.container.updateColumnName(this.name, oldName, newName);
+    if (response.success === true) this.columns[index].name = newName;
+    return response;
+  }
+
   public addColumn(name: string, value: Random, required: boolean = false): ReturnState {
     if (name == undefined || name.trim() == '') return {success: false, message: `Column name may not be empty`};
     if (this.columns.findIndex(col => col.name == name) >= 0) return {success: false, message: `Column ${name} already exists on table ${this.name}`};
     let newCol: Column = {table: this.name, name: name, value: value, references: 0};
     let response = this.container.registerColumn(newCol);
     if (response.success) {
+      newCol.value.owners().forEach(owner => {
+        if (owner.name != newCol.name || owner.table != newCol.table) {
+          console.log(`${this.name}.${newCol.name} now references ${this.name}.${owner.name}`);
+          this.container.addColumnReference(this.name, owner.name);
+        }
+      });
       this.columns.push(newCol);
       if (newCol.value.owner == undefined) newCol.value.owner = newCol;
       return {success: true, message: `Added column: ${name}`};
@@ -57,14 +71,19 @@ export class Table {
     }
   }
 
-  public removeColumn(name: string): ReturnState {
+  public removeColumn(name: string, ignoreReferences: boolean = false): ReturnState {
     let index = this.columns.findIndex(col => col.name == name);
     if (index < 0) return {success: false, message: `Column ${name} does not exist in the ${this.name} table`};
-    if (this.columns[index].references > 0) return {success: false, message: `Cannot remove ${name} because it still has references`};
-    let response = this.container.deregisterColumn(this.columns[index]);
+    let response = this.container.deregisterColumn(this.columns[index], ignoreReferences);
     if (response.success == true) {
+      this.columns[index].value.owners().forEach(owner => {
+        if (owner != this.columns[index]) {
+          console.log(`${this.name}.${this.columns[index].name} dereferenced ${this.name}.${owner.name}`);
+          this.container.removeColumnReference(this.name, owner.name);
+        }
+      });
       this.columns.splice(index, 1);
-      return {success: true, message: `Removed column ${name}`};
+      return {success: true, message: `Removed column: ${name}`};
     }
     else {
       return response;
@@ -102,14 +121,8 @@ export class Table {
     });
 
     // Attempt to remove all columns
-    for (let index = 0; index < this.columns.length; index++) {
-      let col: Column = this.columns[index];
-      if (col.references > 0) {
-        return {success: false, message: `${col.table}.${col.name} still has references`}
-      }
-    }
     while (this.columns.length > 0) {
-      let response = this.removeColumn(this.columns[0].name);
+      let response = this.removeColumn(this.columns[0].name, true);
       if (response.success == false) return response;
     }
 

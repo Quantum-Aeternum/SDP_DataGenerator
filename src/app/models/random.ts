@@ -7,6 +7,7 @@ export abstract class Random {
 
   protected evaluated: boolean = false;
   protected value: Object = 'none';
+  private _nestedRandoms: Array<Random> = [];
 
   constructor() {
   }
@@ -22,7 +23,9 @@ export abstract class Random {
     return value;
   }
 
-  public abstract evaluate(): Object;
+  protected registerChildRandom(random: Random): void {
+    this._nestedRandoms.push(random);
+  }
 
   public settings(): Array<Parameter> {
     return [];
@@ -48,5 +51,20 @@ export abstract class Random {
       return this.getName(tableName, colName);
     }
   }
+
+  public owners(): Array<Column>
+  {
+    let ownerList: Array<Column> = [];
+    if (this.owner != undefined) ownerList.push(this.owner);
+    this._nestedRandoms.forEach(child => {
+      let childOwners = child.owners();
+      childOwners.forEach(childOwner => {
+        if (!ownerList.includes(childOwner)) ownerList.push(childOwner)
+      });
+    });
+    return ownerList;
+  }
+
+  public abstract evaluate(): Object;
 
 }

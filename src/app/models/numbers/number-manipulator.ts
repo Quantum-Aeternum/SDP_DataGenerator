@@ -7,6 +7,8 @@ export class NumberManipulator extends RandomNumber{
     protected right: RandomNumber = new RandomNumber()
   ){
     super(1, 1, 1);
+    this.registerChildRandom(left);
+    this.registerChildRandom(right);
   }
 
   public getName(tableName?: string, colName?: string): string {

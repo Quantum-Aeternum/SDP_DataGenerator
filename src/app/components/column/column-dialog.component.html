@@ -1,13 +1,14 @@
-<h1 mat-dialog-title *ngIf='data.new' >Create Table:</h1>
-<h1 mat-dialog-title *ngIf='!data.new' >Edit Table:</h1>
+<h1 mat-dialog-title *ngIf='data.new' >Create Column:</h1>
+<h1 mat-dialog-title *ngIf='!data.new' >Edit Column:</h1>
 <div mat-dialog-content>
   <mat-form-field>
-    <mat-label>Child table name</mat-label>
-    <input matInput placeholder="Ex. Test Table" [(ngModel)]='data.name'>
+    <mat-label>Column name</mat-label>
+    <input matInput placeholder="Ex. Test Column" [(ngModel)]='data.name'>
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
   <button *ngIf='data.new' mat-button [mat-dialog-close]="data" color="primary">Create</button>
   <button *ngIf='!data.new' mat-button [mat-dialog-close]="data" color="primary">Update</button>
+  <button *ngIf='!data.new' mat-button (click)="delete()" color="primary">Delete</button>
   <button mat-button (click)="cancel()" color="primary">Cancel</button>
 </div>

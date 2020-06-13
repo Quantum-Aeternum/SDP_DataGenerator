@@ -8,6 +8,9 @@ export class RandomChoice extends Random{
     private options: Array<Random> = [new RandomNumber()]
   ) {
     super();
+    options.forEach(option => {
+      this.registerChildRandom(option);
+    });
   }
 
   public getName(tableName?: string, colName?: string): string {

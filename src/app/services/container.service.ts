@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ReturnState } from '../interfaces/return-state';
 import { Column } from '../interfaces/column';
+import { reference } from '@angular/core/src/render3';
 
 @Injectable({
   providedIn: 'root'
@@ -65,13 +66,14 @@ export class ContainerService {
     }
   }
 
-  public deregisterColumn(column: Column): ReturnState {
+  public deregisterColumn(column: Column, ingoreReferences: boolean = false): ReturnState {
     let index: number = this.allColumns.indexOf(column);
     if (index < 0) {
       return {success: false, message: `${column.table}.${column.name} could not be found`}
     }
-    else if (column.references > 0) {
-      return {success: false, message: `Cannot deregister ${column.name} because it still has references`};
+    else if (!ingoreReferences && column.references > 0) {
+      if (column.references == 1) return {success: false, message: `Cannot deregister ${column.name} because it still has 1 reference`};
+      else return {success: false, message: `Cannot deregister ${column.name} because it still has ${column.references} references`};
     }
     else {
       this.allColumns.splice(index, 1);
@@ -107,7 +109,7 @@ export class ContainerService {
     if (index < 0) {
       return {success: false, message: `${tableName}.${colName} could not be found`}
     }
-    else if (this.allColumns[index].references < 0) {
+    else if (this.allColumns[index].references > 0) {
       this.allColumns[index].references -= 1;
       return {success: true, message: `Removed reference from column ${tableName}.${colName}`};
     }
