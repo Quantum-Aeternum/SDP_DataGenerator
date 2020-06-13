@@ -22,8 +22,8 @@ export class NumberManipulator extends RandomNumber{
 
   public settings(): Array<Parameter> {
     return [
-      { name: 'left', type: DataType.RandomNumber, list: false, description: 'Left side of the operator', default: this.right},
-      { name: 'right', type: DataType.RandomNumber, list: false, description: 'Right side of the operator', default: this.left}
+      { name: 'left', type: DataType.RandomNumber, list: false, description: 'Left side of the operator', value: this.right},
+      { name: 'right', type: DataType.RandomNumber, list: false, description: 'Right side of the operator', value: this.left}
     ];
   }
 

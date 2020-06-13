@@ -20,7 +20,7 @@ export class FixedNumber extends RandomNumber{
 
   public settings(): Array<Parameter> {
     return [
-      { name: 'value', type: DataType.number, list: false, description: 'Any number', default: this.value}
+      { name: 'value', type: DataType.number, list: false, description: 'Any number', value: this.value}
     ];
   }
 

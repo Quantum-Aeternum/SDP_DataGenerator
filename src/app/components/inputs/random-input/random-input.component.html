@@ -1,1 +1,20 @@
-<app-input *ngFor="let parameter of random.settings()" [settings]='parameter' [value]='parameter.default'></app-input>
+<mat-expansion-panel>
+
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{random.getName()}}
+    </mat-panel-title>
+    <mat-panel-description>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+
+  <mat-list>
+  </mat-list>
+  <br>
+
+  <mat-accordion *ngIf="random.settings()">
+    <app-input *ngFor="let parameter of random.settings()" [settings]='parameter' [value]='parameter.value'></app-input>
+  </mat-accordion>
+  <br>
+
+</mat-expansion-panel>

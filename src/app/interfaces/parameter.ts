@@ -1,9 +1,11 @@
 export enum DataType {number, string, Random, RandomNumber, NumberManipulator, RandomString, RandomChoice, Format}
 
-export interface Parameter {
-  name: string,
-  type: DataType,
-  list: boolean,
-  description: string,
-  default: Object
+export class Parameter {
+  constructor(
+    public name: string,
+    public type: DataType,
+    public list: boolean,
+    public description: string,
+    public value: Object
+  ) {}
 }

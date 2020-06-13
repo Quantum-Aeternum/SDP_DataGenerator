@@ -22,7 +22,7 @@ export class FloatNumber extends RandomNumber{
 
   public settings(): Array<Parameter> {
     let params: Array<Parameter> = super.settings();
-    params.push({ name: 'accuracy', type: DataType.number, list: false, description: 'Decimal places in the number', default: this.accuracy});
+    params.push({ name: 'accuracy', type: DataType.number, list: false, description: 'Decimal places in the number', value: this.accuracy});
     return params;
   }
 

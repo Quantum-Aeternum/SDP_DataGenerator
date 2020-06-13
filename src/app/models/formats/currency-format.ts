@@ -23,8 +23,8 @@ export class CurrencyFormat extends Format{
 
   public settings(): Array<Parameter> {
     return [
-      { name: 'symbol', type: DataType.string, list: false, description: 'Currency symbol', default: this.symbol},
-      { name: 'obj', type: DataType.RandomNumber, list: false, description: 'Numerical amount', default: new RandomNumber()}
+      { name: 'symbol', type: DataType.string, list: false, description: 'Currency symbol', value: this.symbol},
+      { name: 'obj', type: DataType.RandomNumber, list: false, description: 'Numerical amount', value: new RandomNumber()}
     ];
   }
 

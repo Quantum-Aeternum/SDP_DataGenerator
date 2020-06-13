@@ -25,7 +25,7 @@ export class RandomChoice extends Random{
 
   public settings(): Array<Parameter> {
     return [
-      { name: 'options', type: DataType.Random, list: true, description: 'List of options to choose from', default: this.options}
+      { name: 'options', type: DataType.Random, list: true, description: 'List of options to choose from', value: this.options}
     ];
   }
 

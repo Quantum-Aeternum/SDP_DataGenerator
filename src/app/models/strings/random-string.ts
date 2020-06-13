@@ -24,9 +24,9 @@ export class RandomString extends Random{
 
   public settings(): Array<Parameter> {
     return [
-      { name: 'alphabet', type: DataType.string, list: true, description: 'Symbols (characters or strings) to use when creating the string', default: this.alphabet},
-      { name: 'length', type: DataType.RandomNumber, list: false, description: 'Number of symbols to concatenate', default: this.length},
-      { name: 'separator', type: DataType.string, list: false, description: 'Character or string to put between the concatenated symbols', default: this.separator}
+      { name: 'alphabet', type: DataType.string, list: true, description: 'Symbols (characters or strings) to use when creating the string', value: this.alphabet},
+      { name: 'length', type: DataType.RandomNumber, list: false, description: 'Number of symbols to concatenate', value: this.length},
+      { name: 'separator', type: DataType.string, list: false, description: 'Character or string to put between the concatenated symbols', value: this.separator}
     ];
   }
 

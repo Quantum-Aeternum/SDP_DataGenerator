@@ -158,7 +158,7 @@ export class ContainerService {
   public openColumnDialog(data: ColumnData): Observable<ColumnData> {
 
     const dialogRef = this.dialog.open(ColumnDialogComponent, {
-      width: '300px',
+      width: `${window.innerWidth}px`,
       data: data
     });
 
