@@ -5,17 +5,11 @@ import { CurrencyFormat } from '../../models/formats/currency-format';
 import { FixedNumber } from '../../models/numbers/fixed-number';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { NotificationsService } from '../../services/notifications.service';
-import { ContainerService } from '../../services/container.service';
-import { Column } from '../../models/column';
+import { ContainerService, TableData, ColumnData } from '../../services/container.service';
 import { NumberMultiplication } from '../../models/numbers/number-multiplication';
 import { NumberSubtraction } from '../../models/numbers/number-subtraction';
-import { TableData } from '../table/table.component';
-import { TableDialogComponent } from '../table/table-dialog.component';
-import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { ReturnState } from 'src/app/interfaces/return-state';
-import { ColumnData } from '../column/column.component';
-import { ColumnDialogComponent } from '../column/column-dialog.component';
 
 @Component({
   selector: 'app-generator',
@@ -83,7 +77,7 @@ export class GeneratorComponent implements OnInit {
 
   protected addTable(): void {
     this.scrubTables();
-    this.openTableDialog({new: true, name: '', numRows: new RandomNumber()}).subscribe((tableData: TableData) => {
+    this.container.openTableDialog({new: true, name: '', numRows: new RandomNumber()}).subscribe((tableData: TableData) => {
       if (tableData) {
         if (this.container.isTableNameAvailable(tableData.name)) {
           this.tables.push(new Table(tableData.name, tableData.numRows, this.container));
@@ -96,7 +90,7 @@ export class GeneratorComponent implements OnInit {
   }
 
   protected addReadonlyValue(): void {
-    this.openColumnDialog({new: true, name: '', value: new RandomNumber()}).subscribe((columnData: ColumnData) => {
+    this.container.openColumnDialog({new: true, name: '', value: new RandomNumber()}).subscribe((columnData: ColumnData) => {
       if (columnData) {
         let response: ReturnState = this.readonlyTable.addColumn(columnData.name, columnData.value, true);
         this.notifications.showMessage(response);
@@ -131,26 +125,6 @@ export class GeneratorComponent implements OnInit {
 
   private scrubTables(): void {
     this.tables = this.tables.filter(table => !table.shouldDispose());
-  }
-
-  private openTableDialog(data: TableData): Observable<TableData> {
-
-    const dialogRef = this.dialog.open(TableDialogComponent, {
-      width: '250px',
-      data: data
-    });
-
-    return dialogRef.afterClosed();
-  }
-
-  private openColumnDialog(data: ColumnData): Observable<ColumnData> {
-
-    const dialogRef = this.dialog.open(ColumnDialogComponent, {
-      width: '300px',
-      data: data
-    });
-
-    return dialogRef.afterClosed();
   }
 
 }

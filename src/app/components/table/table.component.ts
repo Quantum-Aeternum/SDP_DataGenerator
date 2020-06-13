@@ -2,19 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Table } from 'src/app/models/table';
 import { ReturnState } from 'src/app/interfaces/return-state';
 import { NotificationsService, YesNo } from 'src/app/services/notifications.service';
-import { TableDialogComponent } from './table-dialog.component';
-import { MatDialog } from '@angular/material';
-import { Observable } from 'rxjs';
-import { ContainerService } from 'src/app/services/container.service';
+import { ContainerService, TableData, ColumnData } from 'src/app/services/container.service';
 import { RandomNumber } from 'src/app/models/numbers/random-number';
-import { ColumnData } from '../column/column.component';
-import { ColumnDialogComponent } from '../column/column-dialog.component';
-
-export interface TableData {
-  new: boolean;
-  name: string;
-  numRows: RandomNumber;
-}
 
 @Component({
   selector: 'app-table',
@@ -28,8 +17,7 @@ export class TableComponent implements OnInit {
 
   constructor(
     public notifications: NotificationsService,
-    public container: ContainerService,
-    public dialog: MatDialog
+    public container: ContainerService
   ) { }
 
   ngOnInit() {
@@ -65,7 +53,7 @@ export class TableComponent implements OnInit {
 
   protected editTableData(): void {
     if (this.table) {
-      this.openTableDialog({new: false, name: this.table.getName(), numRows: this.table.getNumRows()}).subscribe((tableData: TableData) => {
+      this.container.openTableDialog({new: false, name: this.table.getName(), numRows: this.table.getNumRows()}).subscribe((tableData: TableData) => {
         if (this.table && tableData) {
           let returnState: ReturnState = {success: true, message: `Updated table: ${tableData.name}`};
           if (this.table.getName() != tableData.name) {
@@ -82,7 +70,7 @@ export class TableComponent implements OnInit {
 
   protected addNestedTable(): void {
     if (this.table) {
-      this.openTableDialog({new: true, name: '', numRows: new RandomNumber()}).subscribe((tableData: TableData) => {
+      this.container.openTableDialog({new: true, name: '', numRows: new RandomNumber()}).subscribe((tableData: TableData) => {
         if (this.table && tableData) {
           if (this.container.isTableNameAvailable(tableData.name)) {
             let returnState: ReturnState = this.table.addChild(new Table(tableData.name, tableData.numRows, this.container));
@@ -97,32 +85,12 @@ export class TableComponent implements OnInit {
   }
 
   protected addColumn(): void {
-    this.openColumnDialog({new: true, name: '', value: new RandomNumber()}).subscribe((columnData: ColumnData) => {
+    this.container.openColumnDialog({new: true, name: '', value: new RandomNumber()}).subscribe((columnData: ColumnData) => {
       if (this.table && columnData) {
         let response: ReturnState = this.table.addColumn(columnData.name, columnData.value);
         this.notifications.showMessage(response);
       }
     });
-  }
-
-  private openColumnDialog(data: ColumnData): Observable<ColumnData> {
-
-    const dialogRef = this.dialog.open(ColumnDialogComponent, {
-      width: '300px',
-      data: data
-    });
-
-    return dialogRef.afterClosed();
-  }
-
-  private openTableDialog(data: TableData): Observable<TableData> {
-
-    const dialogRef = this.dialog.open(TableDialogComponent, {
-      width: '250px',
-      data: data
-    });
-
-    return dialogRef.afterClosed();
   }
 
 }

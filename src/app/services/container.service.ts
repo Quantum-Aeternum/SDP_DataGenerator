@@ -2,7 +2,25 @@ import { Injectable } from '@angular/core';
 import { ReturnState } from '../interfaces/return-state';
 import { Column } from '../models/column';
 import { Table } from '../models/table';
+import { Random } from 'src/app/models/random';
 import { RandomNumber } from '../models/numbers/random-number';
+import { MatDialog } from '@angular/material';
+import { Observable } from 'rxjs';
+import { ColumnDialogComponent } from './column-dialog.component';
+import { TableDialogComponent } from './table-dialog.component';
+
+export interface ColumnData {
+  new: boolean;
+  name: string;
+  value: Random;
+  delete?: boolean;
+}
+
+export interface TableData {
+  new: boolean;
+  name: string;
+  numRows: RandomNumber;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +30,9 @@ export class ContainerService {
   private allTables: Array<Table> = [];
   private allColumns: Array<Column> = [];
 
-  constructor() { }
+  constructor(
+    public dialog: MatDialog
+  ) { }
 
   public isTableNameAvailable(nameToCheck: string): boolean {
     if (nameToCheck.trim() == '') return false;
@@ -123,5 +143,25 @@ export class ContainerService {
     else {
       return {success: false, message: `${column.getFullname()} already had 0 references`}
     }
+  }
+
+  public openTableDialog(data: TableData): Observable<TableData> {
+
+    const dialogRef = this.dialog.open(TableDialogComponent, {
+      width: '250px',
+      data: data
+    });
+
+    return dialogRef.afterClosed();
+  }
+
+  public openColumnDialog(data: ColumnData): Observable<ColumnData> {
+
+    const dialogRef = this.dialog.open(ColumnDialogComponent, {
+      width: '300px',
+      data: data
+    });
+
+    return dialogRef.afterClosed();
   }
 }

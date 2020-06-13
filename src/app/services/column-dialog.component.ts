@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { ColumnData } from './column.component';
+import { ColumnData } from './container.service';
 
 @Component({
   selector: 'column-dialog',

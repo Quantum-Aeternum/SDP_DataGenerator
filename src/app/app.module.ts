@@ -10,12 +10,12 @@ import { NgxJsonViewerModule } from 'ngx-json-viewer';
 import { TableComponent } from './components/table/table.component';
 import { ColumnComponent } from './components/column/column.component';
 import { NotificationsService, ConfirmDialog } from './services/notifications.service';
-import { TableDialogComponent } from './components/table/table-dialog.component';
-import { TableDialogModule } from './components/table/table-dialog.module';
+import { TableDialogComponent } from './services/table-dialog.component';
+import { TableDialogModule } from './services/table-dialog.module';
 import { ContainerService } from './services/container.service';
 import { ToggleControlsComponent } from './components/toggle-controls/toggle-controls.component';
-import { ColumnDialogModule } from './components/column/column-dialog.module';
-import { ColumnDialogComponent } from './components/column/column-dialog.component';
+import { ColumnDialogModule } from './services/column-dialog.module';
+import { ColumnDialogComponent } from './services/column-dialog.component';
 import { GeneratorComponent } from './components/generator/generator.component';
 
 @NgModule({
