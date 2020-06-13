@@ -7,7 +7,6 @@ import { Observable } from 'rxjs';
 import { ColumnDialogComponent } from './column-dialog.component';
 import { ReturnState } from 'src/app/interfaces/return-state';
 import { Random } from 'src/app/models/random';
-import { RandomNumber } from 'src/app/models/numbers/random-number';
 import { Table } from 'src/app/models/table';
 
 export interface ColumnData {

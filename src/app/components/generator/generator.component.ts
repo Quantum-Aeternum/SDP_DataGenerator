@@ -9,6 +9,13 @@ import { ContainerService } from '../../services/container.service';
 import { Column } from '../../models/column';
 import { NumberMultiplication } from '../../models/numbers/number-multiplication';
 import { NumberSubtraction } from '../../models/numbers/number-subtraction';
+import { TableData } from '../table/table.component';
+import { TableDialogComponent } from '../table/table-dialog.component';
+import { Observable } from 'rxjs';
+import { MatDialog } from '@angular/material';
+import { ReturnState } from 'src/app/interfaces/return-state';
+import { ColumnData } from '../column/column.component';
+import { ColumnDialogComponent } from '../column/column-dialog.component';
 
 @Component({
   selector: 'app-generator',
@@ -20,7 +27,7 @@ export class GeneratorComponent implements OnInit {
   protected busy: boolean = false;
 
   protected readonlyTable: Table = new Table('READONLY', new FixedNumber(1), this.container);
-  protected table: Table | undefined;
+  protected tables: Array<Table> = [];
   protected jsonData: JSON = JSON.parse('[]');
   protected downloadUri: SafeUrl = '';
   protected textData: string = '[]';
@@ -31,7 +38,8 @@ export class GeneratorComponent implements OnInit {
   constructor(
     protected sanitizer: DomSanitizer,
     public notifications: NotificationsService,
-    public container: ContainerService
+    public container: ContainerService,
+    public dialog: MatDialog
   ) {
 
     this.generateDownloadURL();
@@ -53,26 +61,51 @@ export class GeneratorComponent implements OnInit {
 
     group.addChild(demand);
 
-    this.table = group;
+    this.tables.push(group);
   }
 
   ngOnInit() {
   }
 
   protected generate(): void {
+    this.scrubTables();
     let tableData: {[key: string]: Object} = {};
-    if (this.table) {
-      this.busy = true;
-      tableData[this.table.getName()] = this.table.generateData();
-      this.textData = JSON.stringify(tableData);
-      this.jsonData = JSON.parse(this.textData);
-      this.generateDownloadURL();
-      this.notifications.showMessage({success: true, message: `Data has been generated`});
-      this.busy = false;
-    }
+    this.busy = true;
+    this.tables.forEach(table => {
+      tableData[table.getName()] = table.generateData();
+    });
+    this.textData = JSON.stringify(tableData);
+    this.jsonData = JSON.parse(this.textData);
+    this.generateDownloadURL();
+    this.notifications.showMessage({success: true, message: `Data has been generated`});
+    this.busy = false;
+  }
+
+  protected addTable(): void {
+    this.scrubTables();
+    this.openTableDialog({new: true, name: '', numRows: new RandomNumber()}).subscribe((tableData: TableData) => {
+      if (tableData) {
+        if (this.container.isTableNameAvailable(tableData.name)) {
+          this.tables.push(new Table(tableData.name, tableData.numRows, this.container));
+        }
+        else {
+          this.notifications.showMessage({success: false, message: `Table name already used or invalid: ${tableData.name}`});
+        }
+      }
+    });
+  }
+
+  protected addReadonlyValue(): void {
+    this.openColumnDialog({new: true, name: '', value: new RandomNumber()}).subscribe((columnData: ColumnData) => {
+      if (columnData) {
+        let response: ReturnState = this.readonlyTable.addColumn(columnData.name, columnData.value, true);
+        this.notifications.showMessage(response);
+      }
+    });
   }
 
   protected generateDownloadURL() {
+    this.scrubTables();
     let blob = new Blob([this.textData], { type: 'text/json' });
     let url= window.URL.createObjectURL(blob);
     let uri: SafeUrl = this.sanitizer.bypassSecurityTrustUrl(url); // This has security issues
@@ -80,6 +113,7 @@ export class GeneratorComponent implements OnInit {
   }
 
   protected clear(): void {
+    this.scrubTables();
     this.busy = true;
     this.jsonData = JSON.parse('[]');
     this.downloadUri = '';
@@ -93,6 +127,30 @@ export class GeneratorComponent implements OnInit {
     if (this.prettyView) this.toggleViewName = "Basic View";
     else this.toggleViewName = "Pretty View";
     this.busy = false;
+  }
+
+  private scrubTables(): void {
+    this.tables = this.tables.filter(table => !table.shouldDispose());
+  }
+
+  private openTableDialog(data: TableData): Observable<TableData> {
+
+    const dialogRef = this.dialog.open(TableDialogComponent, {
+      width: '250px',
+      data: data
+    });
+
+    return dialogRef.afterClosed();
+  }
+
+  private openColumnDialog(data: ColumnData): Observable<ColumnData> {
+
+    const dialogRef = this.dialog.open(ColumnDialogComponent, {
+      width: '300px',
+      data: data
+    });
+
+    return dialogRef.afterClosed();
   }
 
 }

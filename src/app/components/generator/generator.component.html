@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-title>
     Readonly Values:
-    <button mat-button color="primary">Add Readonly Value</button>
+    <button mat-button color="primary" (click)="addReadonlyValue()">Add Readonly Value</button>
   </mat-card-title>
   <p>
     "Readonly Values" can be used in any table. Its value is constant after the first evaluation.
@@ -22,10 +22,10 @@
 <mat-card>
   <mat-card-title>
     Tables:
-    <button mat-button color="primary">Add Table</button>
+    <button mat-button color="primary" (click)="addTable()">Add Table</button>
   </mat-card-title>
   <mat-accordion>
-    <app-table [table]='table'></app-table>
+    <app-table *ngFor='let table of tables' [table]='table'></app-table>
   </mat-accordion>
 </mat-card>
 

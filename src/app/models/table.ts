@@ -7,14 +7,15 @@ import { Column } from './column';
 
 export class Table {
 
-  private columns: Array<Column> = [];
-  private parent: Table | undefined = undefined;
-  private children: Array<Table> = [];
+  private logicallyDeleted: boolean = false;
+  protected columns: Array<Column> = [];
+  protected parent: Table | undefined = undefined;
+  protected children: Array<Table> = [];
 
   constructor(
-    private name: string,
-    private numRows: RandomNumber = new RandomNumber(),
-    private container: ContainerService
+    protected name: string,
+    protected numRows: RandomNumber = new RandomNumber(),
+    protected container: ContainerService
   ) {
     container.registerTable(this);
   }
@@ -44,6 +45,10 @@ export class Table {
   public hasParent(): boolean {
     if (this.parent) return true;
     else return false;
+  }
+
+  public shouldDispose(): boolean {
+    return this.logicallyDeleted;
   }
 
   public setColumnName(column: Column, newName: string): ReturnState {
@@ -101,15 +106,9 @@ export class Table {
   protected removeChild(child: Table): ReturnState {
     let childIndex = this.children.findIndex(table => table.name == child.name);
     if (childIndex < 0 || this.children[childIndex].parent != this) return {success: false, message: `Table ${child.name} is not a child of the ${this.name} table`};
-    let response = this.container.deregisterTable(child);
-    if (response.success == true) {
-      this.children.splice(childIndex, 1);
-      child.parent = undefined;
-      return {success: true, message: `Removed child table: ${child.name}`};
-    }
-    else {
-      return response;
-    }
+    this.children.splice(childIndex, 1);
+    child.parent = undefined;
+    return {success: true, message: `Removed child table: ${child.name}`};
   }
 
   public logicallyDelete(): ReturnState {
@@ -126,6 +125,8 @@ export class Table {
     }
 
     // Finally remove this table from its parent
+    this.container.deregisterTable(this);
+    this.logicallyDeleted = true;
     if (this.parent === undefined) return {success: true, message: `Removed table: ${this.name}`};
     return this.parent.removeChild(this);
   }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ReturnState } from '../interfaces/return-state';
 import { Column } from '../models/column';
 import { Table } from '../models/table';
+import { RandomNumber } from '../models/numbers/random-number';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,8 @@ export class ContainerService {
   public registerTable(table: Table): ReturnState {
     if (this.isTableNameAvailable(table.getName())) {
       this.allTables.push(table);
+      let numRows: RandomNumber = table.getNumRows();
+      if (numRows.owner != undefined) this.addColumnReference(numRows.owner);
       return {success: true, message: `Table ${table.getName()} has been registered`}
     }
     else {
@@ -39,6 +42,8 @@ export class ContainerService {
       return {success: false, message: `Table ${table.getName()} could not be found`}
     }
     else {
+      let numRows: RandomNumber = table.getNumRows();
+      if (numRows.owner != undefined) this.removeColumnReference(numRows.owner);
       this.allTables.splice(index, 1);
       return {success: true, message: `Deregistered table ${table.getName()}`};
     }

@@ -7,6 +7,8 @@ import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
 import { ContainerService } from 'src/app/services/container.service';
 import { RandomNumber } from 'src/app/models/numbers/random-number';
+import { ColumnData } from '../column/column.component';
+import { ColumnDialogComponent } from '../column/column-dialog.component';
 
 export interface TableData {
   new: boolean;
@@ -42,6 +44,7 @@ export class TableComponent implements OnInit {
         this.removeTable();
         break;
       case 2:
+        this.addColumn();
         break;
       case 3:
         this.addNestedTable();
@@ -54,10 +57,7 @@ export class TableComponent implements OnInit {
       this.notifications.confirm(`Are you sure you want to delete ${this.table.getName()}?`).subscribe((result: YesNo) => {
         if (this.table && result && result.confirmed === true) {
           let returnState: ReturnState = this.table.logicallyDelete();
-          if (!this.table.hasParent()) {
-            this.notifications.showMessage(returnState);
-          }
-          this.table = undefined;
+          this.notifications.showMessage(returnState);
         }
       });
     }
@@ -94,6 +94,25 @@ export class TableComponent implements OnInit {
         }
       });
     }
+  }
+
+  protected addColumn(): void {
+    this.openColumnDialog({new: true, name: '', value: new RandomNumber()}).subscribe((columnData: ColumnData) => {
+      if (this.table && columnData) {
+        let response: ReturnState = this.table.addColumn(columnData.name, columnData.value);
+        this.notifications.showMessage(response);
+      }
+    });
+  }
+
+  private openColumnDialog(data: ColumnData): Observable<ColumnData> {
+
+    const dialogRef = this.dialog.open(ColumnDialogComponent, {
+      width: '300px',
+      data: data
+    });
+
+    return dialogRef.afterClosed();
   }
 
   private openTableDialog(data: TableData): Observable<TableData> {
