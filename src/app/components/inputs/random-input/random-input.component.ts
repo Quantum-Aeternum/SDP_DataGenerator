@@ -14,10 +14,12 @@ export class RandomInputComponent implements OnInit {
 
   protected acceptedTypes: Array<DataType> = [DataType.RandomNumber, DataType.RandomString, DataType.RandomChoice];
   protected dataTypes = DataType;
+  protected nestedInputs: Array<Parameter> | undefined;
 
   constructor() {
   }
 
   ngOnInit() {
+    if (this.random) this.nestedInputs = this.random.settings();
   }
 }

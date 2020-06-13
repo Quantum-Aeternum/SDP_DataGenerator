@@ -12,8 +12,8 @@
   </mat-list>
   <br>
 
-  <mat-accordion *ngIf="random.settings()">
-    <app-input *ngFor="let parameter of random.settings()" [settings]='parameter' [value]='parameter.value'></app-input>
+  <mat-accordion *ngIf="nestedInputs">
+    <app-input *ngFor="let parameter of nestedInputs" [(settings)]='parameter' [(value)]='parameter.value'></app-input>
   </mat-accordion>
   <br>
 
