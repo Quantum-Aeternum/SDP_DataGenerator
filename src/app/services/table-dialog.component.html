@@ -5,9 +5,10 @@
     <mat-label>Child table name</mat-label>
     <input matInput placeholder="Ex. Test Table" [(ngModel)]='data.name'>
   </mat-form-field>
+  <app-input *ngIf='value' [(value)]='value'></app-input>
 </div>
 <div mat-dialog-actions>
-  <button *ngIf='data.new' mat-button [mat-dialog-close]="data" color="primary">Create</button>
-  <button *ngIf='!data.new' mat-button [mat-dialog-close]="data" color="primary">Update</button>
+  <button *ngIf='data.new' mat-button (click)="submit()" color="primary">Create</button>
+  <button *ngIf='!data.new' mat-button (click)="submit()" color="primary">Update</button>
   <button mat-button (click)="cancel()" color="primary">Cancel</button>
 </div>
