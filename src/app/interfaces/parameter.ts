@@ -1,5 +1,3 @@
-export enum DataType {number, string, Random, RandomNumber, NumberManipulator, RandomString, RandomChoice, Format}
-
 export class Parameter {
   constructor(
     public name: string,
@@ -8,4 +6,15 @@ export class Parameter {
     public description: string,
     public value: Object
   ) {}
+}
+
+export enum DataType {
+  number='number',
+  string='string',
+  Random='Random',
+  RandomNumber='RandomNumber',
+  NumberManipulator='NumberManipulator',
+  RandomString='RandomString',
+  RandomChoice='RandomChoice',
+  Format='Format'
 }

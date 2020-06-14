@@ -1,8 +1,9 @@
+<app-type-selector [name]='name' [selected]='random.getBaseType()'></app-type-selector>
 <mat-expansion-panel [disabled]='column != random.owner'>
 
   <mat-expansion-panel-header>
     <mat-panel-title>
-      {{name}}: {{random.getDisplayName(column)}}
+      {{random.getDisplayName(column)}}
     </mat-panel-title>
     <mat-panel-description>
     </mat-panel-description>

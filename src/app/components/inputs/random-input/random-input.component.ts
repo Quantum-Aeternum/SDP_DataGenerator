@@ -10,7 +10,7 @@ import { Column } from 'src/app/models/column';
 })
 export class RandomInputComponent implements OnInit {
 
-  @Input() name: string = "Input";
+  @Input() name: string = "Type";
   @Input() random: Random | undefined;
   @Input() settings: Parameter | undefined;
   @Input() column: Column | undefined;

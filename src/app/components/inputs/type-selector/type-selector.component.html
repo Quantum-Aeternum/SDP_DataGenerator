@@ -1,0 +1,6 @@
+<mat-form-field>
+  <mat-label>{{name}}</mat-label>
+  <mat-select [(value)]="selected" (selectionChange)="changedSelection()">
+    <mat-option *ngFor='let dataType of dataTypes' value="dataType">{{dataType}}</mat-option>
+  </mat-select>
+</mat-form-field>

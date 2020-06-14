@@ -10,13 +10,13 @@ import { Column } from 'src/app/models/column';
 })
 export class InputComponent implements OnInit {
 
-  @Input() name: string = "Input";
+  @Input() name: string = "Type";
   @Input() value: Object | undefined;
   @Input() settings: Parameter | undefined;
   @Input() column: Column | undefined;
 
   protected dataTypes = DataType;
-  protected childName: string = "Input";
+  protected childName: string = "Type";
 
   constructor() {
   }
