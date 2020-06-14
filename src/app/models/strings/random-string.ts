@@ -14,6 +14,12 @@ export class RandomString extends Random{
     this.registerChildRandom(length);
   }
 
+  public clone(): Random {
+    let clone: RandomString = new RandomString(this.alphabet, <RandomNumber>this.length.clone(), this.separator);
+    clone.owner = this.owner;
+    return clone;
+  }
+
   public getName(column?: Column): string {
     return `RandomString[${this.alphabet.toString()}, ${this.length.getDisplayName(column)}, ${this.separator}]`;
   }

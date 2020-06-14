@@ -12,7 +12,7 @@ export class Column {
     protected readonly: boolean = false,
   )
   {
-    if (value.owner == undefined) value.owner = this;
+    if (value.getOwner() == undefined) value.setOwner(this);
   }
 
   public getTable(): Table {
@@ -36,8 +36,8 @@ export class Column {
   }
 
   public changeValue(newValue: Random): void {
-    if (this.value.owner == this) this.value.owner = undefined;
-    if (newValue.owner == undefined) newValue.owner = this;
+    if (this.value.getOwner() == this) this.value.setOwner(undefined);
+    if (newValue.getOwner() == undefined) newValue.setOwner(this);
     this.value = newValue;
   }
 

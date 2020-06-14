@@ -1,5 +1,6 @@
 import { RandomNumber } from './random-number';
 import { Column } from '../column';
+import { Random } from '../random';
 
 export class IntegerNumber extends RandomNumber{
   constructor(
@@ -18,6 +19,12 @@ export class IntegerNumber extends RandomNumber{
     this.step = Math.round(step);
     this.min = Math.round(min);
     this.max = Math.round(max);
+  }
+
+  public clone(): Random {
+    let clone: IntegerNumber = new IntegerNumber(this.min, this.max, this.step);
+    clone.owner = this.owner;
+    return clone;
   }
 
   public getName(column?: Column): string {

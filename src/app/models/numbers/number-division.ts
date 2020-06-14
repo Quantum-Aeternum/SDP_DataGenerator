@@ -1,6 +1,7 @@
 import { NumberManipulator } from './number-manipulator';
 import { RandomNumber } from './random-number';
 import { Column } from '../column';
+import { Random } from '../random';
 
 export class NumberDivision extends NumberManipulator{
   constructor(
@@ -8,6 +9,12 @@ export class NumberDivision extends NumberManipulator{
     protected right: RandomNumber = new RandomNumber()
   ){
     super(left, right);
+  }
+
+  public clone(): Random {
+    let clone: NumberDivision = new NumberDivision(<RandomNumber>this.left.clone(), <RandomNumber>this.right.clone());
+    clone.owner = this.owner;
+    return clone;
   }
 
   public getName(column?: Column): string {

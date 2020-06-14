@@ -26,7 +26,7 @@ export class ColumnComponent implements OnInit {
 
   protected editColumnData(): void {
     if (this.column) {
-      this.container.openColumnDialog({new: false, name: this.column.getName(), value: this.column.getValue()}).subscribe((columnData: ColumnData) => {
+      this.container.openColumnDialog({name: this.column.getName(), value: this.column.getValue(), column: this.column}).subscribe((columnData: ColumnData) => {
         if (this.column && this.table && columnData) {
           let returnState: ReturnState = {success: true, message: `Updated column: ${columnData.name}`};
           if (columnData.delete === true)
@@ -35,12 +35,8 @@ export class ColumnComponent implements OnInit {
           }
           else
           {
-            console.log(columnData.value);
             if (this.column.getName() != columnData.name) {
               returnState = this.table.setColumnName(this.column, columnData.name);
-            }
-            if (returnState.success === true) {
-              this.column.changeValue(columnData.value);
             }
           }
           this.notifications.showMessage(returnState);

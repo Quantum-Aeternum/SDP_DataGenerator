@@ -13,6 +13,12 @@ export class RandomNumber extends Random{
     this.fixParameters();
   }
 
+  public clone(): Random {
+    let clone: RandomNumber = new RandomNumber(this.min, this.max, this.step);
+    clone.owner = this.owner;
+    return clone;
+  }
+
   public getName(column?: Column): string {
     return `RandomNumber[${this.min}, ${this.max}, ${this.step}]`
   }

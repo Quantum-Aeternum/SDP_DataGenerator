@@ -1,6 +1,7 @@
 import { RandomNumber } from './random-number';
 import { Parameter, DataType } from 'src/app/interfaces/parameter';
 import { Column } from '../column';
+import { Random } from '../random';
 
 export class NumberManipulator extends RandomNumber{
   constructor(
@@ -10,6 +11,12 @@ export class NumberManipulator extends RandomNumber{
     super(1, 1, 1);
     this.registerChildRandom(left);
     this.registerChildRandom(right);
+  }
+
+  public clone(): Random {
+    let clone: NumberManipulator = new NumberManipulator(<RandomNumber>this.left.clone(), <RandomNumber>this.right.clone());
+    clone.owner = this.owner;
+    return clone;
   }
 
   public getName(column?: Column): string {

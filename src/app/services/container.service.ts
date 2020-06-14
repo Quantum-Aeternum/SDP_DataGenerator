@@ -10,9 +10,9 @@ import { ColumnDialogComponent } from './column-dialog.component';
 import { TableDialogComponent } from './table-dialog.component';
 
 export interface ColumnData {
-  new: boolean;
   name: string;
   value: Random;
+  column?: Column;
   delete?: boolean;
 }
 
@@ -48,7 +48,8 @@ export class ContainerService {
     if (this.isTableNameAvailable(table.getName())) {
       this.allTables.push(table);
       let numRows: RandomNumber = table.getNumRows();
-      if (numRows.owner != undefined) this.addColumnReference(numRows.owner);
+      let owner: Column | undefined = numRows.getOwner();
+      if (owner != undefined) this.addColumnReference(owner);
       return {success: true, message: `Table ${table.getName()} has been registered`}
     }
     else {
@@ -63,7 +64,8 @@ export class ContainerService {
     }
     else {
       let numRows: RandomNumber = table.getNumRows();
-      if (numRows.owner != undefined) this.removeColumnReference(numRows.owner);
+      let owner: Column | undefined = numRows.getOwner();
+      if (owner != undefined) this.removeColumnReference(owner);
       this.allTables.splice(index, 1);
       return {success: true, message: `Deregistered table ${table.getName()}`};
     }

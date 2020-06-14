@@ -1,6 +1,7 @@
 import { RandomNumber } from './random-number';
 import { Parameter, DataType } from 'src/app/interfaces/parameter';
 import { Column } from '../column';
+import { Random } from '../random';
 
 export class FloatNumber extends RandomNumber{
   constructor(
@@ -10,6 +11,13 @@ export class FloatNumber extends RandomNumber{
     protected accuracy: number = 2
   ) {
     super(min, max, step);
+    if (this.accuracy < 0) this.accuracy = 0;
+  }
+
+  public clone(): Random {
+    let clone: FloatNumber = new FloatNumber(this.min, this.max, this.step, this.accuracy);
+    clone.owner = this.owner;
+    return clone;
   }
 
   public getName(column?: Column): string {

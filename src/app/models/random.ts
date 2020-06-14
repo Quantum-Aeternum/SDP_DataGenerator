@@ -3,7 +3,7 @@ import { Column } from '../models/column';
 
 export abstract class Random {
 
-  public owner: Column | undefined;
+  protected owner: Column | undefined;
 
   protected evaluated: boolean = false;
   protected value: Object = 'none';
@@ -27,16 +27,15 @@ export abstract class Random {
     this._nestedRandoms.push(random);
   }
 
-  public settings(): Array<Parameter> {
-    return [];
+  public getOwner(): Column | undefined {
+    return this.owner;
   }
 
-  public getName(column?: Column): string {
-    return 'Random'
-  }
-
-  public getDescription(): string {
-    return 'Base class of all Randoms'
+  public setOwner(column: Column | undefined) {
+    if (this.owner == undefined) this.owner = column;
+    this._nestedRandoms.forEach(random => {
+      random.setOwner(column);
+    });
   }
 
   public getDisplayName(column?: Column): string {
@@ -65,7 +64,11 @@ export abstract class Random {
     return ownerList;
   }
 
+  public abstract getName(column?: Column): string;
+  public abstract getDescription(): string;
   public abstract evaluate(): Object;
+  public abstract settings(): Array<Parameter>;
   public abstract update(parameters: Array<Parameter>): void;
+  public abstract clone(): Random;
 
 }

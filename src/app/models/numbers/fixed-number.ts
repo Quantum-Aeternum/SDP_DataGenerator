@@ -1,6 +1,7 @@
 import { RandomNumber } from './random-number';
 import { Parameter, DataType } from 'src/app/interfaces/parameter';
 import { Column } from '../column';
+import { Random } from '../random';
 
 export class FixedNumber extends RandomNumber{
   constructor(
@@ -8,6 +9,12 @@ export class FixedNumber extends RandomNumber{
   ) {
     super(value, value, 1);
     this.value = value;
+  }
+
+  public clone(): Random {
+    let clone: FixedNumber = new FixedNumber(this.value);
+    clone.owner = this.owner;
+    return clone;
   }
 
   public getName(column?: Column): string {

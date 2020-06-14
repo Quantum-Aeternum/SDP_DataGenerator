@@ -13,6 +13,12 @@ export class CurrencyFormat extends Format{
     super(symbol, obj);
   }
 
+  public clone(): Random {
+    let clone: CurrencyFormat = new CurrencyFormat(this.symbol, <RandomNumber>this.obj.clone());
+    clone.owner = this.owner;
+    return clone;
+  }
+
   public getName(column?: Column): string {
     return `CurrencyFormat[${this.symbol}, ${this.obj.getDisplayName(column)}]`
   }

@@ -76,6 +76,23 @@ export class Table {
     }
   }
 
+  public addExistingColumn(column: Column): ReturnState {
+    if (this.columns.includes(column)) return {success: false, message: `Column ${name} already exists on table ${this.name}`};
+    let response = this.container.registerColumn(column);
+    if (response.success) {
+      column.getValue().owners().forEach(owner => {
+        if (owner != column) {
+          this.container.addColumnReference(owner);
+        }
+      });
+      this.columns.push(column);
+      return {success: true, message: `Added column: ${name}`};
+    }
+    else {
+      return response;
+    }
+  }
+
   public removeColumn(name: string, ignoreReferences: boolean = false): ReturnState {
     let index = this.columns.findIndex(col => col.getName() == name);
     if (index < 0) return {success: false, message: `Column ${name} does not exist in the ${this.name} table`};
@@ -155,7 +172,8 @@ export class Table {
     // Reset the columns after creating the row (and its children)
     this.columns.forEach(col => {
       let val: Random = col.getValue();
-      if (val.owner != undefined && val.owner.isReadonly() == false) {
+      let owner: Column | undefined = val.getOwner();
+      if (owner != undefined && owner.isReadonly() == false) {
         val.reset();
       }
     });

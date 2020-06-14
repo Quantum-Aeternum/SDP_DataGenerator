@@ -85,7 +85,7 @@ export class TableComponent implements OnInit {
   }
 
   protected addColumn(): void {
-    this.container.openColumnDialog({new: true, name: '', value: new RandomNumber()}).subscribe((columnData: ColumnData) => {
+    this.container.openColumnDialog({name: '', value: new RandomNumber()}).subscribe((columnData: ColumnData) => {
       if (this.table && columnData) {
         let response: ReturnState = this.table.addColumn(columnData.name, columnData.value);
         this.notifications.showMessage(response);

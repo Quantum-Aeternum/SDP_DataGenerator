@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Parameter, DataType } from 'src/app/interfaces/parameter';
 import { Random } from 'src/app/models/random';
+import { Column } from 'src/app/models/column';
 
 @Component({
   selector: 'app-random-input',
@@ -12,6 +13,7 @@ export class RandomInputComponent implements OnInit {
   @Input() name: string = "Input";
   @Input() random: Random | undefined;
   @Input() settings: Parameter | undefined;
+  @Input() column: Column | undefined;
 
   protected acceptedTypes: Array<DataType> = [DataType.RandomNumber, DataType.RandomString, DataType.RandomChoice];
   protected dataTypes = DataType;

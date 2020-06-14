@@ -10,6 +10,7 @@ import { NumberMultiplication } from '../../models/numbers/number-multiplication
 import { NumberSubtraction } from '../../models/numbers/number-subtraction';
 import { MatDialog } from '@angular/material';
 import { ReturnState } from 'src/app/interfaces/return-state';
+import { Column } from 'src/app/models/column';
 
 @Component({
   selector: 'app-generator',
@@ -47,11 +48,11 @@ export class GeneratorComponent implements OnInit {
     group.addColumn('first', new CurrencyFormat('R', new RandomNumber(10, 50, 5)));
     group.addColumn('second', second);
 
-    let constVal: RandomNumber = new FixedNumber(8);
-    demand.addColumn('const', constVal);
-    demand.addColumn('const_ref', constVal);
-    demand.addColumn('val', new NumberMultiplication(constVal, new RandomNumber(0, 100, 1)));
-    demand.addColumn('const-1', new NumberSubtraction(constVal, new FixedNumber(1)));
+    let constValCol: Column = new Column(demand, 'const', new FixedNumber(8));
+    demand.addExistingColumn(constValCol);
+    demand.addColumn('const_ref', constValCol.getValue());
+    demand.addColumn('val', new NumberMultiplication(<RandomNumber>constValCol.getValue(), new RandomNumber(0, 100, 1)));
+    demand.addColumn('const-1', new NumberSubtraction(<RandomNumber>constValCol.getValue(), new FixedNumber(1)));
 
     group.addChild(demand);
 
@@ -90,7 +91,7 @@ export class GeneratorComponent implements OnInit {
   }
 
   protected addReadonlyValue(): void {
-    this.container.openColumnDialog({new: true, name: '', value: new RandomNumber()}).subscribe((columnData: ColumnData) => {
+    this.container.openColumnDialog({name: '', value: new RandomNumber()}).subscribe((columnData: ColumnData) => {
       if (columnData) {
         let response: ReturnState = this.readonlyTable.addColumn(columnData.name, columnData.value, true);
         this.notifications.showMessage(response);

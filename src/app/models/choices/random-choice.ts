@@ -14,6 +14,16 @@ export class RandomChoice extends Random{
     });
   }
 
+  public clone(): Random {
+    let clonedOptions: Array<Random> = [];
+    this.options.forEach(option => {
+      clonedOptions.push(option.clone())
+    });
+    let clone: RandomChoice = new RandomChoice(clonedOptions);
+    clone.owner = this.owner;
+    return clone;
+  }
+
   public getName(column?: Column): string {
     let optionsString = this.options.map(o => o.getName()).join(', ');
     return `RandomChoice[${optionsString}]`;
