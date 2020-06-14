@@ -36,9 +36,8 @@ export class Column {
   }
 
   public changeValue(newValue: Random): void {
-    if (this.value.getOwner() == this) this.value.setOwner(undefined);
-    if (newValue.getOwner() == undefined) newValue.setOwner(this);
-    this.value = newValue;
+    this.value.update(newValue.settings());
+    this.value.setOwner(newValue.getOwner());
   }
 
   public isReadonly(): Boolean {
