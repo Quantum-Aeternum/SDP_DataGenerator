@@ -28,6 +28,11 @@ export abstract class Format extends Random{
     ];
   }
 
+  public update(parameters: Parameter[]): void {
+    this.format = <string>parameters[0].value;
+    this.obj = <Random>parameters[1].value;
+  }
+
   public abstract evaluate(): Object;
 
   public reset(): void {

@@ -9,6 +9,7 @@ import { Random } from 'src/app/models/random';
 })
 export class RandomInputComponent implements OnInit {
 
+  @Input() name: string = "Input";
   @Input() random: Random | undefined;
   @Input() settings: Parameter | undefined;
 
@@ -21,5 +22,11 @@ export class RandomInputComponent implements OnInit {
 
   ngOnInit() {
     if (this.random) this.nestedInputs = this.random.settings();
+  }
+
+  commit() {
+    if (this.random && this.nestedInputs) {
+      this.random.update(this.nestedInputs);
+    }
   }
 }

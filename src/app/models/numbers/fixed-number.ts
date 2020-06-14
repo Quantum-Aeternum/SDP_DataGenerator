@@ -24,6 +24,10 @@ export class FixedNumber extends RandomNumber{
     ];
   }
 
+  public update(parameters: Parameter[]): void {
+    this.value = <number>parameters[0].value;
+  }
+
   public evaluate(): Object {
     return this.value;
   }

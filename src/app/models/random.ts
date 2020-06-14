@@ -66,5 +66,6 @@ export abstract class Random {
   }
 
   public abstract evaluate(): Object;
+  public abstract update(parameters: Array<Parameter>): void;
 
 }

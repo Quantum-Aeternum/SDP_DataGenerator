@@ -29,6 +29,10 @@ export class RandomChoice extends Random{
     ];
   }
 
+  public update(parameters: Parameter[]): void {
+    this.options = <Array<Random>>parameters[0].value;
+  }
+
   public evaluate(): Object {
     // Check if the object has already been set
     if (this.evaluated == true) return this.value;

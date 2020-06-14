@@ -22,9 +22,14 @@ export class NumberManipulator extends RandomNumber{
 
   public settings(): Array<Parameter> {
     return [
-      { name: 'left', type: DataType.RandomNumber, list: false, description: 'Left side of the operator', value: this.right},
-      { name: 'right', type: DataType.RandomNumber, list: false, description: 'Right side of the operator', value: this.left}
+      { name: 'left', type: DataType.RandomNumber, list: false, description: 'Left side of the operator', value: this.left},
+      { name: 'right', type: DataType.RandomNumber, list: false, description: 'Right side of the operator', value: this.right}
     ];
+  }
+
+  public update(parameters: Parameter[]): void {
+    this.left = <RandomNumber>parameters[0].value;
+    this.right = <RandomNumber>parameters[1].value;
   }
 
   public evaluate(): Object {

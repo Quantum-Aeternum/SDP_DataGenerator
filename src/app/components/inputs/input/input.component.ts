@@ -9,15 +9,18 @@ import { Random } from 'src/app/models/random';
 })
 export class InputComponent implements OnInit {
 
+  @Input() name: string = "Input";
   @Input() value: Object | undefined;
   @Input() settings: Parameter | undefined;
 
   protected dataTypes = DataType;
+  protected childName: string = "Input";
 
   constructor() {
   }
 
   ngOnInit() {
+    if (this.settings) this.childName = this.settings.name;
   }
 
 }

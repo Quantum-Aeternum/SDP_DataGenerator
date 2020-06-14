@@ -23,4 +23,8 @@ export class FixedString extends RandomString{
       { name: 'string', type: DataType.string, list: false, description: 'Any fixed piece of text', value: this.fixedString }
     ];
   }
+
+  public update(parameters: Parameter[]): void {
+    this.fixedString = <string>parameters[0].value;
+  }
 }

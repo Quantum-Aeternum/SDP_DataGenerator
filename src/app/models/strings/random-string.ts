@@ -30,6 +30,12 @@ export class RandomString extends Random{
     ];
   }
 
+  public update(parameters: Parameter[]): void {
+    this.alphabet = <Array<string>>parameters[0].value;
+    this.length = <RandomNumber>parameters[1].value;
+    this.separator = <string>parameters[2].value;
+  }
+
   public evaluate(): Object {
     // Check if the object has already been set
     if (this.evaluated == true) return this.value;

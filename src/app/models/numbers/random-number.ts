@@ -10,13 +10,7 @@ export class RandomNumber extends Random{
     protected step: number = 1
   ) {
     super();
-    if (step == 0) step = 1;
-    else if (step < 0) step = -step;
-    if (min > max) {
-      let tmp: number = max;
-      max = min;
-      min = tmp;
-    }
+    this.fixParameters();
   }
 
   public getName(column?: Column): string {
@@ -29,13 +23,17 @@ export class RandomNumber extends Random{
 
   public settings(): Array<Parameter> {
     return [
-      new Parameter('min', DataType.number, false, '', this.min),
-      new Parameter('max', DataType.number, false, '', this.max),
-      new Parameter('step', DataType.number, false, '', this.step),
-      // { name: 'min', type: DataType.number, list: false, description: 'Minimum value', value: this.min},
-      // { name: 'max', type: DataType.number, list: false, description: 'Maximum value', value: this.max},
-      // { name: 'step', type: DataType.number, list: false, description: 'Distance between values', value: this.step}
+      { name: 'min', type: DataType.number, list: false, description: 'Minimum value', value: this.min},
+      { name: 'max', type: DataType.number, list: false, description: 'Maximum value', value: this.max},
+      { name: 'step', type: DataType.number, list: false, description: 'Distance between values', value: this.step}
     ];
+  }
+
+  public update(parameters: Parameter[]): void {
+    this.min = <number>parameters[0].value;
+    this.max = <number>parameters[1].value;
+    this.step = <number>parameters[2].value;
+    this.fixParameters();
   }
 
   public evaluate(): Object {
@@ -58,6 +56,17 @@ export class RandomNumber extends Random{
     }
     else {
       return this.setValue(value);
+    }
+  }
+
+  private fixParameters()
+  {
+    if (this.step == 0) this.step = 1;
+    else if (this.step < 0) this.step = -this.step;
+    if (this.min > this.max) {
+      let tmp: number = this.max;
+      this.max = this.min;
+      this.min = tmp;
     }
   }
 }

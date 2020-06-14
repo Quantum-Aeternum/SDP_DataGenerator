@@ -26,6 +26,12 @@ export class FloatNumber extends RandomNumber{
     return params;
   }
 
+  public update(parameters: Parameter[]): void {
+    super.update(parameters);
+    this.accuracy = <number>parameters[3].value;
+    if (this.accuracy < 0) this.accuracy = 0;
+  }
+
   public evaluate(): Object {
     // Check if the object has already been set
     if (this.evaluated == true) return this.value;

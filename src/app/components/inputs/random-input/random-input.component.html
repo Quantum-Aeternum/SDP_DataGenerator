@@ -2,7 +2,7 @@
 
   <mat-expansion-panel-header>
     <mat-panel-title>
-      {{random.getName()}}
+      {{name}}: {{random.getName()}}
     </mat-panel-title>
     <mat-panel-description>
     </mat-panel-description>
@@ -10,8 +10,9 @@
 
   <ng-template matExpansionPanelContent>
     <mat-accordion *ngIf="nestedInputs">
-      <app-input *ngFor="let parameter of nestedInputs" [(settings)]='parameter' [(value)]='parameter.value'></app-input>
+      <app-input *ngFor="let parameter of nestedInputs" [name]='parameter.name' [(settings)]='parameter' [(value)]='parameter.value'></app-input>
     </mat-accordion>
+    <button mat-stroked-button color="primary" (click)="commit()">Commit</button>
   </ng-template>
   <br>
 

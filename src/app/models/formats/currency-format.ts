@@ -28,6 +28,11 @@ export class CurrencyFormat extends Format{
     ];
   }
 
+  public update(parameters: Parameter[]): void {
+    this.symbol = <string>parameters[0].value;
+    this.obj = <RandomNumber>parameters[1].value;
+  }
+
   public evaluate(): Object {
     // Check if the object has already been set
     if (this.evaluated == true) return this.value;

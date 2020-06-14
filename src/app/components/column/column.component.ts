@@ -35,6 +35,7 @@ export class ColumnComponent implements OnInit {
           }
           else
           {
+            console.log(columnData.value);
             if (this.column.getName() != columnData.name) {
               returnState = this.table.setColumnName(this.column, columnData.name);
             }
