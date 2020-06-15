@@ -14,7 +14,7 @@
 
 <span *ngIf='!terminalTypes.includes(settingsType)'>
 
-  <app-type-selector (onChange)='changeRandom($event)'
+  <app-type-selector (onChange)='changedSelection($event)'
     [allowedBaseType]='settingsType' [name]='name' [selected]='value.getType()'>
   </app-type-selector>
 

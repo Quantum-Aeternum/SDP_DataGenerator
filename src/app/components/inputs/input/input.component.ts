@@ -3,6 +3,11 @@ import { Parameter, DataType } from 'src/app/interfaces/parameter';
 import { Random } from 'src/app/models/random';
 import { Column } from 'src/app/models/column';
 
+export interface ChangeTypeObject {
+  obj: Random,
+  parameter: Parameter | undefined
+}
+
 @Component({
   selector: 'app-input',
   templateUrl: './input.component.html',
@@ -37,16 +42,20 @@ export class InputComponent implements OnInit {
     }
   }
 
-  commit(value: Object): void {
+  commit(): void {
     if (this.value && this.nestedInputs) {
       (<Random>this.value).update(this.nestedInputs);
     }
     this.onChange.emit(this.value);
   }
 
-  changeRandom(newRandom: Random): void {
-    this.value = newRandom;
+  changedSelection(newSelection: Random): void {
+    this.value = newSelection;
     (<Random>this.value).setOwner(this.column);
     this.nestedInputs = (<Random>this.value).settings();
+    if (this.settings) {
+      this.settings.value = this.value;
+    }
+    this.onChange.emit(this.value);
   }
 }

@@ -20,8 +20,8 @@ export class ColumnDialogComponent {
     this.value = data.value.clone();
   }
 
-  changedType(newType: Random): void {
-    this.value = newType;
+  commit(obj: Object): void {
+    this.value = <Random>obj;
   }
 
   protected submit(): void {
