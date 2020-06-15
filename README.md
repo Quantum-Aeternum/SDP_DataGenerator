@@ -2,23 +2,19 @@
 
 Application for generating SDP data sets - Part of Research Project - BScHons Computer Science
 
-## Supply Demand Problem (SDP) Template
+## Current State
 
-![](readme-data/template.png)
+Due to deadlines and accelerated development, unit tests are not up to date and running `ng test` will currently fail. There are still a couple of missing main features that will be implemented in the future. At this time, I am not accepting feature requests, and the software comes as is. It is currently required to run locally since it isn't hosted somewhere.
 
-## Models (UML Class Diagram)
+## Setup
 
-![](readme-data/models.png)
+### Dependencies
 
-## Components (UML Class Diagram)
+The project requires NodeJS, NPM and the Angular CLI to run. Installing NodeJS (latest version: `https://nodejs.org/en/`) also installs NPM. You can then use `npm install -g @angular/cli` to get the Angular CLI. Run `npm install` to download all required node modules for the project.
 
-![](readme-data/components.png)
+### Run local server
 
-## Angular Commands
-
-### Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng serve` and navigate to `http://localhost:4200/` or run `ng serve -o` to automatically open the browser tab. The app will automatically reload if you change any of the source files.
 
 ### Code scaffolding
 
@@ -39,3 +35,7 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ### Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Supply Demand Problem (SDP) Template
+
+![](readme-data/template.png)
