@@ -10,7 +10,7 @@ Due to deadlines and accelerated development, unit tests are not up to date and 
 
 ### Dependencies
 
-The project requires NodeJS, NPM and the Angular CLI to run. Installing NodeJS (latest version: `https://nodejs.org/en/`) also installs NPM. You can then use `npm install -g @angular/cli` to get the Angular CLI. Run `npm install` to download all required node modules for the project.
+The project requires NodeJS, NPM and the Angular CLI to run. Installing NodeJS ([available here](https://nodejs.org/en/)) also installs NPM. You can then use `npm install -g @angular/cli` to get the Angular CLI. Run `npm install` to download all required node modules for the project.
 
 ### Run local server
 
