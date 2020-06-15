@@ -38,6 +38,18 @@ export class ColumnComponent implements OnInit {
             if (this.column.getName() != columnData.name) {
               returnState = this.table.setColumnName(this.column, columnData.name);
             }
+            if (columnData.value.getType() != this.column.getValue().getType()) {
+              const refCount: number = this.column.getReferenceCount();
+              if (refCount > 0) {
+                returnState = {success: false, message: `Cannot change type since the column still has ${refCount} reference(s)`};
+              }
+              else {
+                this.column.changeValue(columnData.value);
+              }
+            }
+            else {
+              this.column.updateValue(columnData.value);
+            }
           }
           this.notifications.showMessage(returnState);
         }

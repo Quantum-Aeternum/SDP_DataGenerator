@@ -35,7 +35,14 @@ export class Column {
     return this.value;
   }
 
-  public changeValue(newValue: Random): void {
+  public changeValue(newValue: Random): boolean {
+    if (this.getReferenceCount() > 0) return false;
+    this.value = newValue;
+    this.value.setOwner(newValue.getOwner());
+    return true;
+  }
+
+  public updateValue(newValue: Random): void {
     this.value.update(newValue.settings());
     this.value.setOwner(newValue.getOwner());
   }

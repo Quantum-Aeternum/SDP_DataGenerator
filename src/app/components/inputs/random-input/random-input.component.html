@@ -1,9 +1,11 @@
-<app-type-selector *ngIf='random' [allowedBaseType]='allowedBaseType' [name]='name' [selected]='random.getType()'></app-type-selector>
+<app-type-selector *ngIf='random' (onChange)='changeRandom($event)'
+  [allowedBaseType]='allowedBaseType' [name]='name' [selected]='random.getType()'>
+</app-type-selector>
 <mat-expansion-panel [disabled]='column != random.owner'>
 
   <mat-expansion-panel-header>
     <mat-panel-title>
-      {{random.getDisplayName(column)}}
+      <b>{{random.getDisplayName(column)}}</b>
     </mat-panel-title>
     <mat-panel-description>
     </mat-panel-description>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Parameter, DataType } from 'src/app/interfaces/parameter';
 import { Random } from 'src/app/models/random';
 import { Column } from 'src/app/models/column';
@@ -15,6 +15,8 @@ export class InputComponent implements OnInit {
   @Input() settings: Parameter | undefined;
   @Input() column: Column | undefined;
 
+  @Output() onChange: EventEmitter<Random> = new EventEmitter<Random>()
+
   protected dataTypes = DataType;
   protected childName: string = "Type";
 
@@ -25,4 +27,7 @@ export class InputComponent implements OnInit {
     if (this.settings) this.childName = this.settings.name;
   }
 
+  changeRandom(newRandom: Random): void {
+    this.onChange.emit(newRandom);
+  }
 }

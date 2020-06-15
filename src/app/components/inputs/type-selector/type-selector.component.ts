@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DataType } from 'src/app/interfaces/parameter';
 import { FixedNumber } from 'src/app/models/numbers/fixed-number';
 import { FloatNumber } from 'src/app/models/numbers/float-number';
@@ -11,6 +11,7 @@ import { RandomChoice } from 'src/app/models/choices/random-choice';
 import { CurrencyFormat } from 'src/app/models/formats/currency-format';
 import { FixedString } from 'src/app/models/strings/fixed-string';
 import { RandomString } from 'src/app/models/strings/random-string';
+import { Random } from 'src/app/models/random';
 
 interface subTree {
   [key: string]: Object
@@ -52,6 +53,7 @@ export class TypeSelectorComponent implements OnInit {
   @Input() name: string = "Type";
   @Input() selected: DataType | undefined;
   @Input() allowedBaseType: DataType = DataType.Random;
+  @Output() onChange: EventEmitter<Random> = new EventEmitter<Random>();
 
   protected linearHierarchy: subTree = {};
   protected allowedTypes: Array<string> = [];
@@ -95,7 +97,10 @@ export class TypeSelectorComponent implements OnInit {
   }
 
   changedSelection() {
-
+    if (this.selected != undefined)
+    {
+      this.onChange.emit(<Random>(<subTree>this.linearHierarchy[this.selected])["value"]);
+    }
   }
 
 }

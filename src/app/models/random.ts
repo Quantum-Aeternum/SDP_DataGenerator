@@ -66,12 +66,6 @@ export abstract class Random {
 
   public updateReferences(column: Column): void {
     this._nestedRandoms.forEach(random => {
-      console.log('');
-      if (random.owner != undefined) {
-        console.log(random.owner.getName());
-        console.log(column.getValue());
-        console.log(random);
-      }
       if (random.owner == column) random.update(column.getValue().settings());
       else random.updateReferences(column);
     });
