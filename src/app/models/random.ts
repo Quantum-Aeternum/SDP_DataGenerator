@@ -71,7 +71,24 @@ export abstract class Random {
     });
   }
 
-  public abstract getName(column?: Column): string;
+  public getName(column?: Column): string {
+    let childrenNames: Array<string> = [];
+    this.settings().forEach(setting => {
+      if (setting.type == DataType.number || setting.type == DataType.string) {
+        childrenNames.push(setting.value.toString());
+      }
+      else {
+        if (setting.list) {
+          childrenNames.push((<Array<Random>>setting.value).map(val => val.getName(column)).join(','))
+        }
+        else {
+          childrenNames.push((<Random>setting.value).getDisplayName(column));
+        }
+      }
+    });
+    return `${this.getType()}[${childrenNames.join(',')}]`
+  }
+
   public abstract getDescription(): string;
   public abstract getType(): DataType;
   public abstract evaluate(): Object;

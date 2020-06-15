@@ -28,10 +28,6 @@ export class IntegerNumber extends RandomNumber{
     return clone;
   }
 
-  public getName(column?: Column): string {
-    return `IntegerNumber[${this.min}, ${this.max}, ${this.step}]`
-  }
-
   public getDescription(): string {
     return 'Random integer number in range'
   }

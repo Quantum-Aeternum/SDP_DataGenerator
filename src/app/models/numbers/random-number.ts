@@ -19,10 +19,6 @@ export class RandomNumber extends Random{
     return clone;
   }
 
-  public getName(column?: Column): string {
-    return `RandomNumber[${this.min}, ${this.max}, ${this.step}]`
-  }
-
   public getDescription(): string {
     return 'Creates a random value within a set range'
   }

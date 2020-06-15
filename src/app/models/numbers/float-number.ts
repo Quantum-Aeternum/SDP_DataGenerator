@@ -20,10 +20,6 @@ export class FloatNumber extends RandomNumber{
     return clone;
   }
 
-  public getName(column?: Column): string {
-    return `FloatNumber[${this.min}, ${this.max}, ${this.step}, ${this.accuracy}]`
-  }
-
   public getDescription(): string {
     return 'Random float number in range'
   }

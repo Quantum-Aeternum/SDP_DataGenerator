@@ -24,6 +24,8 @@ interface subTree {
 })
 export class TypeSelectorComponent implements OnInit {
 
+  private dataTypeKeys: Array<string> = Object.keys(DataType);
+  private dataTypeValues: Array<string> = Object.values(DataType);
   private dataTypeHierarchy: subTree = {
     'Random': {
       'RandomNumber': {
@@ -64,7 +66,11 @@ export class TypeSelectorComponent implements OnInit {
     this.linearHierarchy = this.flattenHierarchy(
       this.findSubHierarchy(this.dataTypeHierarchy, this.allowedBaseType)
     );
-    this.allowedTypes = Object.keys(this.linearHierarchy);
+
+    this.allowedTypes = Object.keys(this.linearHierarchy).map(key => {
+      let index = this.dataTypeKeys.indexOf(key);
+      return this.dataTypeValues[index];
+    }).sort();
   }
 
   findSubHierarchy(tree: subTree, baseType: DataType): subTree {
@@ -99,7 +105,9 @@ export class TypeSelectorComponent implements OnInit {
   changedSelection() {
     if (this.selected != undefined)
     {
-      this.onChange.emit(<Random>(<subTree>this.linearHierarchy[this.selected])["value"]);
+      let index = this.dataTypeValues.indexOf(this.selected);
+      let key = this.dataTypeKeys[index];
+      this.onChange.emit(<Random>(<subTree>this.linearHierarchy[key])["value"]);
     }
   }
 

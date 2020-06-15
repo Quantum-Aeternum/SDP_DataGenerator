@@ -21,10 +21,6 @@ export class RandomString extends Random{
     return clone;
   }
 
-  public getName(column?: Column): string {
-    return `RandomString[${this.alphabet.toString()}, ${this.length.getDisplayName(column)}, ${this.separator}]`;
-  }
-
   public getDescription(): string {
     return 'Creates a random string based on its alphabet'
   }

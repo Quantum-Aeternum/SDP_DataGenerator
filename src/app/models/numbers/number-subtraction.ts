@@ -19,10 +19,6 @@ export class NumberSubtraction extends NumberManipulator{
     return clone;
   }
 
-  public getName(column?: Column): string {
-    return `NumberSubtraction[${this.left.getDisplayName(column)}, ${this.right.getDisplayName(column)}]`
-  }
-
   public getDescription(): string {
     return 'Represents a number by subtracting one number (right) from another (left)'
   }

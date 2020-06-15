@@ -17,10 +17,6 @@ export class FixedNumber extends RandomNumber{
     return clone;
   }
 
-  public getName(column?: Column): string {
-    return `FixedNumber[${this.value}]`
-  }
-
   public getDescription(): string {
     return 'Any given number'
   }

@@ -14,10 +14,6 @@ export abstract class Format extends Random{
     this.registerChildRandom(obj);
   }
 
-  public getName(column?: Column): string {
-    return `Format[${this.format}, ${this.obj.getDisplayName(column)}]`
-  }
-
   public getDescription(): string {
     return 'Formats a random value'
   }

@@ -20,10 +20,6 @@ export class NumberManipulator extends RandomNumber{
     return clone;
   }
 
-  public getName(column?: Column): string {
-    return `NumberManipulator[${this.left.getDisplayName(column)}, ${this.right.getDisplayName(column)}]`
-  }
-
   public getDescription(): string {
     return 'Allow RandomNumbers to be manipulated'
   }

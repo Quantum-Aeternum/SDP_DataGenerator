@@ -19,10 +19,6 @@ export class NumberAddition extends NumberManipulator{
     return clone;
   }
 
-  public getName(column?: Column): string {
-    return `NumberAddition[${this.left.getDisplayName(column)}, ${this.right.getDisplayName(column)}]`
-  }
-
   public getDescription(): string {
     return 'Represents a number by adding two numbers (left and right)'
   }

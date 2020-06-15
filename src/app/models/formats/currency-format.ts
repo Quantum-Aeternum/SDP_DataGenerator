@@ -20,10 +20,6 @@ export class CurrencyFormat extends Format{
     return clone;
   }
 
-  public getName(column?: Column): string {
-    return `CurrencyFormat[${this.symbol}, ${this.obj.getDisplayName(column)}]`
-  }
-
   public getDescription(): string {
     return 'Adds a symbol to the front of a number and rounds to the closest two decimals'
   }

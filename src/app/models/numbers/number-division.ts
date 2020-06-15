@@ -19,10 +19,6 @@ export class NumberDivision extends NumberManipulator{
     return clone;
   }
 
-  public getName(column?: Column): string {
-    return `NumberDivision[${this.left.getDisplayName(column)}, ${this.right.getDisplayName(column)}]`
-  }
-
   public getDescription(): string {
     return 'Represents a number given by dividing a number (left) by another number (right)'
   }

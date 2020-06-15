@@ -25,11 +25,6 @@ export class RandomChoice extends Random{
     return clone;
   }
 
-  public getName(column?: Column): string {
-    let optionsString = this.options.map(o => o.getName()).join(', ');
-    return `RandomChoice[${optionsString}]`;
-  }
-
   public getDescription(): string {
     return 'Randomly chooses out of a list of options'
   }

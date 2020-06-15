@@ -19,10 +19,6 @@ export class NumberMultiplication extends NumberManipulator{
     return clone;
   }
 
-  public getName(column?: Column): string {
-    return `NumberMultiplication[${this.left.getDisplayName(column)}, ${this.right.getDisplayName(column)}]`
-  }
-
   public getDescription(): string {
     return 'Represents a number by multiplying two numbers (left and right)'
   }

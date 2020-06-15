@@ -17,10 +17,6 @@ export class FixedString extends RandomString{
     return clone;
   }
 
-  public getName(column?: Column): string {
-    return `FixedString[${this.fixedString}]`
-  }
-
   public getDescription(): string {
     return 'Any fixed string literal'
   }
