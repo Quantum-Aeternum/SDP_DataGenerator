@@ -5,7 +5,7 @@
     <mat-label>Column name</mat-label>
     <input matInput placeholder="Ex. Test Column" [(ngModel)]='data.name'>
   </mat-form-field>
-  <app-input *ngIf='value' [column]='data.column' [(value)]='value' (onChange)='changeRandom($event)'></app-input>
+  <app-input *ngIf='value' [column]='data.column' [value]='value'></app-input>
 </div>
 <div mat-dialog-actions>
   <button *ngIf='!data.column' mat-button (click)="submit()" color="primary">Create</button>

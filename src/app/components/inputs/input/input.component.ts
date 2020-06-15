@@ -11,23 +11,42 @@ import { Column } from 'src/app/models/column';
 export class InputComponent implements OnInit {
 
   @Input() name: string = "Type";
+  @Input() column: Column | undefined;
   @Input() value: Object | undefined;
   @Input() settings: Parameter | undefined;
-  @Input() column: Column | undefined;
 
-  @Output() onChange: EventEmitter<Random> = new EventEmitter<Random>()
+  @Output() onChange: EventEmitter<Object> = new EventEmitter<Object>();
+
+  protected childName: string = "Type";
+  protected nestedInputs: Array<Parameter> | undefined;
 
   protected dataTypes = DataType;
-  protected childName: string = "Type";
+  protected terminalTypes: Array<DataType> = [DataType.string, DataType.number];
+  protected settingsType: DataType = DataType.Random;
 
   constructor() {
   }
 
   ngOnInit() {
-    if (this.settings) this.childName = this.settings.name;
+    if (this.settings) {
+      this.childName = this.settings.name;
+      this.settingsType = this.settings.type;
+    }
+    if (!this.terminalTypes.includes(this.settingsType)) {
+      this.nestedInputs = (<Random>this.value).settings();
+    }
+  }
+
+  commit(value: Object): void {
+    if (this.value && this.nestedInputs) {
+      (<Random>this.value).update(this.nestedInputs);
+    }
+    this.onChange.emit(this.value);
   }
 
   changeRandom(newRandom: Random): void {
-    this.onChange.emit(newRandom);
+    this.value = newRandom;
+    (<Random>this.value).setOwner(this.column);
+    this.nestedInputs = (<Random>this.value).settings();
   }
 }

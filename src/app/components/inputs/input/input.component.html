@@ -1,23 +1,44 @@
 <!-- Input for number -->
-<mat-form-field *ngIf="settings && settings.type == dataTypes.number" required>
+<mat-form-field *ngIf="settingsType == dataTypes.number" required>
   <mat-label>{{name}}</mat-label>
-  <input matInput type="number" [(ngModel)]='settings.value'>
+  <input matInput type="number" [(ngModel)]='settings.value' (ngModelChange)='commit($event)'>
 </mat-form-field>
 
 <!-- Input for string -->
-<mat-form-field *ngIf="settings && settings.type == dataTypes.string" required>
+<mat-form-field *ngIf="settingsType == dataTypes.string" required>
   <mat-label>{{name}}</mat-label>
-  <input matInput type="text" [(ngModel)]='settings.value'>
+  <input matInput type="text" [(ngModel)]='settings.value' (ngModelChange)='commit($event)'>
 </mat-form-field>
 
 <!-- Input for Random -->
-<app-random-input
-  *ngIf="!settings" (onChange)='changeRandom($event)'
-  [allowedBaseType]='dataTypes.Random' [column]='column' [name]='childName' [(random)]='value'>
-</app-random-input>
-<app-random-input
-  *ngIf="settings && settings.type != dataTypes.number && settings.type != dataTypes.string" (onChange)='changeRandom($event)'
-  [allowedBaseType]='settings.type' [column]='column'  [name]='childName' [(random)]='value'>
-</app-random-input>
+
+<span *ngIf='!terminalTypes.includes(settingsType)'>
+
+  <app-type-selector (onChange)='changeRandom($event)'
+    [allowedBaseType]='settingsType' [name]='name' [selected]='value.getType()'>
+  </app-type-selector>
+
+  <mat-expansion-panel [disabled]='column != value.owner'>
+
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <b>{{value.getDisplayName(column)}}</b>
+      </mat-panel-title>
+      <mat-panel-description>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <ng-template matExpansionPanelContent>
+      <mat-accordion *ngIf="nestedInputs">
+        <app-input
+          *ngFor="let parameter of nestedInputs" (onChange)='commit()'
+          [name]='parameter.name' [column]='column' [settings]='parameter' [value]='parameter.value'>
+        </app-input>
+      </mat-accordion>
+    </ng-template>
+    <br>
+
+  </mat-expansion-panel>
+</span>
 
 <br>
