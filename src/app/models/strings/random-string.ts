@@ -2,12 +2,13 @@ import { Random } from '../random';
 import { Parameter, DataType } from 'src/app/interfaces/parameter';
 import { RandomNumber } from '../numbers/random-number';
 import { Column } from '../column';
+import { IntegerNumber } from '../numbers/integer-number';
 
 export class RandomString extends Random{
 
   constructor(
     protected alphabet: Array<string> = ['a','b','c'],
-    protected length: RandomNumber = new RandomNumber(),
+    protected length: RandomNumber = new IntegerNumber(),
     protected separator: string = ''
   ) {
     super();
@@ -26,6 +27,10 @@ export class RandomString extends Random{
 
   public getDescription(): string {
     return 'Creates a random string based on its alphabet'
+  }
+
+  public getType(): DataType {
+    return DataType.RandomString;
   }
 
   public settings(): Array<Parameter> {

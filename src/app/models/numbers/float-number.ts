@@ -28,6 +28,10 @@ export class FloatNumber extends RandomNumber{
     return 'Random float number in range'
   }
 
+  public getType(): DataType {
+    return DataType.FloatNumber;
+  }
+
   public settings(): Array<Parameter> {
     let params: Array<Parameter> = super.settings();
     params.push({ name: 'accuracy', type: DataType.number, list: false, description: 'Decimal places in the number', value: this.accuracy});

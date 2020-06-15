@@ -11,6 +11,7 @@ import { NumberSubtraction } from '../../models/numbers/number-subtraction';
 import { MatDialog } from '@angular/material';
 import { ReturnState } from 'src/app/interfaces/return-state';
 import { Column } from 'src/app/models/column';
+import { IntegerNumber } from 'src/app/models/numbers/integer-number';
 
 @Component({
   selector: 'app-generator',
@@ -39,19 +40,19 @@ export class GeneratorComponent implements OnInit {
 
     this.generateDownloadURL();
 
-    let second: RandomNumber = new RandomNumber(100, 200, 2);
+    let second: RandomNumber = new IntegerNumber(100, 200, 2);
     this.readonlyTable.addColumn('Val', second, true);
 
     let group: Table = new Table('Group', second, container);
-    let demand: Table = new Table('Demand', new RandomNumber(25,50), container);
+    let demand: Table = new Table('Demand', new IntegerNumber(25,50), container);
 
-    group.addColumn('first', new CurrencyFormat('R', new RandomNumber(10, 50, 5)));
+    group.addColumn('first', new CurrencyFormat('R', new IntegerNumber(10, 50, 5)));
     group.addColumn('second', second);
 
     let constValCol: Column = new Column(demand, 'const', new FixedNumber(8));
     demand.addExistingColumn(constValCol);
     demand.addColumn('const_ref', constValCol.getValue());
-    demand.addColumn('val', new NumberMultiplication(<RandomNumber>constValCol.getValue(), new RandomNumber(0, 100, 1)));
+    demand.addColumn('val', new NumberMultiplication(<RandomNumber>constValCol.getValue(), new IntegerNumber(0, 100, 1)));
     demand.addColumn('const-1', new NumberSubtraction(<RandomNumber>constValCol.getValue(), new FixedNumber(1)));
 
     group.addChild(demand);
@@ -78,7 +79,7 @@ export class GeneratorComponent implements OnInit {
 
   protected addTable(): void {
     this.scrubTables();
-    this.container.openTableDialog({new: true, name: '', numRows: new RandomNumber()}).subscribe((tableData: TableData) => {
+    this.container.openTableDialog({new: true, name: '', numRows: new IntegerNumber()}).subscribe((tableData: TableData) => {
       if (tableData) {
         if (this.container.isTableNameAvailable(tableData.name)) {
           this.tables.push(new Table(tableData.name, tableData.numRows, this.container));
@@ -91,7 +92,7 @@ export class GeneratorComponent implements OnInit {
   }
 
   protected addReadonlyValue(): void {
-    this.container.openColumnDialog({name: '', value: new RandomNumber()}).subscribe((columnData: ColumnData) => {
+    this.container.openColumnDialog({name: '', value: new IntegerNumber()}).subscribe((columnData: ColumnData) => {
       if (columnData) {
         let response: ReturnState = this.readonlyTable.addColumn(columnData.name, columnData.value, true);
         this.notifications.showMessage(response);

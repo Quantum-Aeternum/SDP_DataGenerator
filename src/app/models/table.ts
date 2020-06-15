@@ -4,6 +4,7 @@ import { Row } from '../interfaces/row';
 import { ContainerService } from '../services/container.service';
 import { RandomNumber } from './numbers/random-number';
 import { Column } from './column';
+import { IntegerNumber } from './numbers/integer-number';
 
 export class Table {
 
@@ -14,7 +15,7 @@ export class Table {
 
   constructor(
     protected name: string,
-    protected numRows: RandomNumber = new RandomNumber(),
+    protected numRows: RandomNumber = new IntegerNumber(),
     protected container: ContainerService
   ) {
     container.registerTable(this);
@@ -152,16 +153,16 @@ export class Table {
     let data: Array<Object> = [];
     let numRows = this.numRows.evaluate();
     for (let index = 0; index < numRows; index++) {
-      data.push(this.generateRow(index));
+      data.push(this.generateRow());
     }
     this.numRows.reset();
     return data;
   }
 
-  private generateRow(id: number): Row {
+  private generateRow(): Row {
 
     // Create the row
-    let row: Row = {id: id};
+    let row: Row = {};
     this.columns.forEach(col => {
       row[col.getName()] = col.getValue().evaluate();
     });

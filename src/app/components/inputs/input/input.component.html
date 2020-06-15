@@ -11,6 +11,13 @@
 </mat-form-field>
 
 <!-- Input for Random -->
-<app-random-input *ngIf="!settings || (settings.type != dataTypes.number && settings.type != dataTypes.string)" [column]='column'  [name]='childName' [(random)]='value'></app-random-input>
+<app-random-input
+  *ngIf="!settings"
+  [allowedBaseType]='dataTypes.Random' [column]='column'  [name]='childName' [(random)]='value'>
+</app-random-input>
+<app-random-input
+  *ngIf="settings && settings.type != dataTypes.number && settings.type != dataTypes.string"
+  [allowedBaseType]='settings.type' [column]='column'  [name]='childName' [(random)]='value'>
+</app-random-input>
 
 <br>

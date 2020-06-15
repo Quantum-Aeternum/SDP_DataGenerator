@@ -2,12 +2,13 @@ import { Random } from '../random';
 import { Parameter, DataType } from 'src/app/interfaces/parameter';
 import { RandomNumber } from '../numbers/random-number';
 import { Column } from '../column';
+import { IntegerNumber } from '../numbers/integer-number';
 
 export abstract class Format extends Random{
 
   constructor(
     protected format: string = '',
-    protected obj: Random = new RandomNumber()
+    protected obj: Random = new IntegerNumber()
   ) {
     super();
     this.registerChildRandom(obj);
@@ -19,6 +20,10 @@ export abstract class Format extends Random{
 
   public getDescription(): string {
     return 'Formats a random value'
+  }
+
+  public getType(): DataType {
+    return DataType.Format;
   }
 
   public settings(): Array<Parameter> {

@@ -12,7 +12,7 @@ export class RandomInputComponent implements OnInit {
 
   @Input() name: string = "Type";
   @Input() random: Random | undefined;
-  @Input() settings: Parameter | undefined;
+  @Input() allowedBaseType: DataType | undefined;
   @Input() column: Column | undefined;
 
   protected acceptedTypes: Array<DataType> = [DataType.RandomNumber, DataType.RandomString, DataType.RandomChoice];

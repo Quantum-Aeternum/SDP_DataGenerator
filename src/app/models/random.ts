@@ -79,6 +79,7 @@ export abstract class Random {
 
   public abstract getName(column?: Column): string;
   public abstract getDescription(): string;
+  public abstract getType(): DataType;
   public abstract evaluate(): Object;
   public abstract settings(): Array<Parameter>;
   public abstract update(parameters: Array<Parameter>): void;

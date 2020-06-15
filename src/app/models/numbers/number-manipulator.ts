@@ -2,11 +2,12 @@ import { RandomNumber } from './random-number';
 import { Parameter, DataType } from 'src/app/interfaces/parameter';
 import { Column } from '../column';
 import { Random } from '../random';
+import { IntegerNumber } from './integer-number';
 
 export class NumberManipulator extends RandomNumber{
   constructor(
-    protected left: RandomNumber = new RandomNumber(),
-    protected right: RandomNumber = new RandomNumber()
+    protected left: RandomNumber = new IntegerNumber(),
+    protected right: RandomNumber = new IntegerNumber()
   ){
     super(1, 1, 1);
     this.registerChildRandom(left);
@@ -25,6 +26,10 @@ export class NumberManipulator extends RandomNumber{
 
   public getDescription(): string {
     return 'Allow RandomNumbers to be manipulated'
+  }
+
+  public getType(): DataType {
+    return DataType.NumberManipulator;
   }
 
   public settings(): Array<Parameter> {

@@ -13,3 +13,19 @@ mat-card-title {
 .button-row button{
   margin-left: 5px;
 }
+
+::-webkit-scrollbar {
+  width: 0.5em;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 0.3em grey;
+}
+
+::-webkit-scrollbar-thumb {
+  background: grey;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: dimgrey;
+}

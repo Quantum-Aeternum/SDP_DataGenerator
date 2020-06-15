@@ -4,6 +4,7 @@ import { ReturnState } from 'src/app/interfaces/return-state';
 import { NotificationsService, YesNo } from 'src/app/services/notifications.service';
 import { ContainerService, TableData, ColumnData } from 'src/app/services/container.service';
 import { RandomNumber } from 'src/app/models/numbers/random-number';
+import { IntegerNumber } from 'src/app/models/numbers/integer-number';
 
 @Component({
   selector: 'app-table',
@@ -67,7 +68,7 @@ export class TableComponent implements OnInit {
 
   protected addNestedTable(): void {
     if (this.table) {
-      this.container.openTableDialog({new: true, name: '', numRows: new RandomNumber()}).subscribe((tableData: TableData) => {
+      this.container.openTableDialog({new: true, name: '', numRows: new IntegerNumber()}).subscribe((tableData: TableData) => {
         if (this.table && tableData) {
           if (this.container.isTableNameAvailable(tableData.name)) {
             let returnState: ReturnState = this.table.addChild(new Table(tableData.name, tableData.numRows, this.container));
@@ -82,7 +83,7 @@ export class TableComponent implements OnInit {
   }
 
   protected addColumn(): void {
-    this.container.openColumnDialog({name: '', value: new RandomNumber()}).subscribe((columnData: ColumnData) => {
+    this.container.openColumnDialog({name: '', value: new IntegerNumber()}).subscribe((columnData: ColumnData) => {
       if (this.table && columnData) {
         let response: ReturnState = this.table.addColumn(columnData.name, columnData.value);
         this.notifications.showMessage(response);

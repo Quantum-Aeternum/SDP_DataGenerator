@@ -1,6 +1,7 @@
 import { RandomNumber } from './random-number';
 import { Column } from '../column';
 import { Random } from '../random';
+import { DataType } from 'src/app/interfaces/parameter';
 
 export class IntegerNumber extends RandomNumber{
   constructor(
@@ -33,6 +34,10 @@ export class IntegerNumber extends RandomNumber{
 
   public getDescription(): string {
     return 'Random integer number in range'
+  }
+
+  public getType(): DataType {
+    return DataType.IntegerNumber;
   }
 
   public evaluate(): Object {

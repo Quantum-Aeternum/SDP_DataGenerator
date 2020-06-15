@@ -2,11 +2,13 @@ import { NumberManipulator } from './number-manipulator';
 import { RandomNumber } from './random-number';
 import { Column } from '../column';
 import { Random } from '../random';
+import { DataType } from 'src/app/interfaces/parameter';
+import { IntegerNumber } from './integer-number';
 
 export class NumberAddition extends NumberManipulator{
   constructor(
-    protected left: RandomNumber = new RandomNumber(),
-    protected right: RandomNumber = new RandomNumber()
+    protected left: RandomNumber = new IntegerNumber(),
+    protected right: RandomNumber = new IntegerNumber()
   ){
     super(left, right);
   }
@@ -23,6 +25,10 @@ export class NumberAddition extends NumberManipulator{
 
   public getDescription(): string {
     return 'Represents a number by adding two numbers (left and right)'
+  }
+
+  public getType(): DataType {
+    return DataType.NumberAddition;
   }
 
   public evaluate(): Object {

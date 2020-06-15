@@ -25,6 +25,10 @@ export class FixedString extends RandomString{
     return 'Any fixed string literal'
   }
 
+  public getType(): DataType {
+    return DataType.FixedString;
+  }
+
   public settings(): Array<Parameter> {
     return [
       { name: 'string', type: DataType.string, list: false, description: 'Any fixed piece of text', value: this.fixedString }

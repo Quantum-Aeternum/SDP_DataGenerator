@@ -3,12 +3,13 @@ import { RandomNumber } from '../numbers/random-number';
 import { Parameter, DataType } from 'src/app/interfaces/parameter';
 import { Random } from '../random';
 import { Column } from '../column';
+import { IntegerNumber } from '../numbers/integer-number';
 
 export class CurrencyFormat extends Format{
 
   constructor(
     protected symbol: string = 'R',
-    protected obj: RandomNumber = new RandomNumber()
+    protected obj: RandomNumber = new IntegerNumber()
   ){
     super(symbol, obj);
   }
@@ -25,6 +26,10 @@ export class CurrencyFormat extends Format{
 
   public getDescription(): string {
     return 'Adds a symbol to the front of a number and rounds to the closest two decimals'
+  }
+
+  public getType(): DataType {
+    return DataType.CurrencyFormat;
   }
 
   public settings(): Array<Parameter> {

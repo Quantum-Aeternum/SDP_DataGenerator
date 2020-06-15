@@ -16,5 +16,14 @@ export enum DataType {
   NumberManipulator='NumberManipulator',
   RandomString='RandomString',
   RandomChoice='RandomChoice',
-  Format='Format'
+  Format='Format',
+  FixedNumber='FixedNumber',
+  FloatNumber='FloatNumber',
+  IntegerNumber='IntegerNumber',
+  NumberAddition='NumberAddition',
+  NumberSubtraction='NumberSubtraction',
+  NumberMultiplication='NumberMultiplication',
+  NumberDivision='NumberDivision',
+  CurrencyFormat='CurrencyFormat',
+  FixedString='FixedString',
 }

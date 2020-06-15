@@ -27,6 +27,10 @@ export class RandomNumber extends Random{
     return 'Creates a random value within a set range'
   }
 
+  public getType(): DataType {
+    return DataType.RandomNumber;
+  }
+
   public settings(): Array<Parameter> {
     return [
       { name: 'min', type: DataType.number, list: false, description: 'Minimum value', value: this.min},

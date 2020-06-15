@@ -2,11 +2,13 @@ import { NumberManipulator } from './number-manipulator';
 import { RandomNumber } from './random-number';
 import { Column } from '../column';
 import { Random } from '../random';
+import { DataType } from 'src/app/interfaces/parameter';
+import { IntegerNumber } from './integer-number';
 
 export class NumberDivision extends NumberManipulator{
   constructor(
-    protected left: RandomNumber = new RandomNumber(),
-    protected right: RandomNumber = new RandomNumber()
+    protected left: RandomNumber = new IntegerNumber(),
+    protected right: RandomNumber = new IntegerNumber()
   ){
     super(left, right);
   }
@@ -23,6 +25,10 @@ export class NumberDivision extends NumberManipulator{
 
   public getDescription(): string {
     return 'Represents a number given by dividing a number (left) by another number (right)'
+  }
+
+  public getType(): DataType {
+    return DataType.NumberDivision;
   }
 
   public evaluate(): Object {

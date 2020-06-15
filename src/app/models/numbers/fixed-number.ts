@@ -25,6 +25,10 @@ export class FixedNumber extends RandomNumber{
     return 'Any given number'
   }
 
+  public getType(): DataType {
+    return DataType.FixedNumber;
+  }
+
   public settings(): Array<Parameter> {
     return [
       { name: 'value', type: DataType.number, list: false, description: 'Any number', value: this.value}

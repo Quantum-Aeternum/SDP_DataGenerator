@@ -1,4 +1,4 @@
-<app-type-selector [name]='name' [selected]='random.getBaseType()'></app-type-selector>
+<app-type-selector *ngIf='random' [allowedBaseType]='allowedBaseType' [name]='name' [selected]='random.getType()'></app-type-selector>
 <mat-expansion-panel [disabled]='column != random.owner'>
 
   <mat-expansion-panel-header>
@@ -11,7 +11,10 @@
 
   <ng-template matExpansionPanelContent>
     <mat-accordion *ngIf="nestedInputs">
-      <app-input *ngFor="let parameter of nestedInputs" [name]='parameter.name' [column]='column' [(settings)]='parameter' [(value)]='parameter.value'></app-input>
+      <app-input
+        *ngFor="let parameter of nestedInputs"
+        [name]='parameter.name' [column]='column' [(settings)]='parameter' [(value)]='parameter.value'>
+      </app-input>
     </mat-accordion>
     <button mat-stroked-button color="primary" (click)="commit()">Commit</button>
   </ng-template>

@@ -2,11 +2,12 @@ import { Random } from '../random';
 import { Parameter, DataType } from 'src/app/interfaces/parameter';
 import { RandomNumber } from '../numbers/random-number';
 import { Column } from '../column';
+import { IntegerNumber } from '../numbers/integer-number';
 
 export class RandomChoice extends Random{
 
   constructor(
-    private options: Array<Random> = [new RandomNumber()]
+    private options: Array<Random> = [new IntegerNumber()]
   ) {
     super();
     options.forEach(option => {
@@ -31,6 +32,10 @@ export class RandomChoice extends Random{
 
   public getDescription(): string {
     return 'Randomly chooses out of a list of options'
+  }
+
+  public getType(): DataType {
+    return DataType.RandomChoice;
   }
 
   public settings(): Array<Parameter> {

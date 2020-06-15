@@ -12,6 +12,10 @@ import { CurrencyFormat } from 'src/app/models/formats/currency-format';
 import { FixedString } from 'src/app/models/strings/fixed-string';
 import { RandomString } from 'src/app/models/strings/random-string';
 
+interface subTree {
+  [key: string]: Object
+}
+
 @Component({
   selector: 'app-type-selector',
   templateUrl: './type-selector.component.html',
@@ -19,44 +23,79 @@ import { RandomString } from 'src/app/models/strings/random-string';
 })
 export class TypeSelectorComponent implements OnInit {
 
-  private dataTypeHierarchy = {
+  private dataTypeHierarchy: subTree = {
     'Random': {
       'RandomNumber': {
-        'FixedNumber': new FixedNumber(),
-        'FloatNumber': new FloatNumber(),
-        'IntegerNumber': new IntegerNumber(),
+        'FixedNumber': {value: new FixedNumber()},
+        'FloatNumber': {value: new FloatNumber()},
+        'IntegerNumber': {value: new IntegerNumber()},
         'NumberManipulator': {
-          'NumberAddition': new NumberAddition(),
-          'NumberSubtraction': new NumberSubtraction(),
-          'NumberMultiplication': new NumberMultiplication(),
-          'NumberDivision': new NumberDivision()
+          'NumberAddition': {value: new NumberAddition()},
+          'NumberSubtraction': {value: new NumberSubtraction()},
+          'NumberMultiplication': {value: new NumberMultiplication()},
+          'NumberDivision': {value: new NumberDivision()}
         }
       },
       'RandomString': {
-        'FixedString': new FixedString(),
-        'RandomString': new RandomString()
+        'FixedString': {value: new FixedString()},
+        'RandomString': {value: new RandomString()}
       },
       'RandomChoice': {
-        'RandomChoice': new RandomChoice()
+        'RandomChoice': {value: new RandomChoice()}
       },
       'Format': {
-        'CurrencyFormat': new CurrencyFormat()
+        'CurrencyFormat': {value: new CurrencyFormat()}
       }
     }
-  }
+  };
 
   @Input() name: string = "Type";
   @Input() selected: DataType | undefined;
+  @Input() allowedBaseType: DataType = DataType.Random;
 
-  protected dataTypes = Object.keys(DataType);
+  protected linearHierarchy: subTree = {};
+  protected allowedTypes: Array<string> = [];
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
+    this.linearHierarchy = this.flattenHierarchy(
+      this.findSubHierarchy(this.dataTypeHierarchy, this.allowedBaseType)
+    );
+    this.allowedTypes = Object.keys(this.linearHierarchy);
+  }
+
+  findSubHierarchy(tree: subTree, baseType: DataType): subTree {
+    let keys: Array<string> = Object.keys(tree);
+    let baseIndex: number = keys.indexOf(baseType);
+    if (baseIndex > -1) return <subTree>tree[baseType];
+    else {
+      let subTree: subTree = {};
+      for (let index = 0; index < keys.length; index++) {
+        let key = keys[index];
+        if (key != "value") subTree = this.findSubHierarchy(<subTree>tree[key], baseType);
+        if (subTree != {}) break;
+      }
+      return subTree;
+    }
+  }
+
+  flattenHierarchy(tree: subTree): subTree {
+    const flattened: subTree = {};
+    let keys: Array<string> = Object.keys(tree);
+    keys.forEach(key => {
+      if (Object.keys(tree[key])[0] == "value") {
+        flattened[key] = tree[key];
+      }
+      else {
+        Object.assign(flattened, this.flattenHierarchy(<subTree>tree[key]));
+      }
+    })
+    return flattened;
   }
 
   changedSelection() {
-    console.log(this.selected);
+
   }
 
 }
