@@ -32,7 +32,7 @@
       <mat-accordion *ngIf="nestedInputs">
         <app-input
           *ngFor="let parameter of nestedInputs" (onChange)='commit()'
-          [name]='parameter.name' [column]='column' [settings]='parameter' [value]='parameter.value'>
+          [column]='column' [settings]='parameter' [value]='parameter.value'>
         </app-input>
       </mat-accordion>
     </ng-template>

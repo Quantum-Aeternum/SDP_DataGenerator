@@ -60,6 +60,7 @@ export class TableComponent implements OnInit {
           if (this.table.getName() != tableData.name) {
             returnState = this.table.setName(tableData.name);
           }
+          this.table.setNumRows(tableData.numRows);
           this.notifications.showMessage(returnState);
         }
       });

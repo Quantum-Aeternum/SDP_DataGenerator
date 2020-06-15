@@ -1,7 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { TableData } from './container.service';
-import { Random } from '../models/random';
+import { RandomNumber } from '../models/numbers/random-number';
+import { Parameter, DataType } from '../interfaces/parameter';
 
 
 @Component({
@@ -10,20 +11,22 @@ import { Random } from '../models/random';
 })
 export class TableDialogComponent {
 
-  protected value: Random | undefined;
+  protected value: RandomNumber | undefined;
+  protected settings: Parameter = {name: "Num Rows", description: "Number of rows to generate for the table", list: false, type: DataType.RandomNumber, value: <RandomNumber>this.value}
 
   constructor(
     public dialogRef: MatDialogRef<TableDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: TableData
   ) {
-    this.value = data.numRows.clone();
+    this.value = <RandomNumber>data.numRows.clone();
   }
 
+  commit(obj: Object): void {
+    this.value = <RandomNumber>obj;
+  }
 
   protected submit(): void {
-    if (this.value && this.data.numRows) {
-      this.data.numRows.update(this.value.settings());
-    }
+    if (this.value) this.data.numRows = this.value;
     this.dialogRef.close(this.data);
   }
 

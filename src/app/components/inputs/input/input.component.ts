@@ -15,14 +15,13 @@ export interface ChangeTypeObject {
 })
 export class InputComponent implements OnInit {
 
-  @Input() name: string = "Type";
   @Input() column: Column | undefined;
   @Input() value: Object | undefined;
   @Input() settings: Parameter | undefined;
 
   @Output() onChange: EventEmitter<Object> = new EventEmitter<Object>();
 
-  protected childName: string = "Type";
+  protected name: string = "Type";
   protected nestedInputs: Array<Parameter> | undefined;
 
   protected dataTypes = DataType;
@@ -34,7 +33,7 @@ export class InputComponent implements OnInit {
 
   ngOnInit() {
     if (this.settings) {
-      this.childName = this.settings.name;
+      this.name = this.settings.name;
       this.settingsType = this.settings.type;
     }
     if (!this.terminalTypes.includes(this.settingsType)) {
