@@ -10,6 +10,9 @@ Due to deadlines and accelerated development, unit tests are not up to date and 
 
 - Choice and String do not work - have to implement input lists.
 - Save and Load of templates are not implemented.
+- [Bug] Column(y) can only reference a column(x)'s value when editing (y), not during creation of (y)
+- [Bug] If column(y) and column(x) have the same type, setting (y)'s value to reference (x) doesn't work properly
+- [Bug] If column(y) was referencing column(x) and the type of (y) is changed to the same type as (x), it breaks (x)
 
 ## Setup
 
