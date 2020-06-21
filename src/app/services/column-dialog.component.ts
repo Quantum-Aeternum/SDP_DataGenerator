@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ColumnData } from './container.service';
 import { Random } from '../models/random';
 import { NotificationsService } from './notifications.service';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'column-dialog',
@@ -11,6 +12,7 @@ import { NotificationsService } from './notifications.service';
 export class ColumnDialogComponent {
 
   protected value: Random | undefined;
+  protected formControl = new FormControl('', [Validators.required]);
 
   constructor(
     protected notifications: NotificationsService,
@@ -25,6 +27,11 @@ export class ColumnDialogComponent {
   }
 
   protected submit(): void {
+
+    if (this.data.name.trim() == "") {
+      return;
+    }
+
     if (this.value) this.data.value = this.value;
     this.dialogRef.close(this.data);
   }

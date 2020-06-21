@@ -1,5 +1,6 @@
 import { Random } from '../models/random';
 import { Table } from './table';
+import { ContainerService } from '../services/container.service';
 
 export class Column {
 
@@ -10,6 +11,7 @@ export class Column {
     protected name: string,
     protected value: Random,
     protected readonly: boolean = false,
+    private container: ContainerService
   )
   {
     if (value.getOwner() == undefined) value.setOwner(this);
@@ -37,6 +39,10 @@ export class Column {
 
   public changeValue(newValue: Random): boolean {
     if (this.getReferenceCount() > 0) return false;
+    let oldOwner = this.value.getOwner();
+    if (oldOwner && this.value != newValue) {
+      if (oldOwner != this) this.container.removeColumnReference(oldOwner);
+    }
     this.value = newValue;
     this.value.setOwner(newValue.getOwner());
     return true;

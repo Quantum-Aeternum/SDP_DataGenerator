@@ -3,7 +3,10 @@
 <div mat-dialog-content>
   <mat-form-field>
     <mat-label>Child table name</mat-label>
-    <input matInput placeholder="Ex. Test Table" [(ngModel)]='data.name'>
+    <input matInput placeholder="Ex. Test Table" [(ngModel)]='data.name' [formControl]='formControl'>
+    <mat-error *ngIf="formControl.hasError('required')">
+      Table name is <strong>required</strong>
+    </mat-error>
   </mat-form-field>
   <app-input *ngIf='value' [value]='value' [settings]='settings' (onChange)='commit($event)'></app-input>
 </div>

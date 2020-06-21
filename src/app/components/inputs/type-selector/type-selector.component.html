@@ -1,6 +1,13 @@
 <mat-form-field>
   <mat-label>{{name}}</mat-label>
-  <mat-select [(value)]="selected" (selectionChange)="changedSelection()" [disabled]='allowedTypes.length == 0'>
-    <mat-option *ngFor='let dataType of allowedTypes' [value]="dataType">{{dataType}}</mat-option>
+  <mat-select [(value)]="selected" (selectionChange)="changedSelection($event)" [disabled]='allowedTypes.length == 0'>
+    <!-- Columns -->
+    <mat-optgroup [label]="'Reference Values'">
+      <mat-option *ngFor='let col of selectableColumns' [value]="col.getFullname()">{{col.getFullname()}}</mat-option>
+    </mat-optgroup>
+    <!-- Data Types -->
+    <mat-optgroup [label]="'Data Types'">
+      <mat-option *ngFor='let dataType of allowedTypes' [value]="dataType">{{dataType}}</mat-option>
+    </mat-optgroup>
   </mat-select>
 </mat-form-field>

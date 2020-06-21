@@ -147,6 +147,17 @@ export class ContainerService {
     }
   }
 
+  public getSelectableColumns(column?: Column): Array<Column> {
+    let table: Table | undefined = column? column.getTable() : undefined;
+    let parentTable: Table | undefined = table? table.getParent() : undefined;
+    let cols = this.allColumns.filter(col => {
+      return col.getTable().getName() == "READONLY" ||
+      (col != column && col.getTable() == table) ||
+      (parentTable != undefined && col.getTable() == parentTable)
+    });
+    return cols;
+  }
+
   public openTableDialog(data: TableData): Observable<TableData> {
 
     const dialogRef = this.dialog.open(TableDialogComponent, {

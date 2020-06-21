@@ -48,6 +48,10 @@ export class Table {
     else return false;
   }
 
+  public getParent(): Table | undefined {
+    return this.parent;
+  }
+
   public shouldDispose(): boolean {
     return this.logicallyDeleted;
   }
@@ -61,7 +65,7 @@ export class Table {
   public addColumn(name: string, value: Random, readonly: boolean = false): ReturnState {
     if (name == undefined || name.trim() == '') return {success: false, message: `Column name may not be empty`};
     if (this.columns.findIndex(col => col.getName() == name) >= 0) return {success: false, message: `Column ${name} already exists on table ${this.name}`};
-    let newCol: Column = new Column(this, name, value, readonly);
+    let newCol: Column = new Column(this, name, value, readonly , this.container);
     let response = this.container.registerColumn(newCol);
     if (response.success) {
       newCol.getValue().owners().forEach(owner => {

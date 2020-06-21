@@ -3,7 +3,10 @@
 <div mat-dialog-content>
   <mat-form-field>
     <mat-label>Column name</mat-label>
-    <input matInput placeholder="Ex. Test Column" [(ngModel)]='data.name'>
+    <input matInput placeholder="Ex. Test Column" [(ngModel)]='data.name' [formControl]='formControl'>
+    <mat-error *ngIf="formControl.hasError('required')">
+      Column name is <strong>required</strong>
+    </mat-error>
   </mat-form-field>
   <app-input *ngIf='value' [column]='data.column' [value]='value' (onChange)='commit($event)'></app-input>
 </div>

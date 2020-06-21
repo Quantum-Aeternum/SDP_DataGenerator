@@ -15,7 +15,7 @@
 <span *ngIf='!terminalTypes.includes(settingsType)'>
 
   <app-type-selector (onChange)='changedSelection($event)'
-    [allowedBaseType]='settingsType' [name]='name' [selected]='value.getType()'>
+    [allowedBaseType]='settingsType' [name]='name' [column]='column' [value]='value'>
   </app-type-selector>
 
   <mat-expansion-panel [disabled]='column != value.owner'>

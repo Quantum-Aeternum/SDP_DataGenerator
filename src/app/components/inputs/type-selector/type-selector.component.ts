@@ -12,6 +12,8 @@ import { CurrencyFormat } from 'src/app/models/formats/currency-format';
 import { FixedString } from 'src/app/models/strings/fixed-string';
 import { RandomString } from 'src/app/models/strings/random-string';
 import { Random } from 'src/app/models/random';
+import { ContainerService } from 'src/app/services/container.service';
+import { Column } from 'src/app/models/column';
 
 interface subTree {
   [key: string]: Object
@@ -37,7 +39,7 @@ export class TypeSelectorComponent implements OnInit {
           'NumberSubtraction': {value: new NumberSubtraction()},
           'NumberMultiplication': {value: new NumberMultiplication()},
           'NumberDivision': {value: new NumberDivision()}
-        }
+        },
       },
       'RandomString': {
         'FixedString': {value: new FixedString()},
@@ -53,16 +55,22 @@ export class TypeSelectorComponent implements OnInit {
   };
 
   @Input() name: string = "Type";
-  @Input() selected: DataType | undefined;
+  @Input() column: Column | undefined;
+  @Input() value: Random | undefined;
   @Input() allowedBaseType: DataType = DataType.Random;
   @Output() onChange: EventEmitter<Random> = new EventEmitter<Random>();
 
   protected linearHierarchy: subTree = {};
   protected allowedTypes: Array<string> = [];
+  protected selectableColumns: Array<Column> = [];
+  protected selected: Object | undefined;
 
-  constructor() {}
+  constructor(
+    private container: ContainerService
+  ) {}
 
   ngOnInit() {
+    // Populate usable types
     this.linearHierarchy = this.flattenHierarchy(
       this.findSubHierarchy(this.dataTypeHierarchy, this.allowedBaseType)
     );
@@ -71,12 +79,32 @@ export class TypeSelectorComponent implements OnInit {
       let index = this.dataTypeKeys.indexOf(key);
       return this.dataTypeValues[index];
     }).sort();
+    if (this.column) {
+      this.selectableColumns = this.container.getSelectableColumns(this.column).filter(col => {
+        return this.allowedTypes.includes(col.getValue().getType());
+      });
+    }
+    else {
+      this.selectableColumns = this.container.getSelectableColumns();
+    }
+
+    // Set selected type
+    if (this.value) {
+      let owner = this.value.getOwner();
+      if (owner && owner != this.column) this.selected = owner.getFullname();
+      else this.selected = this.value.getType();
+    }
   }
 
   findSubHierarchy(tree: subTree, baseType: DataType): subTree {
+
+    let index: number = this.dataTypeValues.indexOf(baseType);
+    let baseTypeKey: string = this.dataTypeKeys[index];
+
     let keys: Array<string> = Object.keys(tree);
-    let baseIndex: number = keys.indexOf(baseType);
-    if (baseIndex > -1) return <subTree>tree[baseType];
+    let baseIndex: number = keys.indexOf(baseTypeKey);
+
+    if (baseIndex > -1) return <subTree>tree[baseTypeKey];
     else {
       let subTree: subTree = {};
       for (let index = 0; index < keys.length; index++) {
@@ -105,9 +133,17 @@ export class TypeSelectorComponent implements OnInit {
   changedSelection() {
     if (this.selected != undefined)
     {
-      let index = this.dataTypeValues.indexOf(this.selected);
-      let key = this.dataTypeKeys[index];
-      this.onChange.emit(<Random>(<subTree>this.linearHierarchy[key])["value"]);
+      if (this.dataTypeValues.includes(this.selected.toString())) {
+        let index = this.dataTypeValues.indexOf(this.selected.toString());
+        let key = this.dataTypeKeys[index];
+        this.onChange.emit(<Random>(<subTree>this.linearHierarchy[key])["value"]);
+      }
+      else {
+        let index = this.selectableColumns.findIndex(col => {
+          return this.selected != undefined && (col.getFullname() == this.selected.toString())
+        });
+        this.onChange.emit(this.selectableColumns[index].getValue());
+      }
     }
   }
 

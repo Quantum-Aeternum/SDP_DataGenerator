@@ -40,24 +40,24 @@ export class GeneratorComponent implements OnInit {
 
     this.generateDownloadURL();
 
-    // let second: RandomNumber = new IntegerNumber(100, 200, 2);
-    // this.readonlyTable.addColumn('Val', second, true);
+    let second: RandomNumber = new IntegerNumber(100, 200, 2);
+    this.readonlyTable.addColumn('Val', second, true);
 
-    // let group: Table = new Table('Group', second, container);
-    // let demand: Table = new Table('Demand', new IntegerNumber(25,50), container);
+    let group: Table = new Table('Group', second, container);
+    let demand: Table = new Table('Demand', new IntegerNumber(25,50), container);
 
-    // group.addColumn('first', new CurrencyFormat('R', new IntegerNumber(10, 50, 5)));
-    // group.addColumn('second', second);
+    group.addColumn('first', new CurrencyFormat('R', new IntegerNumber(10, 50, 5)));
+    group.addColumn('second', second);
 
-    // let constValCol: Column = new Column(demand, 'const', new FixedNumber(8));
-    // demand.addExistingColumn(constValCol);
-    // demand.addColumn('const_ref', constValCol.getValue());
-    // demand.addColumn('val', new NumberMultiplication(<RandomNumber>constValCol.getValue(), new IntegerNumber(0, 100, 1)));
-    // demand.addColumn('const-1', new NumberSubtraction(<RandomNumber>constValCol.getValue(), new FixedNumber(1)));
+    let constValCol: Column = new Column(demand, 'const', new FixedNumber(8), false, container);
+    demand.addExistingColumn(constValCol);
+    demand.addColumn('const_ref', constValCol.getValue());
+    demand.addColumn('val', new NumberMultiplication(<RandomNumber>constValCol.getValue(), new IntegerNumber(0, 100, 1)));
+    demand.addColumn('const-1', new NumberSubtraction(<RandomNumber>constValCol.getValue(), new FixedNumber(1)));
 
-    // group.addChild(demand);
+    group.addChild(demand);
 
-    // this.tables.push(group);
+    this.tables.push(group);
   }
 
   ngOnInit() {
