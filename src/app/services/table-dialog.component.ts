@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { TableData } from './container.service';
 import { RandomNumber } from '../models/numbers/random-number';
 import { Parameter, DataType } from '../interfaces/parameter';
+import { FormControl, Validators } from '@angular/forms';
 
 
 @Component({
@@ -12,6 +13,7 @@ import { Parameter, DataType } from '../interfaces/parameter';
 export class TableDialogComponent {
 
   protected value: RandomNumber | undefined;
+  protected formControl = new FormControl('', [Validators.required]);
   protected settings: Parameter = {name: "Num Rows", description: "Number of rows to generate for the table", list: false, type: DataType.RandomNumber, value: <RandomNumber>this.value}
 
   constructor(
@@ -26,6 +28,11 @@ export class TableDialogComponent {
   }
 
   protected submit(): void {
+
+    if (this.data.name.trim() == "") {
+      return;
+    }
+
     if (this.value) this.data.numRows = this.value;
     this.dialogRef.close(this.data);
   }

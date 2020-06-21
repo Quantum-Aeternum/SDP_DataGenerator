@@ -49,7 +49,7 @@ export class GeneratorComponent implements OnInit {
     // group.addColumn('first', new CurrencyFormat('R', new IntegerNumber(10, 50, 5)));
     // group.addColumn('second', second);
 
-    // let constValCol: Column = new Column(demand, 'const', new FixedNumber(8));
+    // let constValCol: Column = new Column(demand, 'const', new FixedNumber(8), false, container);
     // demand.addExistingColumn(constValCol);
     // demand.addColumn('const_ref', constValCol.getValue());
     // demand.addColumn('val', new NumberMultiplication(<RandomNumber>constValCol.getValue(), new IntegerNumber(0, 100, 1)));
