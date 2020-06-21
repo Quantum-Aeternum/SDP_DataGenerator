@@ -5,3 +5,12 @@
 .toolbar-icon {
   padding: 0 14px;
 }
+
+.about {
+  font-size: 14px;
+}
+
+.logo {
+  width: 40px;
+  padding-right: 10px;
+}

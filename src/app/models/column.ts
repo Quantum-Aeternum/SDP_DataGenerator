@@ -38,11 +38,20 @@ export class Column {
   }
 
   public changeValue(newValue: Random): boolean {
+
+    // Don't allow changing of value for referenced colums
     if (this.getReferenceCount() > 0) return false;
-    let oldOwner = this.value.getOwner();
-    if (oldOwner && this.value != newValue) {
-      if (oldOwner != this) this.container.removeColumnReference(oldOwner);
+
+    // Remove reference of old value's owner colum if needed
+    let oldValueOwner = this.value.getOwner();
+    if (oldValueOwner && this.value != newValue) {
+      if (oldValueOwner != this) this.container.removeColumnReference(oldValueOwner);
     }
+
+    // Add reference to new value's owner column if needed
+    let newValueOwner = newValue.getOwner();
+    if (newValueOwner && newValueOwner != this) this.container.addColumnReference(newValueOwner);
+
     this.value = newValue;
     this.value.setOwner(newValue.getOwner());
     return true;
