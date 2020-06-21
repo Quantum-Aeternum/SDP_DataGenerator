@@ -6,6 +6,11 @@ Application for generating SDP data sets - Part of Research Project - BScHons Co
 
 Due to deadlines and accelerated development, unit tests are not up to date and running `ng test` will currently fail. There are still a couple of missing main features that will be implemented in the future. At this time, I am not accepting feature requests, and the software comes as is. It is currently required to run locally since it isn't hosted somewhere.
 
+## Missing Features
+
+- Choice and String do not work - have to implement input lists.
+- Save and Load of templates are not implemented.
+
 ## Setup
 
 ### Dependencies
