@@ -29,7 +29,7 @@
     </mat-expansion-panel-header>
 
     <ng-template matExpansionPanelContent>
-      <mat-accordion *ngIf="nestedInputs">
+      <mat-accordion *ngIf="nestedInputs && column == value.owner">
         <app-input
           *ngFor="let parameter of nestedInputs" (onChange)='commit()'
           [column]='column' [settings]='parameter' [value]='parameter.value'>

@@ -2,7 +2,7 @@
 <h1 mat-dialog-title *ngIf='!data.new' >Edit Table:</h1>
 <div mat-dialog-content>
   <mat-form-field>
-    <mat-label>Child table name</mat-label>
+    <mat-label>Table name</mat-label>
     <input matInput placeholder="Ex. Test Table" [(ngModel)]='data.name' [formControl]='formControl'>
     <mat-error *ngIf="formControl.hasError('required')">
       Table name is <strong>required</strong>

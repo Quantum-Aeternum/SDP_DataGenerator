@@ -70,23 +70,21 @@ export class TypeSelectorComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Populate usable types
+    // Create hierachies
     this.linearHierarchy = this.flattenHierarchy(
       this.findSubHierarchy(this.dataTypeHierarchy, this.allowedBaseType)
     );
 
+    // Get allowed types array
     this.allowedTypes = Object.keys(this.linearHierarchy).map(key => {
       let index = this.dataTypeKeys.indexOf(key);
       return this.dataTypeValues[index];
     }).sort();
-    if (this.column) {
-      this.selectableColumns = this.container.getSelectableColumns(this.column).filter(col => {
-        return this.allowedTypes.includes(col.getValue().getType());
-      });
-    }
-    else {
-      this.selectableColumns = this.container.getSelectableColumns();
-    }
+
+    // Get allowed column references
+    this.selectableColumns = this.container.getSelectableColumns(this.column).filter(col => {
+      return this.allowedTypes.includes(col.getValue().getType());
+    });
 
     // Set selected type
     if (this.value) {
