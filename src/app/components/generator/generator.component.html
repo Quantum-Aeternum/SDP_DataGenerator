@@ -1,29 +1,28 @@
 <mat-card>
   <mat-card-title>
-    Readonly Values:
-    <button mat-button color="primary" (click)="addReadonlyValue()">Add Readonly Value</button>
+    Tables:
+    <button mat-button color="primary" (click)="addTable()">Add Table</button>
+    <button mat-button color="primary" disabled>Save Template</button>
+    <button mat-button color="primary" disabled>Load Template</button>
   </mat-card-title>
-  <p>
-    "Readonly Values" can be used in any table. Its value is constant after the first evaluation.
-  </p>
+
+  <!-- Readonly value table -->
   <mat-expansion-panel *ngIf='readonlyTable'>
     <mat-expansion-panel-header>
       <mat-panel-title>
-        <b>{{readonlyTable.name}}</b>
+        <b>{{readonlyTable.name}}</b> &nbsp;&nbsp; "Readonly Values" can be used in any table. Its value is constant after the first evaluation.
       </mat-panel-title>
     </mat-expansion-panel-header>
+    <button mat-stroked-button color="primary" (click)="addReadonlyValue()">Add Readonly Value</button>
     <mat-list>
       <app-column *ngFor='let column of readonlyTable.columns' [column]='column' [table]='readonlyTable'></app-column>
     </mat-list>
     <br>
   </mat-expansion-panel>
-</mat-card>
 
-<mat-card>
-  <mat-card-title>
-    Tables:
-    <button mat-button color="primary" (click)="addTable()">Add Table</button>
-  </mat-card-title>
+  <br>
+
+  <!-- Data tables -->
   <mat-accordion>
     <app-table *ngFor='let table of tables' [table]='table'></app-table>
   </mat-accordion>

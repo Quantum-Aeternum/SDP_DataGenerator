@@ -129,4 +129,13 @@ export class GeneratorComponent implements OnInit {
     this.tables = this.tables.filter(table => !table.shouldDispose());
   }
 
+  // private save(): void {
+
+  // }
+
+  // private load(): void {
+  //   this.readonlyTable
+  //   this.tables
+  // }
+
 }

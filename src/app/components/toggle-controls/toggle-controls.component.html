@@ -1,6 +1,6 @@
 <div class="button-row">
   <button mat-stroked-button (click)="toggleControls()" color="primary">{{toggleControlsText}}</button>
   <span *ngIf='showControls'>
-    <button mat-button *ngFor='let text of buttons; let i = index' (click)="onClick(i)" color="primary">{{text}}</button>
+    <button mat-stroked-button *ngFor='let text of buttons; let i = index' (click)="onClick(i)" color="primary">{{text}}</button>
   </span>
 </div>
