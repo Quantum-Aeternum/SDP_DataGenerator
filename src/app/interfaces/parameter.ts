@@ -13,6 +13,7 @@ export enum DataType {
   string='string',
   Random='Random',
   RandomNumber='Random Number',
+  RoundNumber='Round',
   NumberManipulator='Number Manipulator',
   RandomString='String',
   RandomChoice='Choice',

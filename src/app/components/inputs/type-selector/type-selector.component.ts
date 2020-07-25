@@ -6,6 +6,7 @@ import { IntegerNumber } from 'src/app/models/numbers/integer-number';
 import { NumberAddition } from 'src/app/models/numbers/number-addition';
 import { NumberSubtraction } from 'src/app/models/numbers/number-subtraction';
 import { NumberMultiplication } from 'src/app/models/numbers/number-multiplication';
+import { RoundNumber } from 'src/app/models/numbers/round-number';
 import { NumberDivision } from 'src/app/models/numbers/number-division';
 import { RandomChoice } from 'src/app/models/choices/random-choice';
 import { CurrencyFormat } from 'src/app/models/formats/currency-format';
@@ -40,6 +41,7 @@ export class TypeSelectorComponent implements OnInit {
           'NumberMultiplication': {value: new NumberMultiplication()},
           'NumberDivision': {value: new NumberDivision()}
         },
+        'RoundNumber': {value: new RoundNumber()}
       },
       'RandomString': {
         'FixedString': {value: new FixedString()},
