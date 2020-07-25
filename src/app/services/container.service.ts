@@ -6,8 +6,8 @@ import { Random } from 'src/app/models/random';
 import { RandomNumber } from '../models/numbers/random-number';
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
-import { ColumnDialogComponent } from './column-dialog.component';
-import { TableDialogComponent } from './table-dialog.component';
+import { TableDialogComponent } from './table-dialog/table-dialog.component';
+import { ColumnDialogComponent } from './column-dialog/column-dialog.component';
 
 export interface ColumnData {
   name: string;

@@ -10,14 +10,16 @@ import { NgxJsonViewerModule } from 'ngx-json-viewer';
 import { TableComponent } from './components/table/table.component';
 import { ColumnComponent } from './components/column/column.component';
 import { NotificationsService, ConfirmDialog } from './services/notifications.service';
-import { TableDialogComponent } from './services/table-dialog.component';
-import { TableDialogModule } from './services/table-dialog.module';
 import { ContainerService } from './services/container.service';
 import { ToggleControlsComponent } from './components/toggle-controls/toggle-controls.component';
-import { ColumnDialogModule } from './services/column-dialog.module';
-import { ColumnDialogComponent } from './services/column-dialog.component';
+import { ColumnDialogModule } from './services/column-dialog/column-dialog.module';
+import { ColumnDialogComponent } from './services/column-dialog/column-dialog.component';
 import { GeneratorComponent } from './components/generator/generator.component';
 import { InputsModule } from './components/inputs/inputs.module';
+import { FileDialogComponent } from './services/file-dialog/file-dialog.component';
+import { FileDialogModule } from './services/file-dialog/file-dialog.module';
+import { TableDialogComponent } from './services/table-dialog/table-dialog.component';
+import { TableDialogModule } from './services/table-dialog/table-dialog.module';
 
 @NgModule({
   declarations: [
@@ -49,12 +51,14 @@ import { InputsModule } from './components/inputs/inputs.module';
     MatInputModule,
     MatDialogModule,
     MatListModule,
-    InputsModule
+    InputsModule,
+    FileDialogModule
   ],
   entryComponents: [
     TableDialogComponent,
     ColumnDialogComponent,
-    ConfirmDialog
+    ConfirmDialog,
+    FileDialogComponent
   ],
   providers: [
     NotificationsService,

@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material';
 import { ReturnState } from 'src/app/interfaces/return-state';
 import { Column } from 'src/app/models/column';
 import { IntegerNumber } from 'src/app/models/numbers/integer-number';
+import { FileDialogComponent } from '../../services/file-dialog/file-dialog.component';
 
 @Component({
   selector: 'app-generator',
@@ -129,13 +130,34 @@ export class GeneratorComponent implements OnInit {
     this.tables = this.tables.filter(table => !table.shouldDispose());
   }
 
-  // private save(): void {
+  protected save(): void {
+    const dialogRef = this.dialog.open(FileDialogComponent, {data: true});
+    dialogRef.afterClosed().subscribe((res: ReturnState) => {
+      if (res != undefined)
+      {
+        if (res.success === true)
+        {
+          localStorage.setItem(res.message + "_tables", JSON.stringify(this.tables));
+          localStorage.setItem(res.message + "_consts", JSON.stringify(this.readonlyTable));
+          this.notifications.showMessage({success: true, message: "Saved template"});
+        }
+      }
+    });
+  }
 
-  // }
-
-  // private load(): void {
-  //   this.readonlyTable
-  //   this.tables
-  // }
+  protected load(): void {
+    const dialogRef = this.dialog.open(FileDialogComponent, {data: false});
+    dialogRef.afterClosed().subscribe((res: ReturnState) => {
+      if (res != undefined)
+      {
+        if (res.success === true)
+        {
+          console.log(localStorage.getItem(res.message + "_tables"));
+          console.log(localStorage.getItem(res.message + "_consts"));
+          this.notifications.showMessage({success: true, message: "Loaded template"});
+        }
+      }
+    });
+  }
 
 }

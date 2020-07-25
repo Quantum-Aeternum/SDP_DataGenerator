@@ -1,9 +1,9 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { ColumnData } from './container.service';
-import { Random } from '../models/random';
-import { NotificationsService } from './notifications.service';
 import { FormControl, Validators } from '@angular/forms';
+import { Random } from 'src/app/models/random';
+import { NotificationsService } from '../notifications.service';
+import { ColumnData } from '../container.service';
 
 @Component({
   selector: 'column-dialog',

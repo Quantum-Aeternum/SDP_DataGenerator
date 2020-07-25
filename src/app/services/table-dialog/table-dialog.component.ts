@@ -1,9 +1,9 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { TableData } from './container.service';
-import { RandomNumber } from '../models/numbers/random-number';
-import { Parameter, DataType } from '../interfaces/parameter';
 import { FormControl, Validators } from '@angular/forms';
+import { RandomNumber } from 'src/app/models/numbers/random-number';
+import { Parameter, DataType } from 'src/app/interfaces/parameter';
+import { TableData } from '../container.service';
 
 
 @Component({

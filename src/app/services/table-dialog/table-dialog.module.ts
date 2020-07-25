@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { ColumnDialogComponent } from './column-dialog.component';
+import { TableDialogComponent } from './table-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule, MatInputModule, MatCardModule, MatButtonModule } from '@angular/material';
 import { CommonModule } from '@angular/common';
-import { InputsModule } from '../components/inputs/inputs.module';
+import { InputsModule } from 'src/app/components/inputs/inputs.module';
 
 @NgModule({
   imports: [
@@ -17,7 +17,7 @@ import { InputsModule } from '../components/inputs/inputs.module';
     InputsModule
   ],
   declarations: [
-    ColumnDialogComponent
+    TableDialogComponent
   ]
 })
-export class ColumnDialogModule { }
+export class TableDialogModule { }

@@ -1,0 +1,23 @@
+<h1 mat-dialog-title *ngIf='save'>Save Template:</h1>
+<h1 mat-dialog-title *ngIf='!save'>Load Template:</h1>
+<div mat-dialog-content>
+  <mat-form-field *ngIf='save'>
+    <mat-label>Template Name</mat-label>
+    <input matInput placeholder="Ex. Test Template" [(ngModel)]='templateName' [formControl]='formControl'>
+    <mat-error *ngIf="formControl.hasError('required')">
+      Template name is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field *ngIf='!save'>
+    <mat-label>Template to Load</mat-label>
+    <mat-select [(value)]="templateName">
+        <mat-option *ngFor='let name of templateNames' [value]="name">{{name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button *ngIf='save' mat-button (click)="submit()" color="primary">Save</button>
+  <button *ngIf='!save' mat-button (click)="submit()" color="primary">Load</button>
+  <button *ngIf='!save' mat-button (click)="deleteCurrent()" color="primary">Delete Selected</button>
+  <button mat-button (click)="cancel()" color="primary">Cancel</button>
+</div>
